@@ -1,0 +1,302 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+:root{
+    --titleFont: 'Poppins', sans-serif; 
+    --bodyFont: 'Work Sans', sans-serif;
+    --bodyTextColor: ##262F3B;
+}
+
+body {
+    margin: 0;
+    font-family: var(--bodyFont);
+    font-size: 16px;
+    color: var(--bodyTextColor);
+    scroll-behavior: smooth;
+}
+
+header {
+    background-color: transparent;
+    color: white;
+    text-align: center;
+    min-height: 3rem;
+    width: 100vw;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: background 0.3s ease, color 0.3s ease; /* Langsamer */
+}
+
+header>*{
+    margin: 10px 50px;
+}
+
+
+header:hover {
+    background-color: white;
+}
+
+header.scrolled {
+    position: sticky;
+    background: white;
+    color: var(--bodyTextColor);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+}
+
+header.scrolled nav a {
+    color: var(--bodyTextColor);
+    font-size: 14px;
+}
+
+
+header.scrolled #logo {
+    content: url(logo/logo.png);
+    height: 50px;
+}
+
+.hero {
+    position: relative; /* Needed for absolute positioning */
+    width: 100%;
+    height: 100vh; /* Full screen height */
+    overflow: hidden;
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    text-align: center; /* Ensures text is centered */
+}
+.hero video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.hero h1 {
+    position: absolute;
+    text-align: center; /* Center text alignment */
+    color: white;
+    text-transform: uppercase;
+    font-size: 4rem;
+    width: 100%; /* Ensures centering for multi-line text */
+    z-index: 2; /* Ensures it's above the video */
+    padding: 20px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.logo img {
+    height: 50px; /* Adjust size of the logo */
+}
+
+nav {
+    display: flex;
+    gap: 10px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #0226B6;
+    font-size: 14px;
+    padding: 10px 15px;
+    transition: color 0.3s ease;
+    font-family: var(--titleFont);
+    font-weight: 600; /* Standardmäßig mittelstark */
+    text-transform: uppercase;
+}
+
+.nav a:hover {
+    color: #02176E; /* Farbe beim Hover ändern */
+}
+
+.logo-marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    background-color: white;
+    padding: 40px 0;
+}
+
+.logo-track {
+    display: flex;
+    gap: 5rem; /* Abstand zwischen Logos */
+    animation: marquee 40s linear infinite; /* Endloser Lauf-Effekt */
+}
+
+.logo-track img {
+    height: 1rem; /* Größe der Logos anpassen */
+    width: auto;
+}
+
+/* Blur effect on left & right edges */
+.logo-marquee::before,
+.logo-marquee::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 10rem; /* Adjust width of blur */
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Left side blur */
+.logo-marquee::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(248, 248, 248, 1), rgba(248, 248, 248, 0));
+}
+
+/* Right side blur */
+.logo-marquee::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(248, 248, 248, 1), rgba(248, 248, 248, 0));
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+
+#aboutUs{
+    display: flex;
+    text-align: left;   
+}
+
+.column-title {
+    width: 32.75vw;
+}
+
+.parallax {
+    /* The image used */
+    background-image: url('gießerei.jpg'); /* Replace with your image URL */
+
+    /* Set a specific height */
+    height: 300px;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@media screen and (max-width:768px) {
+    .parallax {
+        display: none;
+    } 
+    
+    .hero {
+        height: 80vh; /* Weniger Platz für das Video auf mobilen Geräten */
+    }
+
+    .hero video {
+        height: auto; /* Behält das Seitenverhältnis */
+        width: 100%; /* Passt sich der Bildschirmbreite an */
+    }
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 10vw;
+    padding-right: 10vw;
+    justify-content: space-between;
+}
+
+.content {
+    min-height: 100vh; /* Set the height of the content sections */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #FBFBFE;
+    padding: 20px;
+    transition: height 0.5s ease-in-out;
+}
+
+
+footer {
+    height: 10rem;
+    color: var(--bodyTextColor);
+    text-align: center;
+    background-color: #F6F8F9;
+    padding: 40px 20px;
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between; /* Logo links, Navigation rechts */
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.footer-logo img {
+    height: 20px;
+    width: auto;
+}
+
+.footer-nav {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-nav a {
+    color: #0226B6;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 0.5rem;
+    transition: color 0.3s;
+}
+
+.footer-nav a:hover {
+    color: #02176E; /* Farbe beim Hover ändern */
+}
+
+/* Datenschutz & Impressum unten links */
+.footer-bottom {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+.footer-bottom a {
+    color: var(--bodyTextColor);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-bottom a:hover {
+    text-decoration: underline;
+}
+
+h1, h2 {
+    margin: 0;
+    font-family: var(--titleFont);
+    text-transform: uppercase;
+    font-weight: 600; /* Standardmäßig mittelstark */
+}
+
+p {
+    max-width: 600px;
+}
