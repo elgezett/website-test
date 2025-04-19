@@ -253,8 +253,46 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   })
 
-  // Enhanced parallax effect for all devices
+  // Detect iOS
+  const isIOS =
+    /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+
+  // Enhanced parallax effect for all devices including iOS
   const parallaxSections = document.querySelectorAll(".parallax")
+
+  // Set up parallax backgrounds as actual elements for iOS
+  if (isIOS) {
+    parallaxSections.forEach((section, index) => {
+      // Create a background div that we can move with transform instead of background-position
+      const bgElement = document.createElement("div")
+      bgElement.className = "parallax-bg"
+
+      // Get the background image from the section
+      const computedStyle = window.getComputedStyle(section)
+      const bgImage = computedStyle.backgroundImage
+
+      // Apply the background to the new element
+      bgElement.style.backgroundImage = bgImage
+      bgElement.style.backgroundSize = "cover"
+      bgElement.style.backgroundPosition = "center center"
+      bgElement.style.position = "absolute"
+      bgElement.style.top = "-50px" // Extra space for parallax movement
+      bgElement.style.left = "0"
+      bgElement.style.width = "100%"
+      bgElement.style.height = "calc(100% + 100px)" // Extra space for parallax movement
+      bgElement.style.zIndex = "0"
+      bgElement.style.willChange = "transform"
+
+      // Insert the background element as the first child
+      section.style.position = "relative"
+      section.style.overflow = "hidden"
+      section.style.background = "none" // Remove the original background
+      section.insertBefore(bgElement, section.firstChild)
+
+      // Store the element for later reference
+      section.setAttribute("data-parallax-bg", "true")
+    })
+  }
 
   // Apply parallax effect to all devices
   window.addEventListener("scroll", () => {
@@ -276,7 +314,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const parallaxSpeed = isMobile ? 0.15 : 0.3 // Slower on mobile for better effect
 
         const yPos = (distance - sectionTop) * parallaxSpeed
-        section.style.backgroundPosition = `center ${yPos}px`
+
+        if (isIOS) {
+          // For iOS, use transform on the background element
+          const bgElement = section.querySelector(".parallax-bg")
+          if (bgElement) {
+            bgElement.style.transform = `translateY(${yPos}px)`
+          }
+        } else {
+          // For other browsers, use background-position
+          section.style.backgroundPosition = `center ${yPos}px`
+        }
       }
     })
   })
