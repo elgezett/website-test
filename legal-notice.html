@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Impressum - Werner Lichy</title>
+    <title>Impressum - Werner Lichy | Prototypenbau & Aluminiumguss Berlin</title>
+    <meta name="description" content="Impressum von Werner Lichy - Ihr Spezialist für Prototypenbau, Aluminiumguss und Kleinserienfertigung in Berlin.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -46,8 +47,8 @@
     <header class="header">
         <div class="container header-container">
             <div class="logo">
-                <a href="index.html">
-                    <img src="assets/images/logo/metalcraft-logo.svg" alt="Werner Lichy Logo" class="logo-image">
+                <a href="index.html" class="logo-link">
+                    <img src="assets/images/logo/metalcraft-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image" loading="lazy">
                 </a>
             </div>
             <div class="menu-toggle" id="menuToggle">
@@ -157,7 +158,9 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <img src="assets/images/logo/metalcraft-logo.svg" alt="Werner Lichy Logo" class="logo-image footer-logo-image">
+                    <a href="index.html#hero" class="logo-link">
+                        <img src="assets/images/logo/metalcraft-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image footer-logo-image" loading="lazy">
+                    </a>
                 </div>
                 <div class="footer-links">
                     <ul>
@@ -255,8 +258,8 @@
                 pageTitle.textContent = "Legal Notice (Impressum)";
                 
                 // Show English content, hide German content
-                deContent.style.display = "block";
-                enContent.style.display = "none";
+                deContent.style.display = "none";
+                enContent.style.display = "block";
                 
                 // Footer
                 const footerLinks = document.querySelectorAll(".footer-links a");

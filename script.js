@@ -117,29 +117,62 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initial check for elements in viewport
   checkAnimations()
 
+  // Find the animation code for hero elements and update it
+
   // Add specific animation timing for hero elements
   const heroElements = document.querySelectorAll(".hero-content .animate-on-scroll")
-  heroElements.forEach((element, index) => {
-    // Make the base delay longer for more drama
-    const baseDelay = 800
-    const delay = element.getAttribute("data-delay") || index * 400 + baseDelay
+  // Check if user prefers reduced motion
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
-    // Initially hide the elements
-    element.style.opacity = "0"
-    element.style.transform = "translateY(30px)"
+  if (!prefersReducedMotion) {
+    heroElements.forEach((element, index) => {
+      // Make the base delay longer for more drama
+      const baseDelay = 800
+      const delay = element.getAttribute("data-delay") || index * 400 + baseDelay
 
-    // Animate them in with a slower transition
-    setTimeout(() => {
-      element.style.transition = "opacity 1.5s ease-out, transform 1.5s ease-out"
+      // Initially hide the elements
+      element.style.opacity = "0"
+      element.style.transform = "translateY(30px)"
+
+      // Animate them in with a slower transition
+      setTimeout(() => {
+        element.style.transition = "opacity 1.5s ease-out, transform 1.5s ease-out"
+        element.style.opacity = "1"
+        element.style.transform = "translateY(0)"
+      }, delay)
+    })
+  } else {
+    // For reduced motion, just show the elements without animation
+    heroElements.forEach((element) => {
       element.style.opacity = "1"
-      element.style.transform = "translateY(0)"
-    }, delay)
-  })
+      element.style.transform = "none"
+    })
+  }
 
   // Check animations on scroll
   window.addEventListener("scroll", checkAnimations)
 
   function checkAnimations() {
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+    // If reduced motion is preferred, make all elements visible without animations
+    if (prefersReducedMotion) {
+      animateElements.forEach((element) => {
+        element.classList.add("active")
+        element.style.opacity = "1"
+        element.style.transform = "none"
+      })
+
+      scrollAnimateElements.forEach((element) => {
+        element.classList.add("active")
+        element.style.opacity = "1"
+        element.style.transform = "none"
+      })
+
+      return
+    }
+
     // Basic animations with smoother transitions
     animateElements.forEach((element) => {
       if (isElementInViewport(element)) {
@@ -225,6 +258,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Apply parallax effect to all devices
   window.addEventListener("scroll", () => {
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+    // Skip parallax effect if reduced motion is preferred
+    if (prefersReducedMotion) return
+
     parallaxSections.forEach((section) => {
       const distance = window.pageYOffset
       const sectionTop = section.offsetTop
@@ -251,16 +290,16 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".nav-link")[3].textContent = "KONTAKT"
 
     // Hero
-    document.querySelector(".hero-title").textContent = "PRÄZISIONSTECHNIK"
-    document.querySelector(".hero-subtitle").textContent = "MADE IN GERMANY"
+    document.querySelector(".hero-title").textContent = "PROTOTYPENBAU & PRÄZISIONSFERTIGUNG"
+    document.querySelector(".hero-subtitle").textContent = "AUS BERLIN"
 
     // About
     document.querySelector("#about .section-title").textContent = "ÜBER UNS"
     const aboutParagraphs = document.querySelectorAll("#about p")
     aboutParagraphs[0].textContent =
-      "Seit über 40 Jahren sind wir Ihr kompetenter Ansprechpartner für Prototypen, Aluminiumguss und die Fertigung von Kleinserien. Als familiengeführtes Unternehmen stehen bei uns Qualität, Verlässlichkeit und persönliche Betreuung im Mittelpunkt. Mit modernster Fertigungstechnik, einem hohen Maß an Flexibilität und einem erfahrenen Team aus hochqualifizierten Fachkräften setzen wir Ihre Projekte effizient und präzise um."
+      "Seit über 40 Jahren sind wir Ihr kompetenter Ansprechpartner für Prototypenbau, Modellbau, Aluminiumguss und die Fertigung von Kleinserien. Als familiengeführtes Unternehmen stehen bei uns Qualität, Verlässlichkeit und persönliche Betreuung im Mittelpunkt. Mit modernster CNC-Bearbeitung, einem hohen Maß an Flexibilität und einem erfahrenen Team aus hochqualifizierten Fachkräften setzen wir Ihre Projekte effizient und präzise um."
     aboutParagraphs[1].textContent =
-      "Ob Einzelanfertigung oder Serienproduktion – wir begleiten Sie von der ersten Idee bis zum fertigen Bauteil und finden gemeinsam die beste Lösung für Ihre Anforderungen."
+      "Ob Einzelanfertigung oder Serienproduktion – wir begleiten Sie von der ersten Idee bis zum fertigen Bauteil und finden gemeinsam die beste Lösung für Ihre Anforderungen im Bereich Präzisionsfertigung und Aluminiumguss."
 
     // Products
     document.querySelector("#products .section-title").textContent = "UNSERE PRODUKTE"
@@ -338,16 +377,16 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".nav-link")[3].textContent = "CONTACT"
 
     // Hero
-    document.querySelector(".hero-title").textContent = "PRECISION ENGINEERING"
-    document.querySelector(".hero-subtitle").textContent = "MADE IN GERMANY"
+    document.querySelector(".hero-title").textContent = "PROTOTYPE DEVELOPMENT & PRECISION ENGINEERING"
+    document.querySelector(".hero-subtitle").textContent = "FROM BERLIN"
 
     // About
     document.querySelector("#about .section-title").textContent = "ABOUT US"
     const aboutParagraphs = document.querySelectorAll("#about p")
     aboutParagraphs[0].textContent =
-      "For over 40 years, we have been your competent partner for prototypes, aluminum casting, and small series production. As a family-run company, quality, reliability, and personal support are at the center of everything we do. With state-of-the-art manufacturing technology, a high degree of flexibility, and an experienced team of highly qualified professionals, we implement your projects efficiently and precisely."
+      "For over 40 years, we have been your competent partner for prototype development, model making, aluminum casting, and small series production. As a family-run company, quality, reliability, and personal support are at the center of everything we do. With state-of-the-art CNC machining, a high degree of flexibility, and an experienced team of highly qualified professionals, we implement your projects efficiently and precisely."
     aboutParagraphs[1].textContent =
-      "Whether individual production or series manufacturing – we accompany you from the initial idea to the finished component and together find the best solution for your requirements."
+      "Whether individual production or series manufacturing – we accompany you from the initial idea to the finished component and together find the best solution for your requirements in precision engineering and aluminum casting."
 
     // Products
     document.querySelector("#products .section-title").textContent = "OUR PRODUCTS"

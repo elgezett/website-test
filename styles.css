@@ -158,6 +158,17 @@ img {
   filter: brightness(0) invert(1);
 }
 
+/* Add this to your existing CSS file */
+
+.logo-link {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.logo-link:focus {
+  outline: none;
+}
+
 /* Navigation and Language Switcher */
 .nav-list {
   display: flex;
@@ -358,6 +369,45 @@ img {
 
 .hero-subtitle {
   animation-delay: 1.2s;
+}
+
+/* Add this after the hero section styles */
+
+/* Accessibility - Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .video-container video {
+    display: none;
+  }
+
+  .hero .video-container {
+    background: url("assets/images/parallax/giesserei.jpeg") center / cover no-repeat;
+  }
+
+  /* Keep the overlay visible for text contrast */
+  .hero .overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  /* Disable parallax effects for reduced motion */
+  .parallax {
+    background-attachment: scroll !important;
+    transition: none !important;
+  }
+
+  /* Disable animations for reduced motion */
+  .animate-on-scroll,
+  .scroll-animate {
+    transition: none !important;
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Disable marquee animation */
+  .marquee-content {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 /* Partners Section */
