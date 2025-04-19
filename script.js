@@ -290,7 +290,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".nav-link")[3].textContent = "KONTAKT"
 
     // Hero
-    document.querySelector(".hero-title").textContent = "PROTOTYPENBAU & PRÄZISIONSFERTIGUNG"
+    document.querySelector(".hero-title").innerHTML =
+      '<span class="first-part">PRÄZISIONS</span><span class="second-part">FERTIGUNG</span>'
     document.querySelector(".hero-subtitle").textContent = "AUS BERLIN"
 
     // About
@@ -377,7 +378,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".nav-link")[3].textContent = "CONTACT"
 
     // Hero
-    document.querySelector(".hero-title").textContent = "PROTOTYPE DEVELOPMENT & PRECISION ENGINEERING"
+    document.querySelector(".hero-title").innerHTML =
+      '<span class="first-part">PRECISION</span><span class="second-part">ENGINEERING</span>'
     document.querySelector(".hero-subtitle").textContent = "FROM BERLIN"
 
     // About

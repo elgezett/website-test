@@ -294,6 +294,29 @@ img {
   overflow: hidden;
 }
 
+/* Add this new rule for mobile hero title */
+.mobile-break {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-title .first-part,
+  .hero-title .second-part {
+    display: block;
+  }
+
+  .hero-title .first-part::after {
+    content: "-";
+  }
+}
+
 .video-container {
   position: absolute;
   top: 0;
@@ -556,11 +579,11 @@ img {
   }
 
   .parallax-1 {
-    background-size: 150% auto; /* Zoom in the image more on mobile */
+    background-size: cover; /* Changed from 150% auto to cover */
   }
 
   .parallax-2 {
-    background-size: 150% auto; /* Zoom in the image more on mobile */
+    background-size: cover; /* Changed from 150% auto to cover */
   }
 }
 
@@ -570,11 +593,11 @@ img {
   }
 
   .parallax-1 {
-    background-size: 180% auto; /* Zoom in even more on smaller screens */
+    background-size: cover; /* Changed from 180% auto to cover */
   }
 
   .parallax-2 {
-    background-size: 180% auto; /* Zoom in even more on smaller screens */
+    background-size: cover; /* Changed from 180% auto to cover */
   }
 }
 
