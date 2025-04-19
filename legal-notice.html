@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressum - Werner Lichy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .page-content {
+            padding: 120px 0 60px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+        .content-section {
+            margin-bottom: 40px;
+        }
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        .content-section p {
+            margin-bottom: 15px;
+        }
+        .content-section a {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+        .content-section a:hover {
+            color: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="assets/images/logo/metalcraft-logo.svg" alt="Werner Lichy Logo" class="logo-image">
+                </a>
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <nav class="nav" id="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">HOME</a></li>
+                    <li><a href="index.html#about" class="nav-link">ABOUT</a></li>
+                    <li><a href="index.html#products" class="nav-link">PRODUCTS</a></li>
+                    <li><a href="index.html#contact" class="nav-link">CONTACT</a></li>
+                    <li class="nav-divider"></li>
+                    <li class="lang-item">
+                        <button class="lang-icon" id="langToggle" aria-label="Change language">
+                            <i data-lucide="globe"></i>
+                            <span class="current-lang">DE</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-content container">
+        <h1 class="page-title" id="pageTitle">Impressum</h1>
+        
+        <div id="legalContent">
+            <!-- German content -->
+            <div id="de-content">
+                <div class="content-section">
+                    <p>(gemäß § 5 TMG)</p>
+                    <p>Werner Lichy<br>
+                    Modell- und Prototypenbau e.K.<br>
+                    Innungsstraße 60<br>
+                    13509 Berlin</p>
+                </div>
+                
+                <div class="content-section">
+                    <h2>Vertreten durch:</h2>
+                    <p>Marcel Lichy (Inhaber)</p>
+                </div>
+                
+                <div class="content-section">
+                    <h2>Kontakt:</h2>
+                    <p>Telefon: 030 / 414 16 12<br>
+                    E-Mail: info@lichy-berlin.de</p>
+                </div>
+                
+                <div class="content-section">
+                    <h2>Registereintrag:</h2>
+                    <p>Eingetragen im Handelsregister.<br>
+                    Registergericht: Amtsgericht Berlin-Charlottenburg<br>
+                    Registernummer: HRA 267168 B</p>
+                </div>
+                
+                <div class="content-section">
+                    <h2>Berufsrechtliche Regelungen:</h2>
+                    <p>Zuständige Handwerkskammer: Handwerkskammer Berlin<br>
+                    Es gelten die Regelungen der Handwerksordnung (HwO), abrufbar unter: <a href="https://www.gesetze-im-internet.de/hwo/" target="_blank">https://www.gesetze-im-internet.de/hwo/</a></p>
+                </div>
+            </div>
+            
+            <!-- English content -->
+            <div id="en-content" style="display: none;">
+                <div class="content-section">
+                    <p>(according to § 5 TMG - German Telemedia Act)</p>
+                    <p>Werner Lichy<br>
+                    Modell- und Prototypenbau e.K.<br>
+                    Innungsstraße 60<br>
+                    13509 Berlin<br>
+                    Germany</p>
+                </div>
+                
+                <div class="content-section">
+                    <h2>Represented by:</h2>
+                    <p>Marcel Lichy (Owner)</p>
+                </div>
+                
+                <div class="content-section">
+                    <h2>Contact:</h2>
+                    <p>Phone: 030 / 414 16 12<br>
+                    Email: info@lichy-berlin.de</p>
+                </div>
+                
+                <div class="content-section">
+                    <h2>Registration:</h2>
+                    <p>Registered in the Commercial Register.<br>
+                    Registration Court: Local Court Berlin-Charlottenburg<br>
+                    Registration Number: HRA 267168 B</p>
+                </div>
+                
+                <div class="content-section">
+                    <h2>Professional Regulations:</h2>
+                    <p>Responsible Chamber of Crafts: Chamber of Crafts Berlin<br>
+                    The regulations of the German Crafts Code (HwO) apply, available at: <a href="https://www.gesetze-im-internet.de/hwo/" target="_blank">https://www.gesetze-im-internet.de/hwo/</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="assets/images/logo/metalcraft-logo.svg" alt="Werner Lichy Logo" class="logo-image footer-logo-image">
+                </div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="index.html">STARTSEITE</a></li>
+                        <li><a href="index.html#products">PRODUKTE</a></li>
+                        <li><a href="index.html#contact">KONTAKT</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2025 Werner Lichy. Alle Rechte vorbehalten.</p>
+                </div>
+                <div class="footer-legal-links">
+                    <a href="legal-notice.html">Impressum</a>
+                    <span class="footer-divider">|</span>
+                    <a href="privacy-policy.html">Datenschutzerklärung</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Initialize Lucide icons
+            lucide.createIcons();
+            
+            // Language switcher for legal page
+            const langToggle = document.getElementById("langToggle");
+            const currentLang = document.querySelector(".current-lang");
+            const pageTitle = document.getElementById("pageTitle");
+            const enContent = document.getElementById("en-content");
+            const deContent = document.getElementById("de-content");
+
+            if (langToggle) {
+              // Current language state - changed to German as default
+              let isEnglish = false;
+              
+              // Set initial language display
+              currentLang.textContent = isEnglish ? "EN" : "DE";
+              
+              // Apply German language by default
+              translateLegalToGerman();
+              
+              // Toggle language on click
+              langToggle.addEventListener("click", () => {
+                isEnglish = !isEnglish;
+                
+                // Update language display
+                currentLang.textContent = isEnglish ? "EN" : "DE";
+                
+                // Switch language content
+                if (isEnglish) {
+                  translateLegalToEnglish();
+                } else {
+                  translateLegalToGerman();
+                }
+              });
+            }
+            
+            function translateLegalToGerman() {
+                // Navigation
+                document.querySelectorAll(".nav-link")[0].textContent = "STARTSEITE";
+                document.querySelectorAll(".nav-link")[1].textContent = "ÜBER UNS";
+                document.querySelectorAll(".nav-link")[2].textContent = "PRODUKTE";
+                document.querySelectorAll(".nav-link")[3].textContent = "KONTAKT";
+                
+                // Page title
+                pageTitle.textContent = "Impressum";
+                
+                // Show German content, hide English content
+                enContent.style.display = "none";
+                deContent.style.display = "block";
+                
+                // Footer
+                const footerLinks = document.querySelectorAll(".footer-links a");
+                footerLinks[0].textContent = "STARTSEITE";
+                footerLinks[1].textContent = "PRODUKTE";
+                footerLinks[2].textContent = "KONTAKT";
+                
+                document.querySelector(".footer-copyright p").textContent = "© 2025 Werner Lichy. Alle Rechte vorbehalten.";
+                document.querySelectorAll(".footer-legal-links a")[0].textContent = "Impressum";
+                document.querySelectorAll(".footer-legal-links a")[1].textContent = "Datenschutzerklärung";
+            }
+            
+            function translateLegalToEnglish() {
+                // Navigation
+                document.querySelectorAll(".nav-link")[0].textContent = "HOME";
+                document.querySelectorAll(".nav-link")[1].textContent = "ABOUT";
+                document.querySelectorAll(".nav-link")[2].textContent = "PRODUCTS";
+                document.querySelectorAll(".nav-link")[3].textContent = "CONTACT";
+                
+                // Page title
+                pageTitle.textContent = "Legal Notice (Impressum)";
+                
+                // Show English content, hide German content
+                deContent.style.display = "block";
+                enContent.style.display = "none";
+                
+                // Footer
+                const footerLinks = document.querySelectorAll(".footer-links a");
+                footerLinks[0].textContent = "HOME";
+                footerLinks[1].textContent = "PRODUCTS";
+                footerLinks[2].textContent = "CONTACT";
+                
+                document.querySelector(".footer-copyright p").textContent = "© 2025 Werner Lichy. All rights reserved.";
+                document.querySelectorAll(".footer-legal-links a")[0].textContent = "Legal Notice (Impressum)";
+                document.querySelectorAll(".footer-legal-links a")[1].textContent = "Privacy Policy";
+            }
+        });
+    </script>
+</body>
+</html>

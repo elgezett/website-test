@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 70">
+  <polygon points="20,30 30,20 45,20 45,50 30,50 20,40" fill="#005CA9"/>
+  <g fill="#005CA9" transform="translate(50, 35)">
+    <path d="M0,0 h8 v-15 h4 v15 h4 v4 h-4 v4 h-4 v-4 h-8 z"/>
+    <path d="M22,-15 h4 v8 h4 v-8 h4 v23 h-4 v-11 h-4 v11 h-4 z"/>
+    <path d="M42,-15 h4 v19 h8 v4 h-12 z"/>
+    <path d="M58,-15 h4 v19 h8 v4 h-12 z"/>
+    <path d="M73,-15 h12 v4 h-8 v4 h8 v4 h-8 v7 h8 v4 h-12 z"/>
+    <path d="M90,-15 h4 v19 h8 v4 h-12 z"/>
+    <path d="M104,-15 h12 v4 h-4 v19 h-4 v-19 h-4 z"/>
+    <path d="M118,-15 h4 v23 h-4 z"/>
+    <path d="M126,-15 h4 v8 h4 v-8 h4 v23 h-4 v-11 h-4 v11 h-4 z"/>
+  </g>
+</svg>
