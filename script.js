@@ -1,4 +1,21 @@
+// Detect iOS - moved to the top for better organization
+const isIOS = (() => {
+  const userAgent = window.navigator.userAgent.toLowerCase()
+  return /iphone|ipad|ipod/.test(userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+})()
+
+// Add iOS class to body for CSS targeting
+if (isIOS) {
+  document.body.classList.add("ios")
+}
+
+// Initialize this at the beginning of the DOMContentLoaded event
 document.addEventListener("DOMContentLoaded", () => {
+  // Add iOS class to body for CSS targeting
+  if (isIOS) {
+    document.body.classList.add("ios")
+  }
+
   // Initialize Lucide icons
   const lucide = window.lucide
   lucide.createIcons()
@@ -8,7 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const nav = document.getElementById("nav")
 
   if (menuToggle && nav) {
-    menuToggle.addEventListener("click", () => {
+    menuToggle.addEventListener("click", (e) => {
+      e.stopPropagation() // Prevent click from bubbling to document
       nav.classList.toggle("active")
       document.body.classList.toggle("menu-open")
     })
@@ -22,21 +40,36 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.classList.remove("menu-open")
       })
     })
+
+    // Close menu when clicking outside
+    document.addEventListener("click", (e) => {
+      // Check if menu is open and click is outside the nav
+      if (nav.classList.contains("active") && !nav.contains(e.target) && e.target !== menuToggle) {
+        nav.classList.remove("active")
+        document.body.classList.remove("menu-open")
+      }
+    })
+
+    // Prevent clicks inside the nav from closing the menu
+    nav.addEventListener("click", (e) => {
+      e.stopPropagation()
+    })
   }
 
   // Language switcher
   const langToggle = document.getElementById("langToggle")
   const currentLang = document.querySelector(".current-lang")
 
+  // Change the language state to default to English
   // Track current language state globally for use in other functions
-  let isEnglish = false
+  let isEnglish = true
 
   if (langToggle) {
     // Set initial language display
     currentLang.textContent = isEnglish ? "EN" : "DE"
 
-    // Apply German language by default
-    translateToGerman()
+    // Apply English language by default
+    translateToEnglish()
 
     // Toggle language on click
     langToggle.addEventListener("click", () => {
@@ -149,9 +182,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
-  // Check animations on scroll
-  window.addEventListener("scroll", checkAnimations)
-
   function checkAnimations() {
     // Check if user prefers reduced motion
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -253,80 +283,82 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   })
 
-  // Detect iOS
-  const isIOS =
-    /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+  // COMPLETELY REVISED PARALLAX IMPLEMENTATION
+  // This is a simpler, more reliable approach to parallax scrolling
+  function initParallax() {
+    const parallaxSections = document.querySelectorAll(".parallax")
 
-  // Enhanced parallax effect for all devices including iOS
-  const parallaxSections = document.querySelectorAll(".parallax")
+    // Skip if no parallax sections or user prefers reduced motion
+    if (parallaxSections.length === 0 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return
+    }
 
-  // Set up parallax backgrounds as actual elements for iOS
-  if (isIOS) {
-    parallaxSections.forEach((section, index) => {
-      // Create a background div that we can move with transform instead of background-position
-      const bgElement = document.createElement("div")
-      bgElement.className = "parallax-bg"
+    // Function to update parallax effect
+    function updateParallax() {
+      const scrollTop = window.pageYOffset
 
-      // Get the background image from the section
-      const computedStyle = window.getComputedStyle(section)
-      const bgImage = computedStyle.backgroundImage
+      parallaxSections.forEach((section) => {
+        // Get section position relative to viewport
+        const sectionTop = section.getBoundingClientRect().top + scrollTop
+        const sectionHeight = section.offsetHeight
+        const viewportHeight = window.innerHeight
 
-      // Apply the background to the new element
-      bgElement.style.backgroundImage = bgImage
-      bgElement.style.backgroundSize = "cover"
-      bgElement.style.backgroundPosition = "center center"
-      bgElement.style.position = "absolute"
-      bgElement.style.top = "-50px" // Extra space for parallax movement
-      bgElement.style.left = "0"
-      bgElement.style.width = "100%"
-      bgElement.style.height = "calc(100% + 100px)" // Extra space for parallax movement
-      bgElement.style.zIndex = "0"
-      bgElement.style.willChange = "transform"
+        // Check if section is visible
+        if (scrollTop + viewportHeight > sectionTop && scrollTop < sectionTop + sectionHeight) {
+          // Calculate how far we've scrolled into the section
+          const scrollIntoSection = scrollTop + viewportHeight - sectionTop
+          const scrollPercentage = scrollIntoSection / (sectionHeight + viewportHeight)
 
-      // Insert the background element as the first child
-      section.style.position = "relative"
-      section.style.overflow = "hidden"
-      section.style.background = "none" // Remove the original background
-      section.insertBefore(bgElement, section.firstChild)
+          // Calculate parallax offset (adjust speed factor as needed)
+          const parallaxSpeed = 1.2
+          const offset = scrollPercentage * 100 * parallaxSpeed
 
-      // Store the element for later reference
-      section.setAttribute("data-parallax-bg", "true")
-    })
-  }
-
-  // Apply parallax effect to all devices
-  window.addEventListener("scroll", () => {
-    // Check if user prefers reduced motion
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-
-    // Skip parallax effect if reduced motion is preferred
-    if (prefersReducedMotion) return
-
-    parallaxSections.forEach((section) => {
-      const distance = window.pageYOffset
-      const sectionTop = section.offsetTop
-      const sectionHeight = section.offsetHeight
-      const windowHeight = window.innerHeight
-
-      if (distance > sectionTop - windowHeight && distance < sectionTop + sectionHeight) {
-        // Adjust parallax speed based on device width for better mobile experience
-        const isMobile = window.innerWidth <= 768
-        const parallaxSpeed = isMobile ? 0.15 : 0.3 // Slower on mobile for better effect
-
-        const yPos = (distance - sectionTop) * parallaxSpeed
-
-        if (isIOS) {
-          // For iOS, use transform on the background element
-          const bgElement = section.querySelector(".parallax-bg")
-          if (bgElement) {
-            bgElement.style.transform = `translateY(${yPos}px)`
+          // Apply different positioning for each section
+          if (section.classList.contains("parallax-1")) {
+            section.style.backgroundPositionY = `calc(50% + ${offset}px)`
+          } else if (section.classList.contains("parallax-2")) {
+            section.style.backgroundPositionY = `calc(50% + ${offset}px)`
           }
-        } else {
-          // For other browsers, use background-position
-          section.style.backgroundPosition = `center ${yPos}px`
+
+          // Debug info - uncomment to see values
+          // console.log(`Section: ${section.classList}, Offset: ${offset}px`)
         }
+      })
+    }
+
+    // Initial update
+    updateParallax()
+
+    // Update on scroll with throttling for performance
+    let ticking = false
+    window.addEventListener("scroll", () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateParallax()
+          ticking = false
+        })
+        ticking = true
       }
     })
+
+    // Update on resize
+    window.addEventListener("resize", updateParallax)
+
+    // Additional update after images might have loaded
+    window.addEventListener("load", updateParallax)
+
+    // Force multiple updates to ensure effect is applied
+    setTimeout(updateParallax, 100)
+    setTimeout(updateParallax, 500)
+    setTimeout(updateParallax, 1000)
+  }
+
+  // Initialize parallax
+  initParallax()
+
+  // Check animations on scroll
+  window.addEventListener("scroll", () => {
+    checkAnimations()
   })
 
   // Language translation functions
@@ -338,8 +370,10 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".nav-link")[3].textContent = "KONTAKT"
 
     // Hero
-    document.querySelector(".hero-title").innerHTML =
-      '<span class="first-part">PRÄZISIONS</span><span class="second-part">FERTIGUNG</span>'
+    const heroTitle = document.querySelector(".hero-title")
+    heroTitle.innerHTML = '<span class="first-part">PRÄZISIONS</span><span class="second-part">FERTIGUNG</span>'
+    heroTitle.classList.remove("english")
+    heroTitle.classList.add("german")
     document.querySelector(".hero-subtitle").textContent = "AUS BERLIN"
 
     // About
@@ -426,8 +460,10 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".nav-link")[3].textContent = "CONTACT"
 
     // Hero
-    document.querySelector(".hero-title").innerHTML =
-      '<span class="first-part">PRECISION</span><span class="second-part">ENGINEERING</span>'
+    const heroTitle = document.querySelector(".hero-title")
+    heroTitle.innerHTML = '<span class="first-part">Precision</span><span class="second-part">Engineering</span>'
+    heroTitle.classList.remove("german")
+    heroTitle.classList.add("english")
     document.querySelector(".hero-subtitle").textContent = "FROM BERLIN"
 
     // About
@@ -503,5 +539,13 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".footer-copyright p").textContent = "© 2025 Werner Lichy. All rights reserved."
     document.querySelectorAll(".footer-legal-links a")[0].textContent = "Legal Notice (Impressum)"
     document.querySelectorAll(".footer-legal-links a")[1].textContent = "Privacy Policy"
+  }
+
+  // Add class to the hero title based on current language
+  const heroTitle = document.querySelector(".hero-title")
+  if (isEnglish) {
+    heroTitle.classList.add("english")
+  } else {
+    heroTitle.classList.add("german")
   }
 })

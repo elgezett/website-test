@@ -294,6 +294,11 @@ img {
   overflow: hidden;
 }
 
+/* Add this new rule for the English title spacing */
+.hero-title .first-part {
+  margin-right: 1.5rem; /* Add extra space between the words */
+}
+
 /* Add this new rule for mobile hero title */
 .mobile-break {
   display: none;
@@ -312,8 +317,14 @@ img {
     display: block;
   }
 
-  .hero-title .first-part::after {
+  /* Only add the hyphen for German version */
+  .hero-title.german .first-part::after {
     content: "-";
+  }
+
+  /* No hyphen for English version */
+  .hero-title.english .first-part::after {
+    content: "";
   }
 }
 
@@ -527,20 +538,21 @@ img {
   transform: scale(1.05);
 }
 
-/* Parallax Sections */
+/* Parallax Sections - Completely revised */
 .parallax {
   height: 450px;
-  background-attachment: fixed;
-  background-position: center;
+  position: relative;
+  overflow: hidden;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center 50%; /* Default position */
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--white);
-  position: relative;
-  overflow: hidden; /* Added to prevent potential scrollbar issues */
-  will-change: transform; /* Optimize for animation */
+  z-index: 1;
+  /* Remove fixed attachment - we'll handle parallax with JS */
+  background-attachment: scroll;
 }
 
 .parallax::before {
@@ -554,42 +566,26 @@ img {
   z-index: 1;
 }
 
-.parallax-bg {
-  /* This will be created dynamically for iOS */
-  z-index: 0;
+.parallax-inner {
+  position: relative;
+  z-index: 2; /* Above the overlay */
+  text-align: center;
+  width: 100%;
+  height: 100%;
 }
 
 .parallax-1 {
   background-image: url("assets/images/parallax/giesserei.jpeg");
-  background-size: 120% auto; /* Zoom in the image to fill more space */
 }
 
 .parallax-2 {
-  background-image: url("assets/images/parallax/parallax-2.png");
-  background-size: 120% auto; /* Zoom in the image to fill more space */
-}
-
-.parallax-inner {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  width: 100%;
-  height: 100%;
+  background-image: url("assets/images/parallax/millingdrill2.png");
 }
 
 /* Mobile adjustments for parallax sections */
 @media (max-width: 768px) {
   .parallax {
     height: 300px;
-    background-attachment: fixed; /* Keep fixed background on mobile */
-  }
-
-  .parallax-1 {
-    background-size: cover; /* Changed from 150% auto to cover */
-  }
-
-  .parallax-2 {
-    background-size: cover; /* Changed from 150% auto to cover */
   }
 }
 
@@ -597,13 +593,15 @@ img {
   .parallax {
     height: 250px; /* Even smaller height on very small screens */
   }
+}
 
-  .parallax-1 {
-    background-size: cover; /* Changed from 180% auto to cover */
-  }
-
-  .parallax-2 {
-    background-size: cover; /* Changed from 180% auto to cover */
+/* Accessibility - Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .parallax {
+    background-attachment: scroll !important;
+    transition: none !important;
+    /* Ensure background is visible and centered */
+    background-position: center center !important;
   }
 }
 
@@ -937,6 +935,12 @@ img {
   transform: translateY(0);
 }
 
+/* Optimize animations with will-change for better performance */
+.animate-on-scroll,
+.scroll-animate {
+  will-change: opacity, transform;
+}
+
 /* Responsive Styles */
 @media (max-width: 992px) {
   .about-content,
@@ -1179,4 +1183,9 @@ img {
 
 .btn-rounded {
   border-radius: 4px;
+}
+
+/* Add a class for iOS-specific styles */
+.ios .parallax {
+  background-attachment: scroll !important; /* Fallback for iOS */
 }

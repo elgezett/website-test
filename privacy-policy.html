@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,7 +75,7 @@
                     <li class="lang-item">
                         <button class="lang-icon" id="langToggle" aria-label="Change language">
                             <i data-lucide="globe"></i>
-                            <span class="current-lang">DE</span>
+                            <span class="current-lang">EN</span>
                         </button>
                     </li>
                 </ul>
@@ -256,14 +256,14 @@
             const deContent = document.getElementById("de-content");
 
             if (langToggle) {
-              // Current language state - changed to German as default
-              let isEnglish = false;
+              // Current language state - changed to English as default
+              let isEnglish = true;
 
               // Set initial language display
               currentLang.textContent = isEnglish ? "EN" : "DE";
               
-              // Apply German language by default
-              translatePrivacyToGerman();
+              // Apply English language by default
+              translatePrivacyToEnglish();
 
               // Toggle language on click
               langToggle.addEventListener("click", () => {
