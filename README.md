@@ -11,10 +11,4 @@
 This site is deployed directly from the `main` branch via GitHub Pages.
 
 ## ⚖️ Legal
-Impressum & Datenschutzerklärung befinden sich direkt auf der Website. 
-
-
-- Compress all images to reduce file size without losing quality
-- Use tools like TinyPNG, ImageOptim, or Squoosh
-- Consider using WebP format with fallbacks for better performance
-- Ensure all images have appropriate alt text for accessibility
+Impressum & Datenschutzerklärung befinden sich direkt auf der Website.
