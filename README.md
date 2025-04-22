@@ -1,6 +1,6 @@
 # lichy-berlin.de
 
-**Werner Lichy Modell- und Prototypenbau e.K.** — Handwerksbetrieb aus Berlin, spezialisiert auf hochwertige Modelle und Prototypen.
+**Werner Lichy GmbH** — Handwerksbetrieb aus Berlin, spezialisiert auf hochwertige Modelle und Prototypen.
 
 ## 🔧 Tech Stack
 - HTML / CSS / JavaScript
