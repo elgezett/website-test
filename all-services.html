@@ -94,7 +94,7 @@
     <header class="header">
         <div class="container header-container">
             <div class="logo">
-                <a href="index.html" class="logo-link">
+                <a href="/" class="logo-link">
                     <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image" loading="lazy">
                 </a>
             </div>
@@ -107,16 +107,25 @@
             </div>
             <nav class="nav" id="nav">
                 <ul class="nav-list">
-                    <li><a href="index.html#hero" class="nav-link">STARTSEITE</a></li>
-                    <li><a href="index.html#products" class="nav-link">PRODUKTE</a></li>
-                    <li><a href="index.html#about" class="nav-link">ÜBER UNS</a></li>
-                    <li><a href="index.html#contact" class="nav-link">KONTAKT</a></li>
+                    <li><a href="/#hero" class="nav-link">Home</a></li>
+                    <li><a href="/#products" class="nav-link">Services</a></li>
+                    <li><a href="/#about" class="nav-link">About</a></li>
+                    <li><a href="/#contact" class="nav-link">Contact</a></li>
                     <li class="nav-divider"></li>
                     <li class="lang-item">
-                        <button class="lang-icon" id="langToggle" aria-label="Change language">
+                        <button class="lang-icon" id="langToggle" aria-label="Change language" aria-expanded="false" aria-haspopup="true">
                             <i data-lucide="globe"></i>
                             <span class="current-lang">EN</span>
+                            <i data-lucide="chevron-down" class="chevron-icon"></i>
                         </button>
+                        <ul class="lang-dropdown" id="langDropdown" role="menu">
+                            <li role="none">
+                                <button class="lang-option" data-lang="english" role="menuitem">English</button>
+                            </li>
+                            <li role="none">
+                                <button class="lang-option" data-lang="german" role="menuitem">Deutsch</button>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </nav>
@@ -231,16 +240,16 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <a href="index.html#hero" class="logo-link">
+                    <a href="/#hero" class="logo-link">
                         <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image footer-logo-image" loading="lazy">
                     </a>
                 </div>
                 <div class="footer-links">
                     <ul>
-                        <li><a href="index.html">Startseite</a></li>
-                        <li><a href="index.html#products">Produkte</a></li>
-                        <li><a href="index.html#about">Über uns</a></li>
-                        <li><a href="index.html#contact">Kontakt</a></li>
+                        <li><a href="/">Startseite</a></li>
+                        <li><a href="/#products">Produkte</a></li>
+                        <li><a href="/#about">Über uns</a></li>
+                        <li><a href="/#contact">Kontakt</a></li>
                     </ul>
                 </div>
                 <div class="footer-social">
@@ -340,38 +349,28 @@
             // Re-initialize animations when language changes
             let animationInitialized = false;
             
-            // Language toggle functionality
-            const langToggle = document.getElementById("langToggle");
-            const currentLang = document.querySelector(".current-lang");
+            // Language toggle functionality - works with dropdown from script.js
             const pageTitle = document.getElementById("pageTitle");
             const enContent = document.getElementById("en-content");
             const deContent = document.getElementById("de-content");
             const LANGUAGE_KEY = 'lichy-website-language';
+            const langOptions = document.querySelectorAll('.lang-option');
             
             // Get saved language preference or default to English
             let isEnglish = localStorage.getItem(LANGUAGE_KEY) !== 'german';
 
-            if (langToggle && currentLang) {
-                // Set initial language display based on saved preference
-                currentLang.textContent = isEnglish ? "EN" : "DE";
-                langToggle.classList.add('active');
-                
-                // Apply saved language preference
-                if (isEnglish) {
-                    translateToEnglish();
-                } else {
-                    translateToGerman();
-                }
-                
-                // Toggle language on click
-                langToggle.addEventListener("click", () => {
-                    isEnglish = !isEnglish;
-                    
-                    // Save language preference to localStorage
-                    localStorage.setItem(LANGUAGE_KEY, isEnglish ? 'english' : 'german');
-                    
-                    // Update language display
-                    currentLang.textContent = isEnglish ? "EN" : "DE";
+            // Apply saved language preference on page load
+            if (isEnglish) {
+                translateToEnglish();
+            } else {
+                translateToGerman();
+            }
+            
+            // Listen for language changes from dropdown
+            langOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const selectedLang = option.dataset.lang === 'english';
+                    isEnglish = selectedLang;
                     
                     // Switch language content
                     if (isEnglish) {
@@ -380,7 +379,20 @@
                         translateToGerman();
                     }
                 });
-            }
+            });
+            
+            // Also listen for storage events in case language changes on another page
+            window.addEventListener('storage', (e) => {
+                if (e.key === LANGUAGE_KEY) {
+                    const newLang = e.newValue !== 'german';
+                    isEnglish = newLang;
+                    if (isEnglish) {
+                        translateToEnglish();
+                    } else {
+                        translateToGerman();
+                    }
+                }
+            });
             
             function translateToGerman() {
                 pageTitle.textContent = "Alle Services & Fähigkeiten";
@@ -388,15 +400,15 @@
                 deContent.style.display = "block";
                 
                 // Update navigation
-                document.querySelectorAll(".nav-link")[0].textContent = "STARTSEITE";
-                document.querySelectorAll(".nav-link")[1].textContent = "PRODUKTE";
-                document.querySelectorAll(".nav-link")[2].textContent = "ÜBER UNS";
-                document.querySelectorAll(".nav-link")[3].textContent = "KONTAKT";
+                document.querySelectorAll(".nav-link")[0].textContent = "Startseite";
+                document.querySelectorAll(".nav-link")[1].textContent = "Services";
+                document.querySelectorAll(".nav-link")[2].textContent = "Über uns";
+                document.querySelectorAll(".nav-link")[3].textContent = "Kontakt";
                 
                 // Update footer
                 const footerLinks = document.querySelectorAll(".footer-links a");
                 footerLinks[0].textContent = "Startseite";
-                footerLinks[1].textContent = "Produkte";
+                footerLinks[1].textContent = "Services";
                 footerLinks[2].textContent = "Über uns";
                 footerLinks[3].textContent = "Kontakt";
                 
@@ -418,15 +430,15 @@
                 deContent.style.display = "none";
                 
                 // Update navigation
-                document.querySelectorAll(".nav-link")[0].textContent = "HOME";
-                document.querySelectorAll(".nav-link")[1].textContent = "PRODUCTS";
-                document.querySelectorAll(".nav-link")[2].textContent = "ABOUT";
-                document.querySelectorAll(".nav-link")[3].textContent = "CONTACT";
+                document.querySelectorAll(".nav-link")[0].textContent = "Home";
+                document.querySelectorAll(".nav-link")[1].textContent = "Services";
+                document.querySelectorAll(".nav-link")[2].textContent = "About";
+                document.querySelectorAll(".nav-link")[3].textContent = "Contact";
                 
                 // Update footer
                 const footerLinks = document.querySelectorAll(".footer-links a");
                 footerLinks[0].textContent = "Home";
-                footerLinks[1].textContent = "Products";
+                footerLinks[1].textContent = "Services";
                 footerLinks[2].textContent = "About";
                 footerLinks[3].textContent = "Contact";
                 

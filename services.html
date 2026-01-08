@@ -26,7 +26,7 @@
     <header class="header">
         <div class="container header-container">
             <div class="logo">
-                <a href="index.html" class="logo-link">
+                <a href="/" class="logo-link">
                     <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image" loading="lazy">
                 </a>
             </div>
@@ -39,16 +39,25 @@
             </div>
             <nav class="nav" id="nav">
                 <ul class="nav-list">
-                    <li><a href="index.html#hero" class="nav-link">Home</a></li>
-                    <li><a href="index.html#products" class="nav-link">Products</a></li>
-                    <li><a href="index.html#about" class="nav-link">About</a></li>
-                    <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                    <li><a href="/#hero" class="nav-link">Home</a></li>
+                    <li><a href="/#products" class="nav-link">Services</a></li>
+                    <li><a href="/#about" class="nav-link">About</a></li>
+                    <li><a href="/#contact" class="nav-link">Contact</a></li>
                     <li class="nav-divider"></li>
                     <li class="lang-item">
-                        <button class="lang-icon" id="langToggle" aria-label="Change language">
+                        <button class="lang-icon" id="langToggle" aria-label="Change language" aria-expanded="false" aria-haspopup="true">
                             <i data-lucide="globe"></i>
                             <span class="current-lang">EN</span>
+                            <i data-lucide="chevron-down" class="chevron-icon"></i>
                         </button>
+                        <ul class="lang-dropdown" id="langDropdown" role="menu">
+                            <li role="none">
+                                <button class="lang-option" data-lang="english" role="menuitem">English</button>
+                            </li>
+                            <li role="none">
+                                <button class="lang-option" data-lang="german" role="menuitem">Deutsch</button>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </nav>
@@ -177,7 +186,7 @@
             </div>
                 <div class="contact-form-container animate-on-scroll" data-animation="fade-left">
                     <div class="contact-form-placeholder" style="background: none; border: none; padding: 0;">
-                        <a href="index.html#contact" class="btn">Get in touch</a>
+                        <a href="/#contact" class="btn">Get in touch</a>
                     </div>
                 </div>
             </div>
@@ -189,16 +198,16 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <a href="index.html#hero" class="logo-link">
+                    <a href="/#hero" class="logo-link">
                         <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image footer-logo-image" loading="lazy">
                     </a>
                 </div>
                 <div class="footer-links">
                     <ul>
-                        <li><a href="index.html">Startseite</a></li>
-                        <li><a href="index.html#products">Produkte</a></li>
-                        <li><a href="index.html#about">Über uns</a></li>
-                        <li><a href="index.html#contact">Kontakt</a></li>
+                        <li><a href="/">Startseite</a></li>
+                        <li><a href="/#products">Produkte</a></li>
+                        <li><a href="/#about">Über uns</a></li>
+                        <li><a href="/#contact">Kontakt</a></li>
                     </ul>
                 </div>
                 <div class="footer-social">

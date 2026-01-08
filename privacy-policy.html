@@ -17,7 +17,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -64,7 +64,7 @@
     <header class="header">
         <div class="container header-container">
             <div class="logo">
-                <a href="index.html" class="logo-link">
+                <a href="/" class="logo-link">
                     <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image" loading="lazy">
                 </a>
             </div>
@@ -77,16 +77,25 @@
             </div>
             <nav class="nav" id="nav">
                 <ul class="nav-list">
-                    <li><a href="index.html" class="nav-link">HOME</a></li>
-                    <li><a href="index.html#about" class="nav-link">ABOUT</a></li>
-                    <li><a href="index.html#products" class="nav-link">PRODUCTS</a></li>
-                    <li><a href="index.html#contact" class="nav-link">CONTACT</a></li>
+                    <li><a href="/#hero" class="nav-link">Home</a></li>
+                    <li><a href="/#products" class="nav-link">Services</a></li>
+                    <li><a href="/#about" class="nav-link">About</a></li>
+                    <li><a href="/#contact" class="nav-link">Contact</a></li>
                     <li class="nav-divider"></li>
                     <li class="lang-item">
-                        <button class="lang-icon" id="langToggle" aria-label="Change language">
+                        <button class="lang-icon" id="langToggle" aria-label="Change language" aria-expanded="false" aria-haspopup="true">
                             <i data-lucide="globe"></i>
                             <span class="current-lang">EN</span>
+                            <i data-lucide="chevron-down" class="chevron-icon"></i>
                         </button>
+                        <ul class="lang-dropdown" id="langDropdown" role="menu">
+                            <li role="none">
+                                <button class="lang-option" data-lang="english" role="menuitem">English</button>
+                            </li>
+                            <li role="none">
+                                <button class="lang-option" data-lang="german" role="menuitem">Deutsch</button>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </nav>
@@ -227,15 +236,16 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <a href="index.html#hero" class="logo-link">
+                    <a href="/#hero" class="logo-link">
                         <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image footer-logo-image" loading="lazy">
                     </a>
                 </div>
                 <div class="footer-links">
                     <ul>
-                        <li><a href="index.html">STARTSEITE</a></li>
-                        <li><a href="index.html#products">PRODUKTE</a></li>
-                        <li><a href="index.html#contact">KONTAKT</a></li>
+                        <li><a href="/#hero">Startseite</a></li>
+                        <li><a href="/#products">Services</a></li>
+                        <li><a href="/#about">Über uns</a></li>
+                        <li><a href="/#contact">Kontakt</a></li>
                     </ul>
                 </div>
             </div>
@@ -302,10 +312,10 @@
             
             function translatePrivacyToGerman() {
                 // Navigation
-                document.querySelectorAll(".nav-link")[0].textContent = "STARTSEITE";
-                document.querySelectorAll(".nav-link")[1].textContent = "ÜBER UNS";
-                document.querySelectorAll(".nav-link")[2].textContent = "PRODUKTE";
-                document.querySelectorAll(".nav-link")[3].textContent = "KONTAKT";
+                document.querySelectorAll(".nav-link")[0].textContent = "Startseite";
+                document.querySelectorAll(".nav-link")[1].textContent = "Services";
+                document.querySelectorAll(".nav-link")[2].textContent = "Über uns";
+                document.querySelectorAll(".nav-link")[3].textContent = "Kontakt";
                 
                 // Page title
                 pageTitle.textContent = "Datenschutzerklärung";
@@ -316,9 +326,10 @@
                 
                 // Footer
                 const footerLinks = document.querySelectorAll(".footer-links a");
-                footerLinks[0].textContent = "STARTSEITE";
-                footerLinks[1].textContent = "PRODUKTE";
-                footerLinks[2].textContent = "KONTAKT";
+                footerLinks[0].textContent = "Startseite";
+                footerLinks[1].textContent = "Services";
+                footerLinks[2].textContent = "Über uns";
+                footerLinks[3].textContent = "Kontakt";
                 
                 document.querySelector(".footer-copyright p").textContent = "© 2025 Werner Lichy. Alle Rechte vorbehalten.";
                 document.querySelectorAll(".footer-legal-links a")[0].textContent = "Impressum";
@@ -327,10 +338,10 @@
             
             function translatePrivacyToEnglish() {
                 // Navigation
-                document.querySelectorAll(".nav-link")[0].textContent = "HOME";
-                document.querySelectorAll(".nav-link")[1].textContent = "ABOUT";
-                document.querySelectorAll(".nav-link")[2].textContent = "PRODUCTS";
-                document.querySelectorAll(".nav-link")[3].textContent = "CONTACT";
+                document.querySelectorAll(".nav-link")[0].textContent = "Home";
+                document.querySelectorAll(".nav-link")[1].textContent = "Services";
+                document.querySelectorAll(".nav-link")[2].textContent = "About";
+                document.querySelectorAll(".nav-link")[3].textContent = "Contact";
                 
                 // Page title
                 pageTitle.textContent = "Privacy Policy";
@@ -341,9 +352,10 @@
                 
                 // Footer
                 const footerLinks = document.querySelectorAll(".footer-links a");
-                footerLinks[0].textContent = "HOME";
-                footerLinks[1].textContent = "PRODUCTS";
-                footerLinks[2].textContent = "CONTACT";
+                footerLinks[0].textContent = "Home";
+                footerLinks[1].textContent = "Services";
+                footerLinks[2].textContent = "About";
+                footerLinks[3].textContent = "Contact";
                 
                 document.querySelector(".footer-copyright p").textContent = "© 2025 Werner Lichy. All rights reserved.";
                 document.querySelectorAll(".footer-legal-links a")[0].textContent = "Legal Notice (Impressum)";

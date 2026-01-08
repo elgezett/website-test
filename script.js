@@ -181,6 +181,9 @@ class LanguageManager {
         },
         partners: {
           title: "Wir haben mit führenden Partnern aus der Automobil- und Ingenieurindustrie zusammengearbeitet."
+        },
+        language: {
+          drawerTitle: "Sprache auswählen"
         }
       },
       english: {
@@ -242,6 +245,9 @@ class LanguageManager {
         },
         partners: {
           title: "We've worked with leading partners in the automotive and engineering industries."
+        },
+        language: {
+          drawerTitle: "Select language"
         }
       }
     }
@@ -314,6 +320,9 @@ class LanguageManager {
 
     // Partners
     this.updateElement('.partners-title', t.partners.title)
+
+    // Language drawer title
+    this.updateElement('#langDrawerTitle', t.language.drawerTitle)
 
     // Refresh Lucide icons
     if (window.lucide) {
@@ -1042,6 +1051,15 @@ class NavigationManager {
     this.nav.classList.toggle('active')
     document.body.classList.toggle('menu-open')
     
+    // Close language drawer if open (mobile only)
+    if (!isExpanded && window.innerWidth <= 768) {
+      const langDrawer = safeQuerySelector('#langDrawer')
+      if (langDrawer && langDrawer.classList.contains('active')) {
+        langDrawer.classList.remove('active')
+        document.body.style.overflow = ''
+      }
+    }
+    
     // Update ARIA attributes
     if (this.menuToggle) {
       this.menuToggle.setAttribute('aria-expanded', !isExpanded)
@@ -1086,7 +1104,7 @@ class SmoothScrollManager {
     const targetId = anchor.getAttribute('href')
     if (targetId === '#') return
 
-    // Handle cross-page links (e.g., index.html#contact)
+    // Handle cross-page links (e.g., /#contact)
     if (targetId.includes('#')) {
       const [page, hash] = targetId.split('#')
       if (page && page !== window.location.pathname.split('/').pop()) {
@@ -1200,11 +1218,18 @@ class WernerLichyApp {
     const currentLang = safeQuerySelector('.current-lang')
     const langDropdown = safeQuerySelector('#langDropdown')
     const langOptions = safeQuerySelectorAll('.lang-option')
+    const langDrawer = safeQuerySelector('#langDrawer')
+    const langDrawerClose = safeQuerySelector('#langDrawerClose')
+    const langDrawerOptions = safeQuerySelectorAll('.lang-drawer-option')
 
-    if (!langToggle || !currentLang || !langDropdown) return
+    if (!langToggle || !currentLang) return
 
-    // Update active language option in dropdown
+    // Check if mobile
+    const isMobile = () => window.innerWidth <= CONFIG.MOBILE_BREAKPOINT
+
+    // Update active language option
     const updateActiveOption = (isEnglish) => {
+      // Update dropdown options
       langOptions.forEach(option => {
         option.classList.remove('active')
         if ((isEnglish && option.dataset.lang === 'english') ||
@@ -1212,6 +1237,41 @@ class WernerLichyApp {
           option.classList.add('active')
         }
       })
+      
+      // Update drawer options
+      langDrawerOptions.forEach(option => {
+        option.classList.remove('active')
+        if ((isEnglish && option.dataset.lang === 'english') ||
+            (!isEnglish && option.dataset.lang === 'german')) {
+          option.classList.add('active')
+        }
+      })
+    }
+
+    // Open/close drawer
+    const openDrawer = () => {
+      if (langDrawer) {
+        // Close navigation menu if open
+        if (this.navigationManager && this.navigationManager.nav && this.navigationManager.nav.classList.contains('active')) {
+          this.navigationManager.closeMenu()
+        }
+        
+        langDrawer.classList.add('active')
+        document.body.style.overflow = 'hidden'
+        // Initialize icons when drawer opens
+        if (window.lucide) {
+          setTimeout(() => {
+            window.lucide.createIcons()
+          }, 100)
+        }
+      }
+    }
+
+    const closeDrawer = () => {
+      if (langDrawer) {
+        langDrawer.classList.remove('active')
+        document.body.style.overflow = ''
+      }
     }
 
     // Set initial language display
@@ -1222,45 +1282,89 @@ class WernerLichyApp {
     // Apply saved language preference
     this.languageManager.translateToLanguage(isEnglish)
 
-    // Toggle dropdown on button click
+    // Handle language toggle click
     langToggle.addEventListener('click', (e) => {
       e.stopPropagation()
-      const isExpanded = langToggle.getAttribute('aria-expanded') === 'true'
-      langToggle.setAttribute('aria-expanded', !isExpanded)
-      langDropdown.classList.toggle('show')
-    })
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
-        langToggle.setAttribute('aria-expanded', 'false')
-        langDropdown.classList.remove('show')
+      
+      if (isMobile()) {
+        // Open drawer on mobile
+        openDrawer()
+      } else {
+        // Toggle dropdown on desktop
+        if (langDropdown) {
+          const isExpanded = langToggle.getAttribute('aria-expanded') === 'true'
+          langToggle.setAttribute('aria-expanded', !isExpanded)
+          langDropdown.classList.toggle('show')
+        }
       }
     })
 
-    // Handle language selection from dropdown
+    // Close drawer when clicking overlay or close button
+    if (langDrawer) {
+      const overlay = langDrawer.querySelector('.lang-drawer-overlay')
+      if (overlay) {
+        overlay.addEventListener('click', closeDrawer)
+      }
+      
+      if (langDrawerClose) {
+        langDrawerClose.addEventListener('click', closeDrawer)
+      }
+    }
+
+    // Close dropdown when clicking outside (desktop only)
+    if (langDropdown) {
+      document.addEventListener('click', (e) => {
+        if (!isMobile() && 
+            !langToggle.contains(e.target) && 
+            !langDropdown.contains(e.target)) {
+          langToggle.setAttribute('aria-expanded', 'false')
+          langDropdown.classList.remove('show')
+        }
+      })
+    }
+
+    // Handle language selection
+    const handleLanguageSelection = (selectedLang) => {
+      this.languageManager.saveLanguage(selectedLang)
+      currentLang.textContent = selectedLang ? 'EN' : 'DE'
+      updateActiveOption(selectedLang)
+      this.languageManager.translateToLanguage(selectedLang)
+      
+      // Close drawer/dropdown
+      if (isMobile()) {
+        closeDrawer()
+      } else {
+        if (langDropdown) {
+          langToggle.setAttribute('aria-expanded', 'false')
+          langDropdown.classList.remove('show')
+        }
+      }
+      
+      // Announce language change to screen readers
+      const liveRegion = safeQuerySelector('#aria-live-region')
+      if (liveRegion) {
+        liveRegion.textContent = `Language changed to ${selectedLang ? 'English' : 'German'}`
+        setTimeout(() => {
+          liveRegion.textContent = ''
+        }, 1000)
+      }
+    }
+
+    // Handle language selection from dropdown (desktop)
     langOptions.forEach(option => {
       option.addEventListener('click', (e) => {
         e.stopPropagation()
         const selectedLang = option.dataset.lang === 'english'
-        
-        this.languageManager.saveLanguage(selectedLang)
-        currentLang.textContent = selectedLang ? 'EN' : 'DE'
-        updateActiveOption(selectedLang)
-        this.languageManager.translateToLanguage(selectedLang)
-        
-        // Close dropdown
-        langToggle.setAttribute('aria-expanded', 'false')
-        langDropdown.classList.remove('show')
-        
-        // Announce language change to screen readers
-        const liveRegion = safeQuerySelector('#aria-live-region')
-        if (liveRegion) {
-          liveRegion.textContent = `Language changed to ${selectedLang ? 'English' : 'German'}`
-          setTimeout(() => {
-            liveRegion.textContent = ''
-          }, 1000)
-        }
+        handleLanguageSelection(selectedLang)
+      })
+    })
+
+    // Handle language selection from drawer (mobile)
+    langDrawerOptions.forEach(option => {
+      option.addEventListener('click', (e) => {
+        e.stopPropagation()
+        const selectedLang = option.dataset.lang === 'english'
+        handleLanguageSelection(selectedLang)
       })
     })
     
@@ -1270,12 +1374,28 @@ class WernerLichyApp {
         e.preventDefault()
         langToggle.click()
       } else if (e.key === 'Escape') {
-        langToggle.setAttribute('aria-expanded', 'false')
-        langDropdown.classList.remove('show')
+        if (isMobile() && langDrawer && langDrawer.classList.contains('active')) {
+          closeDrawer()
+        } else if (langDropdown) {
+          langToggle.setAttribute('aria-expanded', 'false')
+          langDropdown.classList.remove('show')
+        }
       }
     })
 
-    // Keyboard navigation in dropdown
+    // Keyboard support for drawer close button
+    if (langDrawerClose) {
+      langDrawerClose.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          closeDrawer()
+        } else if (e.key === 'Escape') {
+          closeDrawer()
+        }
+      })
+    }
+
+    // Keyboard navigation in dropdown (desktop)
     langOptions.forEach((option, index) => {
       option.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -1296,6 +1416,37 @@ class WernerLichyApp {
         }
       })
     })
+
+    // Keyboard navigation in drawer (mobile)
+    langDrawerOptions.forEach((option, index) => {
+      option.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          option.click()
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault()
+          const nextOption = langDrawerOptions[index + 1] || langDrawerOptions[0]
+          nextOption.focus()
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault()
+          const prevOption = langDrawerOptions[index - 1] || langDrawerOptions[langDrawerOptions.length - 1]
+          prevOption.focus()
+        } else if (e.key === 'Escape') {
+          closeDrawer()
+          langToggle.focus()
+        }
+      })
+    })
+
+    // Initialize icons when drawer opens
+    if (langDrawer) {
+      const observer = new MutationObserver(() => {
+        if (langDrawer.classList.contains('active') && window.lucide) {
+          window.lucide.createIcons()
+        }
+      })
+      observer.observe(langDrawer, { attributes: true, attributeFilter: ['class'] })
+    }
   }
 
   setupFormManager() {
