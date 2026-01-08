@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Werner Lichy | Prototypenbau & Aluminiumguss Berlin</title>
+    <meta name="description" content="Comprehensive manufacturing services from prototypes to serial production. Precision engineering made in Germany.">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/android-chrome-512x512.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image" loading="lazy">
+                </a>
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <nav class="nav" id="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html#hero" class="nav-link">Home</a></li>
+                    <li><a href="index.html#products" class="nav-link">Products</a></li>
+                    <li><a href="index.html#about" class="nav-link">About</a></li>
+                    <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                    <li class="nav-divider"></li>
+                    <li class="lang-item">
+                        <button class="lang-icon" id="langToggle" aria-label="Change language">
+                            <i data-lucide="globe"></i>
+                            <span class="current-lang">EN</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-background" style="background-image: url('assets/images/hero/services-hero-placeholder.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-color: #38618C;"></div>
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="animate-on-scroll hero-title" data-animation="fade-up">
+                    All services and capabilities
+                </h1>
+                <p class="animate-on-scroll hero-subtitle" data-animation="fade-up" data-delay="1200">Comprehensive manufacturing solutions from design to delivery</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title animate-on-scroll" data-animation="fade-up">It starts with an idea</h2>
+                <p class="section-subtitle animate-on-scroll" data-animation="fade-up" data-delay="200">
+                    Every part goes through a complete in-house process chain: from 3D design and model construction to aluminum casting, machining, and final inspection. The result: components ready for immediate use — durable, precise, and made in Berlin.
+                </p>
+            </div>
+            
+            <!-- Service 1: Construction -->
+            <div class="product-item animate-on-scroll" data-animation="fade-up" data-delay="200">
+                <div class="product-image scroll-animate" data-animation="slide-right">
+                    <img src="assets/images/services/construction.png" alt="3D CAD Design and Construction" loading="lazy">
+                </div>
+                <div class="product-content">
+                    <h3>Construction</h3>
+                    <p>Our specialists optimize your 3D CAD data for the entire manufacturing process — from prototype to series production. With modern CAD/CAM systems and simulation tools, we detect and eliminate potential errors early, ensuring efficiency and precision at every stage.</p>
+                </div>
+            </div>
+            
+            <!-- Service 2: Model & Tooling -->
+            <div class="product-item reverse animate-on-scroll" data-animation="fade-up" data-delay="400">
+                <div class="product-image scroll-animate" data-animation="slide-left">
+                    <img src="assets/images/services/model-tooling.jpg" alt="Model and Tooling Manufacturing" loading="lazy">
+                </div>
+                <div class="product-content">
+                    <h3>Model & Tooling</h3>
+                    <p>We produce precise models and molds for our aluminum foundry using advanced 3D milling and rapid prototyping. This enables complex geometries and fast turnaround times — tailored to your requirements.</p>
+                </div>
+            </div>
+            
+            <!-- Service 3: Foundry -->
+            <div class="product-item animate-on-scroll" data-animation="fade-up" data-delay="600">
+                <div class="product-image scroll-animate" data-animation="slide-right">
+                    <img src="assets/images/services/foundry.jpg" alt="Aluminum Foundry and Casting" loading="lazy">
+                </div>
+                <div class="product-content">
+                    <h3>Foundry</h3>
+                    <p>Our in-house foundry combines short paths, flexibility, and decades of experience. We offer sand and permanent mold casting for prototypes, small batches, and serial production — powered by sustainable, electric melting systems and 3D-printed cores for complex contours.</p>
+                </div>
+            </div>
+            
+            <!-- Service 4: Machining -->
+            <div class="product-item reverse animate-on-scroll" data-animation="fade-up" data-delay="800">
+                <div class="product-image scroll-animate" data-animation="slide-left">
+                    <img src="assets/images/services/machining.jpg" alt="CNC Machining and Precision Manufacturing" loading="lazy">
+                </div>
+                <div class="product-content">
+                    <h3>Machining</h3>
+                    <p>Our CNC machining centers enable precise turning and milling — from single parts to serial runs. With 5-axis technology, automation systems, and continuous process optimization, we guarantee maximum flexibility, short lead times, and consistent quality.</p>
+                </div>
+            </div>
+            
+            <!-- Service 5: Serial Production -->
+            <div class="product-item animate-on-scroll" data-animation="fade-up" data-delay="1000">
+                <div class="product-image scroll-animate" data-animation="slide-right">
+                    <img src="assets/images/services/serial-production.jpg" alt="Serial Production and Manufacturing" loading="lazy">
+                </div>
+                <div class="product-content">
+                    <h3>Serial Production</h3>
+                    <p>From small batches to thousands of parts — our series production adapts to your needs. Complete in-house process control ensures reliable delivery, flexibility, and consistent precision even under tight timelines.</p>
+                </div>
+            </div>
+            
+            <!-- Service 6: Quality Assurance -->
+            <div class="product-item reverse animate-on-scroll" data-animation="fade-up" data-delay="1200">
+                <div class="product-image scroll-animate" data-animation="slide-left">
+                    <img src="assets/images/services/quality-assurance.jpg" alt="Quality Assurance and Measurement" loading="lazy">
+                </div>
+                <div class="product-content">
+                    <h3>Quality Assurance</h3>
+                    <p>Quality is more than accuracy — it's our promise. Certified to ISO 9001, we apply tactile, scanning, and optical measurement technologies to ensure every part meets your specifications. From first-sample reports to 100% inspections, we deliver reliability that's measurable.</p>
+                </div>
+            </div>
+            
+            <!-- Service 7: Packaging -->
+            <div class="product-item animate-on-scroll" data-animation="fade-up" data-delay="1400">
+                <div class="product-image scroll-animate" data-animation="slide-right">
+                    <img src="assets/images/services/packaging.png" alt="Packaging and Shipping Solutions" loading="lazy">
+                </div>
+                <div class="product-content">
+                    <h3>Packaging</h3>
+                    <p>We make sure your parts arrive safely and sustainably. Our packaging solutions are tailored to each component — from reusable systems to custom inserts — reducing waste and ensuring optimal protection in transit.</p>
+                </div>
+            </div>
+            
+            <!-- Service 8: Assembly & Additional Services -->
+            <div class="product-item reverse animate-on-scroll" data-animation="fade-up" data-delay="1600">
+                <div class="product-image scroll-animate" data-animation="slide-left">
+                    <img src="assets/images/services/assembly.png" alt="Assembly and Additional Services" loading="lazy">
+                </div>
+                <div class="product-content">
+                    <h3>Assembly & Additional Services</h3>
+                    <p>Beyond manufacturing, we handle assembly, functional testing, surface finishing, and heat treatment. This complete service ensures your components are ready for direct integration — tested, refined, and delivered from one source.</p>
+                </div>
+            </div>
+            
+
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title animate-on-scroll" data-animation="fade-up">Let's discuss your project</h2>
+            </div>
+                <div class="contact-form-container animate-on-scroll" data-animation="fade-left">
+                    <div class="contact-form-placeholder" style="background: none; border: none; padding: 0;">
+                        <a href="index.html#contact" class="btn">Get in touch</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html#hero" class="logo-link">
+                        <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image footer-logo-image" loading="lazy">
+                    </a>
+                </div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="index.html">Startseite</a></li>
+                        <li><a href="index.html#products">Produkte</a></li>
+                        <li><a href="index.html#about">Über uns</a></li>
+                        <li><a href="index.html#contact">Kontakt</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/company/werner-lichy-modell-und-prototypenbau/?originalSubdomain=de" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2024 Werner Lichy. All rights reserved.</p>
+                </div>
+                <div class="footer-legal-links">
+                    <a href="privacy-policy.html">Datenschutz</a>
+                    <span class="footer-divider">|</span>
+                    <a href="legal-notice.html">Impressum</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Initialize Lucide icons
+            lucide.createIcons();
+            
+            // Language translation functions for services page
+            function translateServicesToGerman() {
+                // Hero section
+                const heroTitle = document.querySelector(".hero-title")
+                if (heroTitle) {
+                    heroTitle.textContent = "Alle Services und Fähigkeiten"
+                }
+                const heroSubtitle = document.querySelector(".hero-subtitle")
+                if (heroSubtitle) {
+                    heroSubtitle.textContent = "Umfassende Fertigungslösungen von Design bis Lieferung"
+                }
+                
+                // Section header
+                const sectionTitle = document.querySelector("#products .section-title")
+                if (sectionTitle) {
+                    sectionTitle.textContent = "Es beginnt mit einer Idee"
+                }
+                const sectionSubtitle = document.querySelector("#products .section-subtitle")
+                if (sectionSubtitle) {
+                    sectionSubtitle.textContent = "Jedes Bauteil durchläuft eine komplette hauseigene Prozesskette: von 3D-Design und Modellbau über Aluminiumguss und Bearbeitung bis zur Endprüfung. Das Ergebnis: sofort einsatzbereite Komponenten — langlebig, präzise und made in Berlin."
+                }
+                
+                // Service titles and descriptions
+                const serviceTitles = document.querySelectorAll(".product-content h3")
+                const serviceDescriptions = document.querySelectorAll(".product-content p")
+                
+                if (serviceTitles[0]) serviceTitles[0].textContent = "Konstruktion"
+                if (serviceDescriptions[0]) serviceDescriptions[0].textContent = "Unsere Spezialisten optimieren Ihre 3D-CAD-Daten für den gesamten Fertigungsprozess — vom Prototyp bis zur Serienfertigung. Mit modernen CAD/CAM-Systemen und Simulationswerkzeugen erkennen und eliminieren wir potenzielle Fehler frühzeitig und gewährleisten Effizienz und Präzision in jeder Phase."
+                
+                if (serviceTitles[1]) serviceTitles[1].textContent = "Modell & Werkzeugbau"
+                if (serviceDescriptions[1]) serviceDescriptions[1].textContent = "Wir produzieren präzise Modelle und Formen für unsere Aluminiumgießerei mit moderner 3D-Frästechnik und Rapid Prototyping. Dies ermöglicht komplexe Geometrien und schnelle Durchlaufzeiten — maßgeschneidert für Ihre Anforderungen."
+                
+                if (serviceTitles[2]) serviceTitles[2].textContent = "Gießerei"
+                if (serviceDescriptions[2]) serviceDescriptions[2].textContent = "Unsere hauseigene Gießerei verbindet kurze Wege, Flexibilität und jahrzehntelange Erfahrung. Wir bieten Sand- und Kokillenguss für Prototypen, Kleinserien und Serienfertigung — angetrieben von nachhaltigen, elektrischen Schmelzsystemen und 3D-gedruckten Kernen für komplexe Konturen."
+                
+                if (serviceTitles[3]) serviceTitles[3].textContent = "Bearbeitung"
+                if (serviceDescriptions[3]) serviceDescriptions[3].textContent = "Unsere CNC-Bearbeitungszentren ermöglichen präzises Drehen und Fräsen — von Einzelteilen bis zu Serienläufen. Mit 5-Achs-Technologie, Automatisierungssystemen und kontinuierlicher Prozessoptimierung garantieren wir maximale Flexibilität, kurze Lieferzeiten und gleichbleibende Qualität."
+                
+                if (serviceTitles[4]) serviceTitles[4].textContent = "Serienfertigung"
+                if (serviceDescriptions[4]) serviceDescriptions[4].textContent = "Von Kleinserien bis zu Tausenden von Teilen — unsere Serienfertigung passt sich Ihren Bedürfnissen an. Vollständige hauseigene Prozesskontrolle gewährleistet zuverlässige Lieferung, Flexibilität und gleichbleibende Präzision auch bei engen Zeitplänen."
+                
+                if (serviceTitles[5]) serviceTitles[5].textContent = "Qualitätssicherung"
+                if (serviceDescriptions[5]) serviceDescriptions[5].textContent = "Qualität ist mehr als Genauigkeit — es ist unser Versprechen. Nach ISO 9001 zertifiziert, wenden wir taktile, Scan- und optische Messtechnologien an, um sicherzustellen, dass jedes Teil Ihren Spezifikationen entspricht. Von Erstmusterberichten bis zu 100%-Prüfungen liefern wir messbare Zuverlässigkeit."
+                
+                if (serviceTitles[6]) serviceTitles[6].textContent = "Verpackung"
+                if (serviceDescriptions[6]) serviceDescriptions[6].textContent = "Wir sorgen dafür, dass Ihre Teile sicher und nachhaltig ankommen. Unsere Verpackungslösungen sind auf jede Komponente zugeschnitten — von wiederverwendbaren Systemen bis zu maßgeschneiderten Einsätzen — und reduzieren Abfall bei optimalem Schutz im Transit."
+                
+                if (serviceTitles[7]) serviceTitles[7].textContent = "Montage & Zusatzservices"
+                if (serviceDescriptions[7]) serviceDescriptions[7].textContent = "Über die Fertigung hinaus übernehmen wir Montage, Funktionstests, Oberflächenveredelung und Wärmebehandlung. Dieser komplette Service stellt sicher, dass Ihre Komponenten bereit für die direkte Integration sind — getestet, verfeinert und aus einer Quelle geliefert."
+                
+                // Contact section
+                const contactTitle = document.querySelector("#contact .section-title")
+                if (contactTitle) {
+                    contactTitle.textContent = "Lassen Sie uns über Ihr Projekt sprechen"
+                }
+                const contactButton = document.querySelector("#contact .btn")
+                if (contactButton) {
+                    contactButton.textContent = "Kontakt aufnehmen"
+                }
+                
+                // Footer
+                const footerLinks = document.querySelectorAll(".footer-links a")
+                if (footerLinks[0]) footerLinks[0].textContent = "Startseite"
+                if (footerLinks[1]) footerLinks[1].textContent = "Services"
+                if (footerLinks[2]) footerLinks[2].textContent = "Über uns"
+                if (footerLinks[3]) footerLinks[3].textContent = "Kontakt"
+                
+                const footerCopyright = document.querySelector(".footer-copyright p")
+                if (footerCopyright) {
+                    footerCopyright.textContent = "© 2025 Werner Lichy. Alle Rechte vorbehalten."
+                }
+                
+                const footerLegalLinks = document.querySelectorAll(".footer-legal-links a")
+                if (footerLegalLinks[0]) footerLegalLinks[0].textContent = "Datenschutz"
+                if (footerLegalLinks[1]) footerLegalLinks[1].textContent = "Impressum"
+            }
+            
+            function translateServicesToEnglish() {
+                // Hero section
+                const heroTitle = document.querySelector(".hero-title")
+                if (heroTitle) {
+                    heroTitle.textContent = "All services and capabilities"
+                }
+                const heroSubtitle = document.querySelector(".hero-subtitle")
+                if (heroSubtitle) {
+                    heroSubtitle.textContent = "Comprehensive manufacturing solutions from design to delivery"
+                }
+                
+                // Section header
+                const sectionTitle = document.querySelector("#products .section-title")
+                if (sectionTitle) {
+                    sectionTitle.textContent = "It starts with an idea"
+                }
+                const sectionSubtitle = document.querySelector("#products .section-subtitle")
+                if (sectionSubtitle) {
+                    sectionSubtitle.textContent = "Every part goes through a complete in-house process chain: from 3D design and model construction to aluminum casting, machining, and final inspection. The result: components ready for immediate use — durable, precise, and made in Berlin."
+                }
+                
+                // Service titles and descriptions
+                const serviceTitles = document.querySelectorAll(".product-content h3")
+                const serviceDescriptions = document.querySelectorAll(".product-content p")
+                
+                if (serviceTitles[0]) serviceTitles[0].textContent = "Construction"
+                if (serviceDescriptions[0]) serviceDescriptions[0].textContent = "Our specialists optimize your 3D CAD data for the entire manufacturing process — from prototype to series production. With modern CAD/CAM systems and simulation tools, we detect and eliminate potential errors early, ensuring efficiency and precision at every stage."
+                
+                if (serviceTitles[1]) serviceTitles[1].textContent = "Model & Tooling"
+                if (serviceDescriptions[1]) serviceDescriptions[1].textContent = "We produce precise models and molds for our aluminum foundry using advanced 3D milling and rapid prototyping. This enables complex geometries and fast turnaround times — tailored to your requirements."
+                
+                if (serviceTitles[2]) serviceTitles[2].textContent = "Foundry"
+                if (serviceDescriptions[2]) serviceDescriptions[2].textContent = "Our in-house foundry combines short paths, flexibility, and decades of experience. We offer sand and permanent mold casting for prototypes, small batches, and serial production — powered by sustainable, electric melting systems and 3D-printed cores for complex contours."
+                
+                if (serviceTitles[3]) serviceTitles[3].textContent = "Machining"
+                if (serviceDescriptions[3]) serviceDescriptions[3].textContent = "Our CNC machining centers enable precise turning and milling — from single parts to serial runs. With 5-axis technology, automation systems, and continuous process optimization, we guarantee maximum flexibility, short lead times, and consistent quality."
+                
+                if (serviceTitles[4]) serviceTitles[4].textContent = "Serial Production"
+                if (serviceDescriptions[4]) serviceDescriptions[4].textContent = "From small batches to thousands of parts — our series production adapts to your needs. Complete in-house process control ensures reliable delivery, flexibility, and consistent precision even under tight timelines."
+                
+                if (serviceTitles[5]) serviceTitles[5].textContent = "Quality Assurance"
+                if (serviceDescriptions[5]) serviceDescriptions[5].textContent = "Quality is more than accuracy — it's our promise. Certified to ISO 9001, we apply tactile, scanning, and optical measurement technologies to ensure every part meets your specifications. From first-sample reports to 100% inspections, we deliver reliability that's measurable."
+                
+                if (serviceTitles[6]) serviceTitles[6].textContent = "Packaging"
+                if (serviceDescriptions[6]) serviceDescriptions[6].textContent = "We make sure your parts arrive safely and sustainably. Our packaging solutions are tailored to each component — from reusable systems to custom inserts — reducing waste and ensuring optimal protection in transit."
+                
+                if (serviceTitles[7]) serviceTitles[7].textContent = "Assembly & Additional Services"
+                if (serviceDescriptions[7]) serviceDescriptions[7].textContent = "Beyond manufacturing, we handle assembly, functional testing, surface finishing, and heat treatment. This complete service ensures your components are ready for direct integration — tested, refined, and delivered from one source."
+                
+                // Contact section
+                const contactTitle = document.querySelector("#contact .section-title")
+                if (contactTitle) {
+                    contactTitle.textContent = "Let's discuss your project"
+                }
+                const contactButton = document.querySelector("#contact .btn")
+                if (contactButton) {
+                    contactButton.textContent = "Get in touch"
+                }
+                
+                // Footer
+                const footerLinks = document.querySelectorAll(".footer-links a")
+                if (footerLinks[0]) footerLinks[0].textContent = "Home"
+                if (footerLinks[1]) footerLinks[1].textContent = "Services"
+                if (footerLinks[2]) footerLinks[2].textContent = "About"
+                if (footerLinks[3]) footerLinks[3].textContent = "Contact"
+                
+                const footerCopyright = document.querySelector(".footer-copyright p")
+                if (footerCopyright) {
+                    footerCopyright.textContent = "© 2025 Werner Lichy. All rights reserved."
+                }
+                
+                const footerLegalLinks = document.querySelectorAll(".footer-legal-links a")
+                if (footerLegalLinks[0]) footerLegalLinks[0].textContent = "Privacy Policy"
+                if (footerLegalLinks[1]) footerLegalLinks[1].textContent = "Legal Notice"
+            }
+            
+            // Language toggle functionality for services page with persistence
+            const langToggle = document.getElementById('langToggle')
+            const currentLang = document.querySelector('.current-lang')
+            
+            // Language persistence using localStorage (same key as main page)
+            const LANGUAGE_KEY = 'lichy-website-language'
+            
+            // Get saved language preference or default to English
+            let isEnglish = localStorage.getItem(LANGUAGE_KEY) !== 'german'
+            
+            if (langToggle && currentLang) {
+                // Set initial language display based on saved preference
+                currentLang.textContent = isEnglish ? "EN" : "DE"
+                langToggle.classList.add('active')
+                
+                // Apply saved language preference
+                if (isEnglish) {
+                    translateServicesToEnglish()
+                } else {
+                    translateServicesToGerman()
+                }
+                
+                // Toggle language on click
+                langToggle.addEventListener("click", () => {
+                    isEnglish = !isEnglish
+                    
+                    // Save language preference to localStorage
+                    localStorage.setItem(LANGUAGE_KEY, isEnglish ? 'english' : 'german')
+                    
+                    // Update language display
+                    currentLang.textContent = isEnglish ? "EN" : "DE"
+                    
+                    // Switch language content
+                    if (isEnglish) {
+                        translateServicesToEnglish()
+                    } else {
+                        translateServicesToGerman()
+                    }
+                })
+            }
+            
+                  // Initialize smooth animations with optimized performance
+                  function checkAnimations() {
+                      const elements = document.querySelectorAll('.animate-on-scroll');
+                      
+                      requestAnimationFrame(() => {
+                          elements.forEach((element, index) => {
+                              // Skip if already animated
+                              if (element.classList.contains('active')) return;
+                              
+                              const rect = element.getBoundingClientRect();
+                              const elementTop = rect.top;
+                              const windowHeight = window.innerHeight;
+                              
+                              // Trigger earlier (150px before element enters viewport) for better visibility during fast scrolling
+                              const triggerPoint = windowHeight * 1.2; // 120% of viewport height (earlier trigger)
+                              
+                              if (elementTop < triggerPoint) {
+                                  // Get delay from data attribute
+                                  const delay = parseInt(element.getAttribute('data-delay')) || 0;
+                                  const totalDelay = delay + (index * 30); // Reduced stagger delay for faster response
+                                  
+                                  if (totalDelay > 0) {
+                                      setTimeout(() => {
+                                          requestAnimationFrame(() => {
+                                              element.classList.add('active');
+                                          });
+                                      }, totalDelay);
+                                  } else {
+                                      requestAnimationFrame(() => {
+                                          element.classList.add('active');
+                                      });
+                                  }
+                              }
+                          });
+                      });
+                  }
+            
+            // Throttle scroll events for better performance
+            let animationTicking = false;
+            window.addEventListener("scroll", () => {
+                if (!animationTicking) {
+                    window.requestAnimationFrame(() => {
+                        checkAnimations();
+                        animationTicking = false;
+                    });
+                    animationTicking = true;
+                }
+            }, { passive: true });
+            
+                  // Check animations on load
+                  requestAnimationFrame(() => {
+                      checkAnimations();
+                  });
+                  
+                  // Initialize scroll animations for product images (matching main page logic)
+                  const scrollAnimateElements = document.querySelectorAll('.scroll-animate');
+                  
+                  function updateScrollAnimations() {
+                      scrollAnimateElements.forEach((element) => {
+                          const elementPosition = element.getBoundingClientRect();
+                          const windowHeight = window.innerHeight;
+
+                          // Calculate how far the element is in the viewport (0 to 1)
+                          // Start animation earlier for better visibility during fast scrolling
+                          const scrollStart = 1.2; // Start when element is 120% below viewport (earlier trigger)
+                          const scrollEnd = 0.3; // End when element is 30% below viewport top
+
+                          let scrollProgress =
+                              (windowHeight * scrollStart - elementPosition.top) / (windowHeight * (scrollStart - scrollEnd));
+
+                          // Clamp values between 0 and 1
+                          scrollProgress = Math.max(0, Math.min(scrollProgress, 1));
+
+                          // Apply easing function for smoother motion
+                          // Use a faster easing for quicker response during fast scrolling
+                          const easedProgress = 1 - Math.pow(1 - scrollProgress, 2.5);
+
+                          if (scrollProgress > 0) {
+                              // Scale animation: start at 0.85, scale to 1.0
+                              const scale = 0.85 + (easedProgress * 0.15); // Scale from 0.85 to 1.0
+                              // Apply scale to the img element inside the product-image container
+                              const img = element.querySelector('img');
+                              if (img) {
+                                  // Use translateZ(0) for GPU acceleration
+                                  img.style.transform = `translateZ(0) scale(${scale})`;
+                                  img.style.webkitTransform = `translateZ(0) scale(${scale})`;
+                              } else {
+                                  element.style.transform = `translateZ(0) scale(${scale})`;
+                                  element.style.webkitTransform = `translateZ(0) scale(${scale})`;
+                              }
+
+                              // When element is mostly in viewport, add active class
+                              if (scrollProgress >= 0.7) {
+                                  element.classList.add('active');
+                              }
+                          }
+                      });
+                  }
+                  
+                  // Throttle scroll events for better performance
+                  let ticking = false;
+                  
+                  // Update scroll animations on scroll with requestAnimationFrame
+                  window.addEventListener('scroll', () => {
+                      if (!ticking) {
+                          window.requestAnimationFrame(() => {
+                              updateScrollAnimations();
+                              ticking = false;
+                          });
+                          ticking = true;
+                      }
+                  }, { passive: true });
+                  
+                  // Initial call
+                  requestAnimationFrame(() => {
+                      updateScrollAnimations();
+                  });
+                  
+                  // Smooth parallax scroll effect for text content only
+                  function initParallax() {
+                      const productContents = document.querySelectorAll('.product-content');
+                      
+                      function updateParallax() {
+                          // Apply smooth parallax to text content only
+                          productContents.forEach(content => {
+                              const rect = content.getBoundingClientRect();
+                              const speed = 0.15; // Much slower, gentler parallax speed
+                              const windowHeight = window.innerHeight;
+                              
+                              // Calculate gentle fade effect based on position in viewport
+                              const elementCenter = rect.top + (rect.height / 2);
+                              const viewportCenter = windowHeight / 2;
+                              const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
+                              const maxDistance = windowHeight / 1.5; // Larger fade area
+                              
+                              // Gentle fade calculation (0 to 1)
+                              const fadeRatio = Math.max(0, 1 - (distanceFromCenter / maxDistance));
+                              const opacity = Math.max(0.6, fadeRatio); // Higher minimum opacity
+                              
+                              // Only apply parallax when text is in viewport
+                              if (rect.top < windowHeight && rect.bottom > 0) {
+                                  const yPos = -(rect.top * speed);
+                                  content.style.transform = `translateY(${yPos}px)`;
+                                  content.style.opacity = opacity;
+                              } else {
+                                  // Gentle reset when out of viewport
+                                  content.style.transform = 'translateY(0)';
+                                  content.style.opacity = '0.6';
+                              }
+                          });
+                      }
+                      
+                      // Throttled scroll event for better performance
+                      let ticking = false;
+                      function requestTick() {
+                          if (!ticking) {
+                              requestAnimationFrame(updateParallax);
+                              ticking = true;
+                          }
+                      }
+                      
+                      window.addEventListener('scroll', () => {
+                          ticking = false;
+                          requestTick();
+                      });
+                      
+                      // Initial call
+                      updateParallax();
+                  }
+                  
+                  // Initialize parallax
+                  initParallax();
+                  
+                  // Ensure services page content is preserved
+                  setTimeout(() => {
+                      const heroTitle = document.querySelector('.hero-title');
+                      if (heroTitle && !heroTitle.textContent.includes('All services and capabilities')) {
+                          heroTitle.textContent = 'All services and capabilities';
+                      }
+                      const heroSubtitle = document.querySelector('.hero-subtitle');
+                      if (heroSubtitle && !heroSubtitle.textContent.includes('Comprehensive manufacturing solutions')) {
+                          heroSubtitle.textContent = 'Comprehensive manufacturing solutions from design to delivery';
+                      }
+                  }, 100);
+            
+            // Add placeholder styling for images and hero section
+            const style = document.createElement('style');
+            style.textContent = `
+                .hero {
+                    position: relative;
+                    min-height: 100vh;
+                    display: flex;
+                    align-items: center;
+                }
+                .hero-background {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 1;
+                }
+                .hero-overlay {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.5);
+                    z-index: 2;
+                }
+                .hero-content {
+                    position: relative;
+                    z-index: 3;
+                }
+                .hero-title {
+                    color: white !important;
+                    opacity: 1 !important;
+                    visibility: visible !important;
+                    font-size: 3rem !important;
+                    font-weight: 600 !important;
+                    margin-bottom: 1rem !important;
+                    text-align: center !important;
+                    position: relative !important;
+                }
+                .hero-title::after {
+                    content: '' !important;
+                    position: absolute !important;
+                    bottom: -10px !important;
+                    left: 50% !important;
+                    transform: translateX(-50%) !important;
+                    width: 60px !important;
+                    height: 4px !important;
+                    background-color: var(--primary) !important;
+                    border-radius: 2px !important;
+                    display: block !important;
+                    margin: 0 auto !important;
+                    right: auto !important;
+                    top: auto !important;
+                }
+                .hero-title .first-part,
+                .hero-title .second-part {
+                    color: white !important;
+                }
+                .hero-subtitle {
+                    color: white !important;
+                    opacity: 1 !important;
+                    visibility: visible !important;
+                }
+                .hero-content {
+                    opacity: 1 !important;
+                    visibility: visible !important;
+                    text-align: center !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    width: 100% !important;
+                    max-width: 100% !important;
+                }
+                .hero-title {
+                    text-align: center !important;
+                    width: 100% !important;
+                }
+                .hero-subtitle {
+                    text-align: center !important;
+                    width: 100% !important;
+                }
+                .hero-cta {
+                    text-align: center !important;
+                    width: 100% !important;
+                }
+                .animate-on-scroll {
+                    opacity: 0;
+                    transform: translateZ(0) translateY(20px);
+                    -webkit-transform: translateZ(0) translateY(20px);
+                    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                    will-change: opacity, transform;
+                    /* Force hardware acceleration */
+                    backface-visibility: hidden;
+                    -webkit-backface-visibility: hidden;
+                }
+                .animate-on-scroll.active {
+                    opacity: 1 !important;
+                    transform: translateZ(0) translateY(0) !important;
+                    -webkit-transform: translateZ(0) translateY(0) !important;
+                    will-change: auto; /* Remove will-change after animation */
+                }
+                .placeholder-image {
+                    background: #f0f0f0;
+                    border: 2px dashed #ccc;
+                    padding: 40px;
+                    text-align: center;
+                    color: #666;
+                    font-weight: 500;
+                    border-radius: 8px;
+                    min-height: 200px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .contact-form-placeholder {
+                    background: none;
+                    border: none;
+                    padding: 0;
+                    text-align: center;
+                }
+                .contact-form-placeholder h3 {
+                    color: var(--dark);
+                    margin-bottom: 15px;
+                }
+                .contact-form-placeholder p {
+                    color: var(--text-light);
+                    margin-bottom: 10px;
+                }
+                
+                /* Service Images - Balanced Size (60% of screen) */
+                .product-image {
+                    flex: 0 0 60%;
+                    max-width: 60%;
+                }
+                .product-image img {
+                    width: 100%;
+                    height: 400px;
+                    object-fit: cover;
+                    transform: translateZ(0) scale(0.85);
+                    -webkit-transform: translateZ(0) scale(0.85);
+                    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                    opacity: 1;
+                    /* Force hardware acceleration */
+                    backface-visibility: hidden;
+                    -webkit-backface-visibility: hidden;
+                    will-change: transform;
+                }
+                
+                /* Hover effect for images - same as about section */
+                .product-image:hover img {
+                    transform: scale(1.05);
+                }
+                
+                /* Scale to full size when active */
+                .product-image.scroll-animate.active img,
+                .scroll-animate.active .product-image img {
+                    transform: translateZ(0) scale(1);
+                    -webkit-transform: translateZ(0) scale(1);
+                    will-change: auto; /* Remove will-change after animation */
+                }
+                .product-content {
+                    flex: 0 0 40%;
+                    max-width: 40%;
+                    padding: 2rem;
+                    transform: translateY(0);
+                    opacity: 1;
+                    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                }
+                
+                /* Mobile responsive overrides */
+                @media (max-width: 768px) {
+                    .product-image {
+                        max-width: 100% !important;
+                        width: 100% !important;
+                    }
+                    
+                    .product-content {
+                        flex: none !important;
+                        max-width: none !important;
+                        width: 100% !important;
+                        padding: 0 1rem !important;
+                        margin-top: 2rem !important; /* Space between image and text */
+                    }
+                    
+                    .product-item {
+                        gap: 2rem !important; /* Increase gap between image and text */
+                        margin-bottom: 4rem !important; /* More space between service items */
+                    }
+                }
+                
+                @media (max-width: 576px) {
+                    .product-content {
+                        padding: 0 0.75rem !important;
+                        margin-top: 4rem !important; /* Increased space between image and text */
+                    }
+                    
+                    .product-item {
+                        gap: 1.5rem !important;
+                        margin-bottom: 3rem !important;
+                    }
+                    
+                    /* Services page specific mobile spacing */
+                    .section-subtitle {
+                        margin-bottom: 5rem !important; /* Decreased from default */
+                    }
+                    
+                    .products {
+                        margin-top: 4rem !important; /* Add space above content */
+                    }
+                }
+                
+                /* Parallax Scroll Effect - Text Only */
+                .product-item {
+                    position: relative;
+                }
+                
+                /* Smooth scroll-based parallax for text */
+                @media (prefers-reduced-motion: no-preference) {
+                    .product-content {
+                        will-change: transform, opacity;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
+
+

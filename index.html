@@ -1,44 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Werner Lichy – Prototypenbau & Aluminiumguss in Berlin</title>
     <meta name="description" content="Werner Lichy – Spezialist für Prototypenbau, Aluminiumguss und Kleinserienfertigung in Berlin.">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/android-chrome-512x512.png">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+    <!-- Skip to main content link for keyboard users -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- ARIA live region for dynamic content announcements -->
+    <div id="aria-live-region" class="sr-only" aria-live="polite" aria-atomic="true"></div>
     <!-- Header -->
     <header class="header">
         <div class="container header-container">
             <div class="logo">
                 <a href="#hero" class="logo-link">
-                    <img src="assets/images/logo/metalcraft-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image" loading="lazy">
+                    <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image" loading="lazy">
                 </a>
             </div>
-            <div class="menu-toggle" id="menuToggle">
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav">
                 <div class="hamburger">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
-            </div>
+            </button>
             <nav class="nav" id="nav">
                 <ul class="nav-list">
-                    <li><a href="#hero" class="nav-link">HOME</a></li>
-                    <li><a href="#about" class="nav-link">ABOUT</a></li>
-                    <li><a href="#products" class="nav-link">PRODUCTS</a></li>
-                    <li><a href="#contact" class="nav-link">CONTACT</a></li>
+                    <li><a href="#hero" class="nav-link">Home</a></li>
+                    <li><a href="#products" class="nav-link">Services</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
                     <li class="nav-divider"></li>
                     <li class="lang-item">
-                        <button class="lang-icon" id="langToggle" aria-label="Change language">
+                        <button class="lang-icon" id="langToggle" aria-label="Change language" aria-expanded="false" aria-haspopup="true">
                             <i data-lucide="globe"></i>
                             <span class="current-lang">EN</span>
+                            <i data-lucide="chevron-down" class="chevron-icon"></i>
                         </button>
+                        <ul class="lang-dropdown" id="langDropdown" role="menu">
+                            <li role="none">
+                                <button class="lang-option" data-lang="english" role="menuitem">English</button>
+                            </li>
+                            <li role="none">
+                                <button class="lang-option" data-lang="german" role="menuitem">Deutsch</button>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </nav>
@@ -46,21 +70,133 @@
     </header>
 
     <!-- Hero Section -->
-    <section id="hero" class="hero">
+    <main id="main-content">
+    <section id="hero" class="hero" style="background-image: url('assets/images/hero/milling.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <!-- Video auskommentiert - kann später wieder eingebunden werden
         <div class="video-container">
-            <video autoplay muted loop playsinline aria-hidden="true" id="heroVideo">
+            <video autoplay muted loop playsinline aria-hidden="true" id="heroVideo" aria-label="Background video showing manufacturing process">
                 <source src="assets/videos/hero/hero-background.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
             <div class="overlay"></div>
         </div>
+        -->
+        <div class="overlay"></div>
         <div class="hero-content">
     <h1 class="animate-on-scroll hero-title" data-animation="fade-up">
-  <span class="first-part">PRÄZISIONS</span>
-  <span class="second-part">FERTIGUNG</span>
-</h1>
-    <p class="animate-on-scroll hero-subtitle" data-animation="fade-up" data-delay="1200">AUS BERLIN</p>
+        Wir machen aus Ideen fertige Bauteile, alles aus einer Hand
+    </h1>
+    <p class="animate-on-scroll hero-subtitle" data-animation="fade-up" data-delay="400">Precision made in Germany</p>
+    <div class="hero-cta animate-on-scroll" data-animation="fade-up" data-delay="800">
+        <a href="#products" class="btn btn-hero">Unsere Services</a>
+    </div>
 </div>
+    </section>
+
+    <!-- Parallax Section 1 -->
+    <section class="parallax parallax-1" aria-label="Company introduction">
+        <div class="parallax-inner">
+            <div class="parallax-content">
+                <div class="parallax-text text-center animate-on-scroll" data-animation="fade-up" data-delay="200">
+                    <h2 class="parallax-heading">
+                        For over 40 years, we've been turning ideas into precision parts from prototype to production..
+                    </h2>
+                </div>
+                <div class="parallax-button text-center animate-on-scroll" data-animation="fade-up" data-delay="400">
+                    <a href="#about" class="btn btn-outline-white">Mehr über uns</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="products" class="products">
+        <div class="container">
+            <h2 class="section-title text-center animate-on-scroll" data-animation="fade-up">Unsere Services</h2>
+            <p class="section-subtitle text-center animate-on-scroll" data-animation="fade-up" data-delay="200">From prototypes to serial production, we deliver precision manufacturing made in Berlin. Our in-house capabilities, from design and casting to machining, assembly, and testing, ensure consistent quality, short lead times, and full process control. Reliable, innovative, and ISO 9001 certified.</p>
+            
+            <!-- Product 1 -->
+            <div class="product-item">
+                <div class="product-image scroll-animate" data-animation="slide-right">
+                    <img src="assets/images/products/prototypes.png" alt="Prototypenbau und Modellbau bei Werner Lichy" loading="lazy">
+                </div>
+                <div class="product-content product-text-parallax">
+                    <h3>Prototypenbau</h3>
+                    <p>
+                        Wir fertigen Prototypen auf Basis von 3D-CAD-Daten. Modellkonstruktion, Formerstellung, Guss, sowie mechanische Bearbeitung und Qualitätssicherung werden bei uns unter einem Dach durchgeführt.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="product-item reverse">
+                <div class="product-image scroll-animate" data-animation="slide-left">
+                    <img src="assets/images/products/molding.png" alt="Aluminiumguss und Gießereitechnik bei Werner Lichy" loading="lazy">
+                </div>
+                <div class="product-content product-text-parallax">
+                    <h3>Aluminiumguss</h3>
+                    <p>
+                        In unserer eigenen Gießerei betreiben wir Schmelzöfen für Aluminiumlegierungen. Mit unserem eigens entwickelten Gießverfahren erreichen wir ohne signifikanten Preisunterschied Wandstärken und Oberflächenstrukturen von druckgussähnlicher Qualität.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="product-item">
+                <div class="product-image scroll-animate" data-animation="slide-right">
+                    <img src="assets/images/products/kleinserie.png" alt="Kleinserienfertigung und Präzisionsteile bei Werner Lichy" loading="lazy">
+                </div>
+                <div class="product-content product-text-parallax">
+                    <h3>Kleinserien</h3>
+                    <p>
+                        Nahtlos im Anschluss an die Ergebnisse der Prototypenphase bieten wir die Produktion von Vor- und Kleinserien an. Auch hier wird mit seriennahen Werkstoffen gearbeitet und unter Verwendung der Datensätze und Werkzeuge der Prototypenphase, was für unsere Kunden einen weiteren Kostenvorteil bedeutet.
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Parallax Section 2 -->
+    <section class="parallax parallax-2" aria-label="Manufacturing workflow information">
+        <div class="parallax-inner">
+            <div class="parallax-content">
+                <div class="parallax-text text-center animate-on-scroll" data-animation="fade-up" data-delay="200">
+                    <h2 class="parallax-heading">Our services don't stand alone. They are part of a complete manufacturing workflow designed for automotive standards.</h2>
+                </div>
+                <div class="parallax-button text-center animate-on-scroll" data-animation="fade-up" data-delay="400">
+                    <a href="services.html" class="btn btn-outline-white">Discover our manufacturing process</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title text-center animate-on-scroll" data-animation="fade-up">Über uns</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="about-paragraphs animate-on-scroll" data-animation="fade-right" data-delay="200">
+                        <p>
+                            Seit 1982 stehen wir für höchste Präzision, Innovation und Verlässlichkeit – heute in zweiter Generation und mit über vier Jahrzehnten Erfahrung.
+                        </p>
+                        <p>
+                            Aus einem reinen Modellbaubetrieb in Berlin-Reinickendorf gewachsen, bieten wir heute die komplette Prozesskette: von der Entwicklung und Modellfertigung über den Aluminiumguss bis hin zur CNC-Bearbeitung, Messtechnik und Montage – alles unter einem Dach.
+                        </p>
+                        <p>
+                            Unser inhabergeführtes Unternehmen arbeitet mit modernsten Maschinen und Fertigungstechniken und ist nach ISO 9001 zertifiziert. Wir sind stolz auf langjährige Partnerschaften mit namhaften Kunden aus der Automobilindustrie und dem Maschinenbau und entwickeln zugleich Lösungen für neue Branchen und Zukunftstechnologien wie 3D-Metall- und Kerndruck.
+                        </p>
+                        <p>
+                            Ob Prototyp, Kleinserie oder Spezialteil – wir finden Lösungen, wo andere aufgeben. Nachhaltigkeit, Teamgeist und die Leidenschaft für perfekte Ergebnisse treiben uns dabei jeden Tag an.
+                        </p>
+                    </div>
+                </div>
+                <div class="about-image scroll-animate" data-animation="slide-left">
+                    <img src="assets/images/about/aboutus.png" alt="CNC-Bearbeitung und Präzisionsfertigung bei Werner Lichy in Berlin" loading="lazy">
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Partners Section -->
@@ -86,129 +222,48 @@
                 <div class="partner-logo"><img src="assets/images/partners/airbus.png" alt="Airbus - Partner von Werner Lichy" loading="lazy"></div>
             </div>
         </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
         <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2 class="section-title animate-on-scroll" data-animation="fade-right">ÜBER UNS</h2>
-                    <p class="animate-on-scroll" data-animation="fade-right" data-delay="200">
-                        Seit über 40 Jahren sind wir Ihr kompetenter Ansprechpartner für Prototypenbau, Modellbau, Aluminiumguss und die Fertigung von Kleinserien. Als familiengeführtes Unternehmen stehen bei uns Qualität, Verlässlichkeit und persönliche Betreuung im Mittelpunkt. Mit modernster CNC-Bearbeitung, einem hohen Maß an Flexibilität und einem erfahrenen Team aus hochqualifizierten Fachkräften setzen wir Ihre Projekte effizient und präzise um.
-                    </p>
-                    <p class="animate-on-scroll" data-animation="fade-right" data-delay="400">
-                        Ob Einzelanfertigung oder Serienproduktion – wir begleiten Sie von der ersten Idee bis zum fertigen Bauteil und finden gemeinsam die beste Lösung für Ihre Anforderungen im Bereich Präzisionsfertigung und Aluminiumguss.
-                    </p>
-                </div>
-                <div class="about-image animate-on-scroll" data-animation="fade-left">
-                    <img src="assets/images/about/aboutus.png" alt="CNC-Bearbeitung und Präzisionsfertigung bei Werner Lichy in Berlin" loading="lazy">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Parallax Section 1 -->
-    <section class="parallax parallax-1">
-        <div class="parallax-inner">
-            <!-- No text as requested -->
-        </div>
-    </section>
-
-    <!-- Products Section -->
-    <section id="products" class="products">
-        <div class="container">
-            <h2 class="section-title text-center animate-on-scroll" data-animation="fade-up">UNSERE PRODUKTE</h2>
-            
-            <!-- Product 1 -->
-            <div class="product-item">
-                <div class="product-image scroll-animate" data-animation="slide-right">
-                    <img src="assets/images/products/prototypes.png" alt="Prototypenbau und Modellbau bei Werner Lichy" loading="lazy">
-                </div>
-                <div class="product-content scroll-animate" data-animation="slide-left">
-                    <h3>PROTOTYPENBAU</h3>
-                    <p>
-                        Wir fertigen Prototypen auf Basis von 3D-CAD-Daten. Modellkonstruktion, Formerstellung, Guss, sowie mechanische Bearbeitung und Qualitätssicherung werden bei uns unter einem Dach durchgeführt.
-                    </p>
-                    <a href="#" class="btn btn-outline">MEHR ERFAHREN <i data-lucide="arrow-right"></i></a>
-                </div>
-            </div>
-            
-            <!-- Product 2 -->
-            <div class="product-item reverse">
-                <div class="product-image scroll-animate" data-animation="slide-left">
-                    <img src="assets/images/products/molding.jpeg" alt="Aluminiumguss und Gießereitechnik bei Werner Lichy" loading="lazy">
-                </div>
-                <div class="product-content scroll-animate" data-animation="slide-right">
-                    <h3>ALUMINIUMGUSS</h3>
-                    <p>
-                        In unserer eigenen Gießerei betreiben wir Schmelzöfen für Aluminiumlegierungen. Mit unserem eigens entwickelten Gießverfahren erreichen wir ohne signifikanten Preisunterschied Wandstärken und Oberflächenstrukturen von druckgussähnlicher Qualität.
-                    </p>
-                    <a href="#" class="btn btn-outline">MEHR ERFAHREN <i data-lucide="arrow-right"></i></a>
-                </div>
-            </div>
-            
-            <!-- Product 3 -->
-            <div class="product-item">
-                <div class="product-image scroll-animate" data-animation="slide-right">
-                    <img src="assets/images/products/kleinserie.png" alt="Kleinserienfertigung und Präzisionsteile bei Werner Lichy" loading="lazy">
-                </div>
-                <div class="product-content scroll-animate" data-animation="slide-left">
-                    <h3>KLEINSERIEN</h3>
-                    <p>
-                        Nahtlos im Anschluss an die Ergebnisse der Prototypenphase bieten wir die Produktion von Vor- und Kleinserien an. Auch hier wird mit seriennahen Werkstoffen gearbeitet und unter Verwendung der Datensätze und Werkzeuge der Prototypenphase, was für unsere Kunden einen weiteren Kostenvorteil bedeutet.
-                    </p>
-                    <a href="#" class="btn btn-outline">MEHR ERFAHREN <i data-lucide="arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Parallax Section 2 -->
-    <section class="parallax parallax-2">
-        <div class="parallax-inner">
-            <!-- No text as requested -->
+            <h2 class="partners-title text-center">We've worked with leading partners in the automotive and engineering industries.</h2>
         </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
-            <h2 class="section-title text-center animate-on-scroll" data-animation="fade-up">KONTAKT</h2>
+            <h2 class="section-title text-center animate-on-scroll" data-animation="fade-up">Kontakt</h2>
             <div class="contact-container">
+                <!-- Contact Form - Commented Out
                 <div class="contact-form animate-on-scroll" data-animation="fade-right">
-                    <form id="contactForm" novalidate>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" id="name" name="name" class="form-input">
-                                <span class="error-message">Dieses Feld ist erforderlich</span>
-                            </div>
-                            <div class="form-group">
-                                <label for="surname">Nachname <span class="required">*</span></label>
-                                <input type="text" id="surname" name="surname" class="form-input" required>
-                                <span class="error-message">Dieses Feld ist erforderlich</span>
-                            </div>
+                    <div id="formSubmissionError" class="form-submission-error" style="display: none;">
+                        <p>Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie uns an info@lichy-berlin.de</p>
+                    </div>
+                    <form id="contactForm" method="POST" action="send-mail.php" novalidate>
+                        <div class="form-group">
+                            <label for="name">Name <span class="required">*</span></label>
+                            <input type="text" id="name" name="name" class="form-input" required>
+                            <span class="error-message">Dieses Feld ist erforderlich</span>
                         </div>
                         <div class="form-group">
                             <label for="email">E-Mail <span class="required">*</span></label>
                             <input type="email" id="email" name="email" class="form-input" required>
-                            <span class="error-message">Dieses Feld ist erforderlich</span>
+                            <span class="error-message">Bitte geben Sie eine gültige E-Mail-Adresse ein.</span>
                         </div>
                         <div class="form-group">
                             <label for="message">Nachricht <span class="required">*</span></label>
                             <textarea id="message" name="message" rows="5" class="form-input" required></textarea>
-                            <span class="error-message">Dieses Feld ist erforderlich</span>
+                            <span class="error-message">Bitte schreiben Sie eine kurze Nachricht.</span>
                         </div>
+                        <input type="text" name="website" style="display: none !important; position: absolute; left: -9999px;" tabindex="-1" autocomplete="off">
                         <div class="form-group checkbox">
                             <input type="checkbox" id="consent" name="consent" required>
-                            <label for="consent">Ich stimme der Datenschutzerklärung zu</label>
-                            <span class="error-message">Sie müssen der Datenschutzerklärung zustimmen</span>
+                            <label for="consent">Ich stimme der Datenschutzerklärung zu <span class="required">*</span></label>
+                            <span class="error-message">Bitte bestätigen Sie, dass Sie unsere Datenschutzerklärung gelesen haben.</span>
                         </div>
                         <button type="submit" class="btn btn-rounded">Nachricht senden</button>
                     </form>
                 </div>
-                <div class="contact-info animate-on-scroll" data-animation="fade-left">
+                -->
+                <div class="contact-info animate-on-scroll" data-animation="fade-up">
                     <div class="info-item">
                         <h3><i data-lucide="map-pin"></i> ADRESSE</h3>
                         <p>Innungsstraße 60<br>13509 Berlin</p>
@@ -232,29 +287,36 @@
             <div class="footer-content">
                 <div class="footer-logo">
                     <a href="#hero" class="logo-link">
-                        <img src="assets/images/logo/metalcraft-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image footer-logo-image" loading="lazy">
+                        <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image footer-logo-image" loading="lazy">
                     </a>
                 </div>
                 <div class="footer-links">
                     <ul>
-                        <li><a href="#hero">STARTSEITE</a></li>
-                        <li><a href="#products">PRODUKTE</a></li>
-                        <li><a href="#contact">KONTAKT</a></li>
+                        <li><a href="#hero">Startseite</a></li>
+                        <li><a href="#products">Services</a></li>
+                        <li><a href="#about">Über uns</a></li>
+                        <li><a href="#contact">Kontakt</a></li>
                     </ul>
                 </div>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/company/werner-lichy-modell-und-prototypenbau/?originalSubdomain=de" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                </div>
             </div>
-        <div class="footer-bottom">
-            <div class="footer-copyright">
-                <p>&copy; 2025 Werner Lichy. Alle Rechte vorbehalten.</p>
-            </div>
-            <div class="footer-legal-links">
-                <a href="legal-notice.html">Impressum</a>
-                <span class="footer-divider">|</span>
-                <a href="privacy-policy.html">Datenschutzerklärung</a>
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2025 Werner Lichy. Alle Rechte vorbehalten.</p>
+                </div>
+                <div class="footer-legal-links">
+                    <a href="legal-notice.html">Impressum</a>
+                    <span class="footer-divider">|</span>
+                    <a href="privacy-policy.html">Datenschutzerklärung</a>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
+    </main>
 
     <script src="script.js"></script>
 </body>

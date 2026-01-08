@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Datenschutzerklärung - Werner Lichy | Prototypenbau & Aluminiumguss Berlin</title>
     <meta name="description" content="Datenschutzerklärung von Werner Lichy - Ihr Spezialist für Prototypenbau, Aluminiumguss und Kleinserienfertigung in Berlin.">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/android-chrome-512x512.png">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -55,7 +65,7 @@
         <div class="container header-container">
             <div class="logo">
                 <a href="index.html" class="logo-link">
-                    <img src="assets/images/logo/metalcraft-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image" loading="lazy">
+                    <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image" loading="lazy">
                 </a>
             </div>
             <div class="menu-toggle" id="menuToggle">
@@ -218,7 +228,7 @@
             <div class="footer-content">
                 <div class="footer-logo">
                     <a href="index.html#hero" class="logo-link">
-                        <img src="assets/images/logo/metalcraft-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image footer-logo-image" loading="lazy">
+                        <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image footer-logo-image" loading="lazy">
                     </a>
                 </div>
                 <div class="footer-links">
@@ -254,20 +264,29 @@
             const pageTitle = document.getElementById("pageTitle");
             const enContent = document.getElementById("en-content");
             const deContent = document.getElementById("de-content");
+            const LANGUAGE_KEY = 'lichy-website-language';
+            
+            // Get saved language preference or default to English
+            let isEnglish = localStorage.getItem(LANGUAGE_KEY) !== 'german';
 
-            if (langToggle) {
-              // Current language state - changed to English as default
-              let isEnglish = true;
-
+            if (langToggle && currentLang) {
               // Set initial language display
               currentLang.textContent = isEnglish ? "EN" : "DE";
+              langToggle.classList.add('active');
               
-              // Apply English language by default
-              translatePrivacyToEnglish();
+              // Apply saved language preference
+              if (isEnglish) {
+                translatePrivacyToEnglish();
+              } else {
+                translatePrivacyToGerman();
+              }
 
               // Toggle language on click
               langToggle.addEventListener("click", () => {
                 isEnglish = !isEnglish;
+
+                // Save language preference to localStorage
+                localStorage.setItem(LANGUAGE_KEY, isEnglish ? 'english' : 'german');
 
                 // Update language display
                 currentLang.textContent = isEnglish ? "EN" : "DE";

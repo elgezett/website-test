@@ -1,551 +1,1316 @@
-// Detect iOS - moved to the top for better organization
-const isIOS = (() => {
-  const userAgent = window.navigator.userAgent.toLowerCase()
-  return /iphone|ipad|ipod/.test(userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
-})()
+/**
+ * Werner Lichy Website - Main JavaScript
+ * Production-ready code with optimized performance and clean architecture
+ */
 
-// Add iOS class to body for CSS targeting
-if (isIOS) {
-  document.body.classList.add("ios")
+// ============================================================================
+// CONSTANTS & CONFIGURATION
+// ============================================================================
+
+const CONFIG = {
+  LANGUAGE_KEY: 'lichy-website-language',
+  MOBILE_BREAKPOINT: 768,
+  ANIMATION_DELAYS: {
+    HERO_BASE: 800,
+    STAGGER: 50,
+    RESIZE_THROTTLE: 250
+  },
+  PARALLAX: {
+    SPEED: 1.2,
+    TEXT_SPEED: 0.1,
+    SCROLL_START: 0.9,
+    SCROLL_END: 0.2
+  }
 }
 
-// Initialize this at the beginning of the DOMContentLoaded event
-document.addEventListener("DOMContentLoaded", () => {
-  // Add iOS class to body for CSS targeting
-  if (isIOS) {
-    document.body.classList.add("ios")
+// ============================================================================
+// UTILITY FUNCTIONS
+// ============================================================================
+
+/**
+ * Throttle function for performance optimization
+ */
+function throttle(func, limit) {
+  let inThrottle
+  return function() {
+    const args = arguments
+    const context = this
+    if (!inThrottle) {
+      func.apply(context, args)
+      inThrottle = true
+      setTimeout(() => inThrottle = false, limit)
+    }
+  }
+}
+
+/**
+ * Check if element is in viewport
+ */
+function isElementInViewport(element, threshold = 0.9) {
+  const rect = element.getBoundingClientRect()
+  const windowHeight = window.innerHeight || document.documentElement.clientHeight
+  return rect.top <= windowHeight * threshold && rect.bottom >= 0
+}
+
+/**
+ * Check if user prefers reduced motion
+ */
+function prefersReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches
+}
+
+/**
+ * Check if device is mobile
+ */
+function isMobileDevice() {
+  return window.innerWidth <= CONFIG.MOBILE_BREAKPOINT || 
+         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+}
+
+/**
+ * Check if device is iOS
+ */
+function isIOSDevice() {
+  const userAgent = window.navigator.userAgent.toLowerCase()
+  return /iphone|ipad|ipod/.test(userAgent) || 
+         (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+}
+
+/**
+ * Safe element selector with null check
+ */
+function safeQuerySelector(selector) {
+  return document.querySelector(selector)
+}
+
+/**
+ * Safe element selector all with null check
+ */
+function safeQuerySelectorAll(selector) {
+  return document.querySelectorAll(selector)
+}
+
+// ============================================================================
+// LANGUAGE MANAGEMENT
+// ============================================================================
+
+class LanguageManager {
+  constructor() {
+    this.currentLanguage = this.getSavedLanguage()
+    this.translations = this.initializeTranslations()
   }
 
-  // Initialize Lucide icons
-  const lucide = window.lucide
-  lucide.createIcons()
+  getSavedLanguage() {
+    // First check if user has a saved preference
+    const savedLanguage = localStorage.getItem(CONFIG.LANGUAGE_KEY)
+    if (savedLanguage === 'german' || savedLanguage === 'english') {
+      return savedLanguage === 'english'
+    }
+    
+    // If no saved preference, detect browser language
+    const browserLang = navigator.language || navigator.userLanguage || 'en'
+    const langCode = browserLang.toLowerCase().split('-')[0] // Get language code (e.g., 'de' from 'de-DE')
+    
+    // Default to German if browser language is German, otherwise English
+    return langCode !== 'de'
+  }
 
-  // Mobile menu toggle
-  const menuToggle = document.getElementById("menuToggle")
-  const nav = document.getElementById("nav")
+  saveLanguage(isEnglish) {
+    localStorage.setItem(CONFIG.LANGUAGE_KEY, isEnglish ? 'english' : 'german')
+    this.currentLanguage = isEnglish
+  }
 
-  if (menuToggle && nav) {
-    menuToggle.addEventListener("click", (e) => {
-      e.stopPropagation() // Prevent click from bubbling to document
-      nav.classList.toggle("active")
-      document.body.classList.toggle("menu-open")
-    })
-
-    // Close menu when clicking on a nav link
-    const navLinks = document.querySelectorAll(".nav-link")
-
-    navLinks.forEach((link) => {
-      link.addEventListener("click", () => {
-        nav.classList.remove("active")
-        document.body.classList.remove("menu-open")
-      })
-    })
-
-    // Close menu when clicking outside
-    document.addEventListener("click", (e) => {
-      // Check if menu is open and click is outside the nav
-      if (nav.classList.contains("active") && !nav.contains(e.target) && e.target !== menuToggle) {
-        nav.classList.remove("active")
-        document.body.classList.remove("menu-open")
+  initializeTranslations() {
+    return {
+      german: {
+        navigation: ["Startseite", "Services", "Über uns", "Kontakt"],
+        hero: {
+          title: "Wir machen aus Ideen fertige Bauteile, alles aus einer Hand",
+          subtitle: "Präzision aus Deutschland",
+          button: "Unsere Services"
+        },
+        parallax: {
+          text: "Seit über 40 Jahren verwandeln wir Ideen in präzise Bauteile, vom Prototyp bis zur Serienfertigung.",
+          button: "Mehr über uns"
+        },
+        about: {
+          title: "Über uns",
+          paragraphs: [
+            "Seit 1982 stehen wir für höchste Präzision, Innovation und Verlässlichkeit – heute in zweiter Generation und mit über vier Jahrzehnten Erfahrung.",
+            "Aus einem reinen Modellbaubetrieb in Berlin-Reinickendorf gewachsen, bieten wir heute die komplette Prozesskette: von der Entwicklung und Modellfertigung über den Aluminiumguss bis hin zur CNC-Bearbeitung, Messtechnik und Montage – alles unter einem Dach.",
+            "Unser inhabergeführtes Unternehmen arbeitet mit modernsten Maschinen und Fertigungstechniken und ist nach ISO 9001 zertifiziert. Wir sind stolz auf langjährige Partnerschaften mit namhaften Kunden aus der Automobilindustrie und dem Maschinenbau und entwickeln zugleich Lösungen für neue Branchen und Zukunftstechnologien wie 3D-Metall- und Kerndruck.",
+            "Ob Prototyp, Kleinserie oder Spezialteil – wir finden Lösungen, wo andere aufgeben. Nachhaltigkeit, Teamgeist und die Leidenschaft für perfekte Ergebnisse treiben uns dabei jeden Tag an."
+          ]
+        },
+        services: {
+          title: "Unsere Services",
+          subtitle: "Von Prototypen bis zur Serienfertigung liefern wir Präzisionsfertigung aus Berlin. Unsere hauseigenen Fähigkeiten, von Design und Guss bis zur Bearbeitung, Montage und Prüfung, gewährleisten gleichbleibende Qualität, kurze Lieferzeiten und vollständige Prozesskontrolle. Zuverlässig, innovativ und ISO 9001 zertifiziert.",
+          products: {
+            titles: ["Prototypenbau", "Aluminiumguss", "Kleinserien"],
+            descriptions: [
+              "Wir fertigen Prototypen auf Basis von 3D-CAD-Daten. Modellkonstruktion, Formerstellung, Guss, sowie mechanische Bearbeitung und Qualitätssicherung werden bei uns unter einem Dach durchgeführt.",
+              "In unserer eigenen Gießerei betreiben wir Schmelzöfen für Aluminiumlegierungen. Mit unserem eigens entwickelten Gießverfahren erreichen wir ohne signifikanten Preisunterschied Wandstärken und Oberflächenstrukturen von druckgussähnlicher Qualität.",
+              "Nahtlos im Anschluss an die Ergebnisse der Prototypenphase bieten wir die Produktion von Vor- und Kleinserien an. Auch hier wird mit seriennahen Werkstoffen gearbeitet und unter Verwendung der Datensätze und Werkzeuge der Prototypenphase, was für unsere Kunden einen weiteren Kostenvorteil bedeutet."
+            ],
+            buttons: "Mehr erfahren "
+          },
+          parallax2: {
+            title: "Mehr als Produktion",
+            text: "Unsere Leistungen greifen ineinander und bilden einen durchgängigen Fertigungsprozess, der den Anforderungen der Automobilindustrie entspricht.",
+            button: "Zum gesamten Fertigungsprozess"
+          }
+        },
+        contact: {
+          title: "Kontakt",
+          form: {
+            labels: ["Name", "E-Mail <span class=\"required\">*</span>", "Nachricht <span class=\"required\">*</span>", "Ich stimme der Datenschutzerklärung zu <span class=\"required\">*</span>"],
+            errors: ["Dieses Feld ist erforderlich", "Bitte geben Sie eine gültige E-Mail-Adresse ein.", "Bitte schreiben Sie eine kurze Nachricht.", "Bitte bestätigen Sie, dass Sie unsere Datenschutzerklärung gelesen haben."],
+            button: "Nachricht senden",
+            submissionError: "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie uns an info@lichy-berlin.de",
+            successMessage: "Vielen Dank für Ihre Nachricht. Wir werden uns bald bei Ihnen melden!"
+          },
+          info: {
+            titles: ['<i data-lucide="map-pin"></i> ADRESSE', '<i data-lucide="mail"></i> E-MAIL', '<i data-lucide="phone"></i> TELEFON'],
+            texts: ["Innungsstraße 60<br>13509 Berlin", "info@lichy-berlin.de", "030 / 414 16 12"]
+          }
+        },
+        footer: {
+          links: ["Startseite", "Services", "Über uns", "Kontakt"],
+          copyright: "© 2025 Werner Lichy. Alle Rechte vorbehalten.",
+          legal: ["Impressum", "Datenschutzerklärung"]
+        },
+        partners: {
+          title: "Wir haben mit führenden Partnern aus der Automobil- und Ingenieurindustrie zusammengearbeitet."
+        }
+      },
+      english: {
+        navigation: ["Home", "Services", "About", "Contact"],
+        hero: {
+          title: "We turn ideas into finished parts, all under one roof",
+          subtitle: "Precision made in Germany",
+          button: "Our Services"
+        },
+        parallax: {
+          text: "For over 40 years, we've been your partner for prototypes, aluminum casting, and small-series production.",
+          button: "More About Us"
+        },
+        about: {
+          title: "About Us",
+          paragraphs: [
+            "Since 1982, we have stood for the highest precision, innovation, and reliability – today in the second generation with over four decades of experience.",
+            "Grown from a pure model-making business in Berlin-Reinickendorf, we now offer the complete process chain: from development and model manufacturing through aluminum casting to CNC machining, measurement technology, and assembly – all under one roof.",
+            "Our owner-managed company works with the most modern machines and manufacturing techniques and is ISO 9001 certified. We are proud of long-standing partnerships with renowned customers from the automotive industry and mechanical engineering and simultaneously develop solutions for new industries and future technologies such as 3D metal and core printing.",
+            "Whether prototype, small series, or special part – we find solutions where others give up. Sustainability, team spirit, and the passion for perfect results drive us every day."
+          ]
+        },
+        services: {
+          title: "Our Services",
+          subtitle: "From prototypes to serial production, we deliver precision manufacturing made in Berlin. Our in-house capabilities, from design and casting to machining, assembly, and testing, ensure consistent quality, short lead times, and full process control. Reliable, innovative, and ISO 9001 certified.",
+          products: {
+            titles: ["Prototype Development", "Aluminum Casting", "Small Series Production"],
+            descriptions: [
+              "We manufacture prototypes based on 3D CAD data. Model construction, mold creation, casting, as well as mechanical processing and quality assurance are all carried out under one roof.",
+              "In our own foundry, we operate melting furnaces for aluminum alloys. With our specially developed casting process, we achieve wall thicknesses and surface structures of die-cast-like quality without significant price differences.",
+              "Seamlessly following the results of the prototype phase, we offer the production of pre-series and small series. Here too, we work with production-grade materials and use the data sets and tools from the prototype phase, which means a further cost advantage for our customers."
+            ],
+            buttons: "Learn More "
+          },
+          parallax2: {
+            title: "More than production",
+            text: "Our services don't stand alone. They are part of a complete manufacturing workflow designed for automotive standards.",
+            button: "Discover our manufacturing process"
+          }
+        },
+        contact: {
+          title: "Contact Us",
+          form: {
+            labels: ["Name", "Email <span class=\"required\">*</span>", "Message <span class=\"required\">*</span>", "I agree to the data protection policy <span class=\"required\">*</span>"],
+            errors: ["This field is required", "Please enter a valid email address", "Please write a short message", "Please confirm that you've read our Privacy Policy"],
+            button: "Send Message",
+            submissionError: "Something went wrong. Please try again later or email us directly at info@lichy-berlin.de",
+            successMessage: "Thank you for your message. We will get back to you soon!"
+          },
+          info: {
+            titles: ['<i data-lucide="map-pin"></i> ADDRESS', '<i data-lucide="mail"></i> EMAIL', '<i data-lucide="phone"></i> PHONE'],
+            texts: ["Innungsstraße 60<br>13509 Berlin", "info@lichy-berlin.de", "030 / 414 16 12"]
+          }
+        },
+        footer: {
+          links: ["Home", "Services", "About", "Contact"],
+          copyright: "© 2025 Werner Lichy. All rights reserved.",
+          legal: ["Legal Notice (Impressum)", "Privacy Policy"]
+        },
+        partners: {
+          title: "We've worked with leading partners in the automotive and engineering industries."
+        }
       }
-    })
-
-    // Prevent clicks inside the nav from closing the menu
-    nav.addEventListener("click", (e) => {
-      e.stopPropagation()
-    })
+    }
   }
 
-  // Language switcher
-  const langToggle = document.getElementById("langToggle")
-  const currentLang = document.querySelector(".current-lang")
+  translateToLanguage(isEnglish) {
+    const lang = isEnglish ? 'english' : 'german'
+    const langCode = isEnglish ? 'en' : 'de'
+    const t = this.translations[lang]
+    
+    // Update HTML lang attribute for accessibility and SEO
+    document.documentElement.lang = langCode
 
-  // Change the language state to default to English
-  // Track current language state globally for use in other functions
-  let isEnglish = true
+    // Navigation
+    this.updateElements('.nav-link', t.navigation)
 
-  if (langToggle) {
-    // Set initial language display
-    currentLang.textContent = isEnglish ? "EN" : "DE"
+    // Hero
+    this.updateElement('.hero-title', t.hero.title)
+    this.updateElement('.hero-subtitle', t.hero.subtitle)
+    this.updateElement('.hero-cta .btn', t.hero.button)
+    
+    // Update hero title classes
+    const heroTitle = safeQuerySelector('.hero-title')
+    if (heroTitle) {
+      heroTitle.classList.remove('german', 'english')
+      heroTitle.classList.add(lang)
+    }
 
-    // Apply English language by default
-    translateToEnglish()
+    // Parallax
+    this.updateElement('.parallax-1 .parallax-heading', t.parallax.text)
+    this.updateElement('.parallax-1 .parallax-button .btn', t.parallax.button)
 
-    // Toggle language on click
-    langToggle.addEventListener("click", () => {
-      isEnglish = !isEnglish
+    // About
+    this.updateElement('#about .section-title', t.about.title)
+    this.updateElements('#about p', t.about.paragraphs)
 
-      // Update language display
-      currentLang.textContent = isEnglish ? "EN" : "DE"
+    // Services
+    this.updateElement('#products .section-title', t.services.title)
+    this.updateElement('#products .section-subtitle', t.services.subtitle)
+    this.updateElements('.product-content h3', t.services.products.titles)
+    this.updateElements('.product-content p', t.services.products.descriptions)
+    
+    // Update service buttons with icons
+    this.updateServiceButtons(t.services.products.buttons)
 
-      // Switch language content
-      if (isEnglish) {
-        translateToEnglish()
+    // Parallax 2
+    this.updateElement('.parallax-2 .parallax-heading', t.services.parallax2.text)
+    this.updateElement('.parallax-2 .parallax-button .btn', t.services.parallax2.button)
+
+    // Contact
+    this.updateElement('#contact .section-title', t.contact.title)
+    this.updateElements('.form-group label', t.contact.form.labels)
+    this.updateElements('.error-message', t.contact.form.errors)
+    this.updateElement('.btn-rounded', t.contact.form.button)
+    
+    // Update submission error message
+    const submissionError = safeQuerySelector('#formSubmissionError p')
+    if (submissionError) {
+      submissionError.textContent = t.contact.form.submissionError
+    }
+
+    // Contact info
+    this.updateElements('.info-item h3', t.contact.info.titles)
+    this.updateElements('.info-item p', t.contact.info.texts)
+
+    // Footer
+    this.updateElements('.footer-links a', t.footer.links)
+    this.updateElement('.footer-copyright p', t.footer.copyright)
+    this.updateElements('.footer-legal-links a', t.footer.legal)
+
+    // Partners
+    this.updateElement('.partners-title', t.partners.title)
+
+    // Refresh Lucide icons
+    if (window.lucide) {
+      window.lucide.createIcons()
+    }
+  }
+
+  updateElement(selector, content) {
+    const element = safeQuerySelector(selector)
+    if (element && content) {
+      // Use innerHTML if content contains HTML tags, otherwise use textContent
+      if (content.includes('<') && content.includes('>')) {
+        element.innerHTML = content
       } else {
-        translateToGerman()
+        element.textContent = content
+      }
+    }
+  }
+
+  updateElements(selector, contentArray) {
+    const elements = safeQuerySelectorAll(selector)
+    elements.forEach((element, index) => {
+      if (contentArray[index]) {
+        element.innerHTML = contentArray[index]
       }
     })
   }
 
-  // Form validation
-  const contactForm = document.getElementById("contactForm")
-
-  if (contactForm) {
-    contactForm.addEventListener("submit", (e) => {
-      e.preventDefault()
-
-      let isValid = true
-      const requiredFields = contactForm.querySelectorAll("[required]")
-
-      // Reset all error states
-      const formGroups = contactForm.querySelectorAll(".form-group")
-      formGroups.forEach((group) => {
-        group.classList.remove("has-error")
-      })
-
-      // Check each required field
-      requiredFields.forEach((field) => {
-        if (!field.value.trim()) {
-          isValid = false
-          field.parentElement.classList.add("has-error")
-          field.classList.add("error")
-        } else {
-          field.classList.remove("error")
-        }
-      })
-
-      if (isValid) {
-        // Show temporary message that sending is not available
-        if (isEnglish) {
-          alert(
-            "Message sending is currently not available. Our contact form is being set up. Please contact us directly via email or phone.",
-          )
-        } else {
-          alert(
-            "Das Senden von Nachrichten ist derzeit nicht verfügbar. Unser Kontaktformular wird eingerichtet. Bitte kontaktieren Sie uns direkt per E-Mail oder Telefon.",
-          )
-        }
-
-        // Reset the form
-        contactForm.reset()
-      }
-    })
-
-    // Add input event listeners to clear errors when user types
-    const formInputs = contactForm.querySelectorAll(".form-input")
-    formInputs.forEach((input) => {
-      input.addEventListener("input", () => {
-        if (input.value.trim()) {
-          input.parentElement.classList.remove("has-error")
-          input.classList.remove("error")
-        }
-      })
+  updateServiceButtons(buttonText) {
+    const buttons = safeQuerySelectorAll('.product-content .btn-solid')
+    buttons.forEach(button => {
+      button.textContent = buttonText
+      const icon = document.createElement('i')
+      icon.setAttribute('data-lucide', 'arrow-right')
+      button.appendChild(icon)
     })
   }
+}
 
-  // Scroll animations
-  const animateElements = document.querySelectorAll(".animate-on-scroll")
-  const scrollAnimateElements = document.querySelectorAll(".scroll-animate")
+// ============================================================================
+// ANIMATION MANAGER
+// ============================================================================
 
-  // Initial check for elements in viewport
-  checkAnimations()
-
-  // Find the animation code for hero elements and update it
-
-  // Add specific animation timing for hero elements
-  const heroElements = document.querySelectorAll(".hero-content .animate-on-scroll")
-  // Check if user prefers reduced motion
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-
-  if (!prefersReducedMotion) {
-    heroElements.forEach((element, index) => {
-      // Make the base delay longer for more drama
-      const baseDelay = 800
-      const delay = element.getAttribute("data-delay") || index * 400 + baseDelay
-
-      // Initially hide the elements
-      element.style.opacity = "0"
-      element.style.transform = "translateY(30px)"
-
-      // Animate them in with a slower transition
-      setTimeout(() => {
-        element.style.transition = "opacity 1.5s ease-out, transform 1.5s ease-out"
-        element.style.opacity = "1"
-        element.style.transform = "translateY(0)"
-      }, delay)
-    })
-  } else {
-    // For reduced motion, just show the elements without animation
-    heroElements.forEach((element) => {
-      element.style.opacity = "1"
-      element.style.transform = "none"
-    })
+class AnimationManager {
+  constructor() {
+    this.animateElements = safeQuerySelectorAll('.animate-on-scroll')
+    this.scrollAnimateElements = safeQuerySelectorAll('.scroll-animate')
+    this.heroElements = safeQuerySelectorAll('.hero-content .animate-on-scroll')
+    this.init()
   }
 
-  function checkAnimations() {
-    // Check if user prefers reduced motion
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  init() {
+    this.initHeroAnimations()
+    this.initScrollObserver() // Initialize observer first
+    this.checkAnimations()
+    this.bindScrollEvents()
+  }
 
-    // If reduced motion is preferred, make all elements visible without animations
-    if (prefersReducedMotion) {
-      animateElements.forEach((element) => {
-        element.classList.add("active")
-        element.style.opacity = "1"
-        element.style.transform = "none"
-      })
-
-      scrollAnimateElements.forEach((element) => {
-        element.classList.add("active")
-        element.style.opacity = "1"
-        element.style.transform = "none"
-      })
-
+  initHeroAnimations() {
+    if (prefersReducedMotion()) {
+      this.showHeroElementsWithoutAnimation()
       return
     }
 
-    // Basic animations with smoother transitions
-    animateElements.forEach((element) => {
-      if (isElementInViewport(element)) {
-        const delay = element.getAttribute("data-delay") || 0
-        setTimeout(() => {
-          element.classList.add("active")
-        }, delay)
-      }
+    this.hideHeroElements()
+    setTimeout(() => {
+      this.animateHeroElements()
+      // Video-Animation auskommentiert - Video ist deaktiviert
+      // this.animateHeroVideo()
+    }, CONFIG.ANIMATION_DELAYS.HERO_BASE)
+  }
+
+  hideHeroElements() {
+    this.heroElements.forEach(element => {
+      element.style.opacity = '0'
+      element.style.transform = 'translateY(30px)'
     })
+  }
 
-    // Improved scroll-tied animations for products section
-    scrollAnimateElements.forEach((element) => {
-      const elementPosition = element.getBoundingClientRect()
-      const windowHeight = window.innerHeight
+  showHeroElementsWithoutAnimation() {
+    this.heroElements.forEach(element => {
+      element.style.opacity = '1'
+      element.style.transform = 'none'
+    })
+    
+    // Video-Animation auskommentiert - Video ist deaktiviert
+    // const heroVideo = safeQuerySelector('#heroVideo')
+    //   if (heroVideo) {
+    //   heroVideo.style.transform = 'translate(-50%, -50%) scale(1)'
+    // }
+  }
 
-      // Calculate how far the element is in the viewport (0 to 1)
-      // This creates a smoother transition zone
-      const scrollStart = 0.9 // Start when element is 90% below viewport
-      const scrollEnd = 0.2 // End when element is 20% below viewport top
+  animateHeroElements() {
+    this.heroElements.forEach(element => {
+      element.style.transition = 'opacity 1.5s ease-out, transform 1.5s ease-out'
+      element.style.opacity = '1'
+      element.style.transform = 'translateY(0)'
+    })
+  }
 
-      let scrollProgress =
-        (windowHeight * scrollStart - elementPosition.top) / (windowHeight * (scrollStart - scrollEnd))
+  animateHeroVideo() {
+    // Video-Animation auskommentiert - Video ist deaktiviert
+    // const heroVideo = safeQuerySelector('#heroVideo')
+    // if (heroVideo) {
+    //   heroVideo.classList.add('zoom-in')
+    // }
+  }
 
-      // Clamp values between 0 and 1
-      scrollProgress = Math.max(0, Math.min(scrollProgress, 1))
+  checkAnimations() {
+    if (prefersReducedMotion()) {
+      this.showAllElementsWithoutAnimation()
+      return
+    }
 
-      // Apply easing function for smoother motion
-      // This uses a cubic ease-out function
-      const easedProgress = 1 - Math.pow(1 - scrollProgress, 3)
+    this.animateScrollElements()
+    this.animateScrollTiedElements()
+  }
 
-      if (scrollProgress > 0) {
-        // Set opacity with slight delay compared to movement
-        element.style.opacity = Math.min(1, easedProgress * 1.3)
+  showAllElementsWithoutAnimation() {
+    [...this.animateElements, ...this.scrollAnimateElements].forEach(element => {
+      element.classList.add('active')
+      element.style.opacity = '1'
+      element.style.transform = 'none'
+    })
+  }
 
-        // Apply transform based on animation type with more dramatic off-screen starting positions
-        const animationType = element.getAttribute("data-animation")
-        if (animationType === "slide-right") {
-          const translateX = -100 + easedProgress * 100 // Full width off-screen
-          element.style.transform = `translateX(${translateX}%)`
-        } else if (animationType === "slide-left") {
-          const translateX = 100 - easedProgress * 100 // Full width off-screen
-          element.style.transform = `translateX(${translateX}%)`
+  animateScrollElements() {
+    // Use Intersection Observer for text elements too, for better performance
+    if (!this.textObserver) {
+      this.initTextObserver()
+    }
+    
+    // Fallback for elements already in viewport
+    requestAnimationFrame(() => {
+      this.animateElements.forEach(element => {
+        if (isElementInViewport(element, 0.01) && !element.classList.contains('active')) {
+          const delay = parseInt(element.getAttribute('data-delay')) || 0
+          if (delay > 0) {
+            setTimeout(() => {
+              element.classList.add('active')
+            }, delay)
+          } else {
+            element.classList.add('active')
+          }
         }
+      })
+    })
+  }
 
-        // When fully in viewport, add active class
-        if (scrollProgress >= 0.95) {
-          element.classList.add("active")
+  initTextObserver() {
+    if (this.animateElements.length === 0) return
+    
+    const observerOptions = {
+      root: null,
+      rootMargin: '150px', // Trigger 150px before element enters viewport
+      threshold: [0, 0.01, 0.1] // Multiple thresholds for better detection
+    }
+
+    this.textObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting || entry.intersectionRatio > 0) {
+          const element = entry.target
+          const delay = parseInt(element.getAttribute('data-delay')) || 0
+          
+          // Use requestAnimationFrame for smoother animation start
+          if (delay > 0) {
+            setTimeout(() => {
+              requestAnimationFrame(() => {
+                element.classList.add('active')
+              })
+            }, delay)
+          } else {
+            requestAnimationFrame(() => {
+              element.classList.add('active')
+            })
+          }
+          
+          // Unobserve once animated to improve performance
+          this.textObserver.unobserve(element)
         }
+      })
+    }, observerOptions)
+
+    // Observe all animate-on-scroll elements
+    this.animateElements.forEach(element => {
+      // Check if element is already in viewport and animate immediately
+      if (isElementInViewport(element, 0.01)) {
+        const delay = parseInt(element.getAttribute('data-delay')) || 0
+        if (delay > 0) {
+          setTimeout(() => {
+            requestAnimationFrame(() => {
+              element.classList.add('active')
+            })
+          }, delay)
+        } else {
+          requestAnimationFrame(() => {
+            element.classList.add('active')
+          })
+        }
+      } else {
+        this.textObserver.observe(element)
       }
     })
   }
 
-  function isElementInViewport(el) {
-    const rect = el.getBoundingClientRect()
-    // Start animation earlier - when element is 90% below the viewport
-    return rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.9 && rect.bottom >= 0
-  }
+  initScrollObserver() {
+    // Use Intersection Observer API for better performance
+    if (this.scrollAnimateElements.length === 0) return
+    
+    const observerOptions = {
+      root: null,
+      rootMargin: '150px', // Trigger 150px before element enters viewport for smoother animation
+      threshold: [0, 0.01, 0.1] // Multiple thresholds for better detection
+    }
 
-  // Smooth scrolling for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function (e) {
-      e.preventDefault()
+    this.scrollObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // Trigger animation as soon as element starts entering viewport
+        if (entry.isIntersecting || entry.intersectionRatio > 0) {
+          // Use requestAnimationFrame for smoother animation start
+          requestAnimationFrame(() => {
+            entry.target.classList.add('active')
+          })
+          // Unobserve once animated to improve performance
+          this.scrollObserver.unobserve(entry.target)
+        }
+      })
+    }, observerOptions)
 
-      const targetId = this.getAttribute("href")
-      if (targetId === "#") return
-
-      const targetElement = document.querySelector(targetId)
-      if (targetElement) {
-        // Get header height for offset
-        const headerHeight = document.querySelector(".header").offsetHeight
-        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight
-
-        window.scrollTo({
-          top: targetPosition,
-          behavior: "smooth",
+    // Observe all scroll-animate elements
+    this.scrollAnimateElements.forEach(element => {
+      // Check if element is already in viewport and animate immediately
+      if (isElementInViewport(element, 0.01)) {
+        requestAnimationFrame(() => {
+          element.classList.add('active')
         })
+      } else {
+        this.scrollObserver.observe(element)
       }
     })
-  })
+  }
 
-  // COMPLETELY REVISED PARALLAX IMPLEMENTATION
-  // This is a simpler, more reliable approach to parallax scrolling
-  function initParallax() {
-    const parallaxSections = document.querySelectorAll(".parallax")
+  animateScrollTiedElements() {
+    // Fallback for elements already in viewport (in case observer hasn't fired yet)
+    // Use requestAnimationFrame for smoother updates
+    requestAnimationFrame(() => {
+      this.scrollAnimateElements.forEach(element => {
+        if (isElementInViewport(element, 0.01) && !element.classList.contains('active')) {
+          element.classList.add('active')
+        }
+      })
+    })
+  }
 
-    // Skip if no parallax sections or user prefers reduced motion
-    if (parallaxSections.length === 0 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  bindScrollEvents() {
+    // Use requestAnimationFrame for smoother animations
+    let ticking = false
+    
+    const updateAnimations = () => {
+      this.checkAnimations()
+      ticking = false
+    }
+    
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateAnimations)
+        ticking = true
+      }
+    }, { passive: true }) // Add passive flag for better scroll performance
+  }
+}
+
+// ============================================================================
+// PARALLAX MANAGER
+// ============================================================================
+
+class ParallaxManager {
+  constructor() {
+    this.parallaxSections = safeQuerySelectorAll('.parallax')
+    this.aboutText = safeQuerySelector('.about-text')
+    this.productTexts = safeQuerySelectorAll('.product-text-parallax')
+    this.init()
+  }
+
+  init() {
+    if (this.parallaxSections.length === 0 || prefersReducedMotion()) {
       return
     }
 
-    // Function to update parallax effect
-    function updateParallax() {
+    this.initMainParallax()
+    this.initTextParallax()
+    this.handleMobileOptimization()
+  }
+
+  initMainParallax() {
+    const updateParallax = throttle(() => {
       const scrollTop = window.pageYOffset
 
-      parallaxSections.forEach((section) => {
-        // Get section position relative to viewport
+      this.parallaxSections.forEach(section => {
         const sectionTop = section.getBoundingClientRect().top + scrollTop
         const sectionHeight = section.offsetHeight
         const viewportHeight = window.innerHeight
 
-        // Check if section is visible
         if (scrollTop + viewportHeight > sectionTop && scrollTop < sectionTop + sectionHeight) {
-          // Calculate how far we've scrolled into the section
           const scrollIntoSection = scrollTop + viewportHeight - sectionTop
           const scrollPercentage = scrollIntoSection / (sectionHeight + viewportHeight)
 
-          // Calculate parallax offset (adjust speed factor as needed)
-          const parallaxSpeed = 1.2
-          const offset = scrollPercentage * 100 * parallaxSpeed
+          // Spürbarer, aber begrenzter Parallax‑Effekt in Pixeln
+          const MAX_OFFSET = 120 // maximale Verschiebung in px nach oben/unten
+          const rawOffset = (scrollPercentage - 0.5) * 2 * MAX_OFFSET * CONFIG.PARALLAX.SPEED
+          const clampedOffset = Math.max(-MAX_OFFSET, Math.min(MAX_OFFSET, rawOffset))
 
-          // Apply different positioning for each section
-          if (section.classList.contains("parallax-1")) {
-            section.style.backgroundPositionY = `calc(50% + ${offset}px)`
-          } else if (section.classList.contains("parallax-2")) {
-            section.style.backgroundPositionY = `calc(50% + ${offset}px)`
-          }
+          section.style.backgroundPositionY = `calc(50% + ${clampedOffset}px)`
+        }
+      })
+    }, 16)
 
-          // Debug info - uncomment to see values
-          // console.log(`Section: ${section.classList}, Offset: ${offset}px`)
+    updateParallax()
+    window.addEventListener('scroll', updateParallax)
+    window.addEventListener('resize', updateParallax)
+    window.addEventListener('load', updateParallax)
+  }
+
+  initTextParallax() {
+    const updateTextParallax = throttle(() => {
+      this.updateAboutTextParallax()
+      this.updateProductTextParallax()
+    }, 16)
+
+    window.addEventListener('scroll', updateTextParallax)
+    updateTextParallax()
+  }
+
+  updateAboutTextParallax() {
+    if (!this.aboutText) return
+
+    const rect = this.aboutText.getBoundingClientRect()
+      const windowHeight = window.innerHeight
+      
+      if (rect.top < windowHeight && rect.bottom > 0) {
+      const yPos = -(rect.top * CONFIG.PARALLAX.TEXT_SPEED)
+      this.aboutText.style.transform = `translateY(${yPos}px)`
+      } else {
+      this.aboutText.style.transform = 'translateY(0)'
+    }
+  }
+
+  updateProductTextParallax() {
+    this.productTexts.forEach(text => {
+        const rect = text.getBoundingClientRect()
+        const windowHeight = window.innerHeight
+        
+        if (rect.top < windowHeight && rect.bottom > 0) {
+        const yPos = -(rect.top * CONFIG.PARALLAX.TEXT_SPEED)
+          text.style.transform = `translateY(${yPos}px)`
+        } else {
+          text.style.transform = 'translateY(0)'
+        }
+      })
+    }
+    
+  handleMobileOptimization() {
+    const updateMobileParallax = throttle(() => {
+      if (isMobileDevice()) {
+        this.disableParallaxOnMobile()
+        document.body.classList.add('mobile-device')
+      } else {
+        document.body.classList.remove('mobile-device')
+      }
+    }, CONFIG.ANIMATION_DELAYS.RESIZE_THROTTLE)
+
+    updateMobileParallax()
+    window.addEventListener('resize', updateMobileParallax)
+  }
+
+  disableParallaxOnMobile() {
+    this.parallaxSections.forEach(element => {
+        element.style.backgroundAttachment = 'scroll'
+        element.style.backgroundPosition = 'center center'
+        element.style.backgroundSize = 'cover'
+        element.style.backgroundRepeat = 'no-repeat'
+        element.style.transform = 'none'
+        element.style.willChange = 'auto'
+      })
+      
+    const animatedElements = safeQuerySelectorAll('.animate-on-scroll')
+      animatedElements.forEach(element => {
+        if (element.closest('.parallax')) {
+          element.style.transform = 'none'
+          element.style.willChange = 'auto'
+        }
+      })
+  }
+}
+
+// ============================================================================
+// FORM MANAGER
+// ============================================================================
+
+class FormManager {
+  constructor() {
+    this.form = safeQuerySelector('#contactForm')
+    this.submissionError = safeQuerySelector('#formSubmissionError')
+    this.languageManager = null
+    this.init()
+  }
+
+  setLanguageManager(languageManager) {
+    this.languageManager = languageManager
+  }
+
+  init() {
+    if (!this.form) return
+
+    this.bindFormEvents()
+    this.bindInputEvents()
+  }
+
+  bindFormEvents() {
+    this.form.addEventListener('submit', (e) => {
+      this.hideSubmissionError()
+      
+      if (!this.validateForm()) {
+        e.preventDefault()
+      } else {
+        // Form is valid, let it submit naturally
+        // The server-side script will handle the response
+        this.handleFormSubmission(e)
+      }
+    })
+  }
+
+  bindInputEvents() {
+    const formInputs = safeQuerySelectorAll('.form-input')
+    formInputs.forEach(input => {
+      input.addEventListener('input', () => {
+        if (input.value.trim()) {
+          this.clearFieldError(input)
+        }
+      })
+    })
+
+    // Special handling for email validation
+    const emailInput = safeQuerySelector('#email')
+    if (emailInput) {
+      emailInput.addEventListener('blur', () => {
+        if (emailInput.value.trim() && !this.isValidEmail(emailInput.value)) {
+          this.setFieldError(emailInput, 1) // Use email-specific error message
         }
       })
     }
 
-    // Initial update
-    updateParallax()
+    // Special handling for message validation
+    const messageInput = safeQuerySelector('#message')
+    if (messageInput) {
+      messageInput.addEventListener('blur', () => {
+        if (messageInput.value.trim() && messageInput.value.trim().length < 10) {
+          this.setFieldError(messageInput, 2) // Use message-specific error message
+        }
+      })
+    }
 
-    // Update on scroll with throttling for performance
-    let ticking = false
-    window.addEventListener("scroll", () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updateParallax()
-          ticking = false
-        })
-        ticking = true
+    // Special handling for consent checkbox
+    const consentCheckbox = safeQuerySelector('#consent')
+    if (consentCheckbox) {
+      consentCheckbox.addEventListener('change', () => {
+        if (consentCheckbox.checked) {
+          this.clearFieldError(consentCheckbox)
+        }
+      })
+    }
+  }
+
+  validateForm() {
+    let isValid = true
+    const formGroups = safeQuerySelectorAll('.form-group')
+
+    // Reset all error states
+    formGroups.forEach(group => group.classList.remove('has-error'))
+
+    // Validate name field
+    const nameInput = safeQuerySelector('#name')
+    if (!nameInput.value.trim()) {
+      isValid = false
+      this.setFieldError(nameInput, 0) // Use name-specific error message
+    }
+
+    // Validate email field
+    const emailInput = safeQuerySelector('#email')
+    if (!emailInput.value.trim()) {
+      isValid = false
+      this.setFieldError(emailInput, 0) // Use generic required error
+    } else if (!this.isValidEmail(emailInput.value)) {
+      isValid = false
+      this.setFieldError(emailInput, 1) // Use email-specific error message
+    }
+
+    // Validate message field
+    const messageInput = safeQuerySelector('#message')
+    if (!messageInput.value.trim()) {
+      isValid = false
+      this.setFieldError(messageInput, 0) // Use generic required error
+    } else if (messageInput.value.trim().length < 10) {
+      isValid = false
+      this.setFieldError(messageInput, 2) // Use message-specific error message
+    }
+
+    // Validate consent checkbox
+    const consentCheckbox = safeQuerySelector('#consent')
+    if (!consentCheckbox.checked) {
+      isValid = false
+      this.setFieldError(consentCheckbox, 3) // Use consent-specific error message
+    }
+
+    return isValid
+  }
+
+  isValidEmail(email) {
+    // Basic email validation - simple syntax check
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
+
+  setFieldError(field, errorIndex = 0) {
+    field.parentElement.classList.add('has-error')
+    field.classList.add('error')
+    
+    // Update error message if language manager is available
+    if (this.languageManager) {
+      const errorMessage = field.parentElement.querySelector('.error-message')
+      if (errorMessage) {
+        const lang = this.languageManager.currentLanguage ? 'english' : 'german'
+        const errors = this.languageManager.translations[lang].contact.form.errors
+        if (errors[errorIndex]) {
+          errorMessage.textContent = errors[errorIndex]
+        }
+      }
+    }
+  }
+
+  clearFieldError(field) {
+    field.parentElement.classList.remove('has-error')
+    field.classList.remove('error')
+  }
+
+  handleFormSubmission(e) {
+    // Hide any previous submission errors
+    this.hideSubmissionError()
+    
+    // Prevent default form submission
+    e.preventDefault()
+    
+    // Show loading state
+    const submitButton = this.form.querySelector('button[type="submit"]')
+    const originalButtonText = submitButton.textContent
+    submitButton.textContent = 'Sending...'
+    submitButton.disabled = true
+    
+    // Prepare form data
+    const formData = new FormData(this.form)
+    
+    // Submit via fetch API
+    fetch('send-mail.php', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        // Show success message
+        this.showSuccessMessage(data.message)
+        // Reset form
+        this.form.reset()
+      } else {
+        // Show error message
+        this.showSubmissionError(data.message)
+      }
+    })
+    .catch(error => {
+      console.error('Form submission error:', error)
+      this.showSubmissionError('Something went wrong. Please try again later or email us directly at info@lichy-berlin.de')
+    })
+    .finally(() => {
+      // Restore button state
+      submitButton.textContent = originalButtonText
+      submitButton.disabled = false
+    })
+  }
+
+  showSubmissionError(customMessage = null) {
+    if (this.submissionError) {
+      const errorParagraph = this.submissionError.querySelector('p')
+      if (errorParagraph) {
+        if (customMessage) {
+          errorParagraph.textContent = customMessage
+        } else if (this.languageManager) {
+          const lang = this.languageManager.currentLanguage ? 'english' : 'german'
+          const errorText = this.languageManager.translations[lang].contact.form.submissionError
+          errorParagraph.textContent = errorText
+        }
+      }
+      
+      this.submissionError.style.display = 'block'
+    }
+  }
+
+  showSuccessMessage(message) {
+    if (this.submissionError) {
+      // Temporarily change styling for success message
+      this.submissionError.style.backgroundColor = '#d4edda'
+      this.submissionError.style.borderColor = '#c3e6cb'
+      this.submissionError.style.color = '#155724'
+      
+      const errorParagraph = this.submissionError.querySelector('p')
+      if (errorParagraph) {
+        // Use custom message or fallback to translated message
+        if (message) {
+          errorParagraph.textContent = message
+        } else if (this.languageManager) {
+          const lang = this.languageManager.currentLanguage ? 'english' : 'german'
+          const successText = this.languageManager.translations[lang].contact.form.successMessage
+          errorParagraph.textContent = successText
+        }
+      }
+      
+      this.submissionError.style.display = 'block'
+      
+      // Reset styling after 5 seconds
+      setTimeout(() => {
+        this.submissionError.style.backgroundColor = '#f8d7da'
+        this.submissionError.style.borderColor = '#f5c6cb'
+        this.submissionError.style.color = '#721c24'
+        this.hideSubmissionError()
+      }, 5000)
+    }
+  }
+
+  hideSubmissionError() {
+    if (this.submissionError) {
+      this.submissionError.style.display = 'none'
+    }
+  }
+}
+
+// ============================================================================
+// NAVIGATION MANAGER
+// ============================================================================
+
+class NavigationManager {
+  constructor() {
+    this.menuToggle = safeQuerySelector('#menuToggle')
+    this.nav = safeQuerySelector('#nav')
+    this.navLinks = safeQuerySelectorAll('.nav-link')
+    this.init()
+  }
+
+  init() {
+    if (!this.menuToggle || !this.nav) return
+
+    // Set initial ARIA attributes
+    this.menuToggle.setAttribute('aria-expanded', 'false')
+    this.menuToggle.setAttribute('aria-controls', 'nav')
+    if (!this.menuToggle.getAttribute('aria-label')) {
+      this.menuToggle.setAttribute('aria-label', 'Toggle navigation menu')
+    }
+
+    this.bindMenuEvents()
+    this.bindNavLinkEvents()
+    this.bindOutsideClickEvents()
+  }
+
+  bindMenuEvents() {
+    // Click event
+    this.menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation()
+      this.toggleMenu()
+    })
+
+    // Keyboard event for accessibility (Enter and Space)
+    this.menuToggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault()
+        e.stopPropagation()
+        this.toggleMenu()
+      }
+      // Close menu on Escape
+      if (e.key === 'Escape' && this.nav.classList.contains('active')) {
+        this.closeMenu()
+        this.menuToggle.focus()
       }
     })
 
-    // Update on resize
-    window.addEventListener("resize", updateParallax)
-
-    // Additional update after images might have loaded
-    window.addEventListener("load", updateParallax)
-
-    // Force multiple updates to ensure effect is applied
-    setTimeout(updateParallax, 100)
-    setTimeout(updateParallax, 500)
-    setTimeout(updateParallax, 1000)
+    this.nav.addEventListener('click', (e) => {
+      e.stopPropagation()
+    })
   }
 
-  // Initialize parallax
-  initParallax()
-
-  // Check animations on scroll
-  window.addEventListener("scroll", () => {
-    checkAnimations()
-  })
-
-  // Language translation functions
-  function translateToGerman() {
-    // Navigation
-    document.querySelectorAll(".nav-link")[0].textContent = "STARTSEITE"
-    document.querySelectorAll(".nav-link")[1].textContent = "ÜBER UNS"
-    document.querySelectorAll(".nav-link")[2].textContent = "PRODUKTE"
-    document.querySelectorAll(".nav-link")[3].textContent = "KONTAKT"
-
-    // Hero
-    const heroTitle = document.querySelector(".hero-title")
-    heroTitle.innerHTML = '<span class="first-part">PRÄZISIONS</span><span class="second-part">FERTIGUNG</span>'
-    heroTitle.classList.remove("english")
-    heroTitle.classList.add("german")
-    document.querySelector(".hero-subtitle").textContent = "AUS BERLIN"
-
-    // About
-    document.querySelector("#about .section-title").textContent = "ÜBER UNS"
-    const aboutParagraphs = document.querySelectorAll("#about p")
-    aboutParagraphs[0].textContent =
-      "Seit über 40 Jahren sind wir Ihr kompetenter Ansprechpartner für Prototypenbau, Modellbau, Aluminiumguss und die Fertigung von Kleinserien. Als familiengeführtes Unternehmen stehen bei uns Qualität, Verlässlichkeit und persönliche Betreuung im Mittelpunkt. Mit modernster CNC-Bearbeitung, einem hohen Maß an Flexibilität und einem erfahrenen Team aus hochqualifizierten Fachkräften setzen wir Ihre Projekte effizient und präzise um."
-    aboutParagraphs[1].textContent =
-      "Ob Einzelanfertigung oder Serienproduktion – wir begleiten Sie von der ersten Idee bis zum fertigen Bauteil und finden gemeinsam die beste Lösung für Ihre Anforderungen im Bereich Präzisionsfertigung und Aluminiumguss."
-
-    // Products
-    document.querySelector("#products .section-title").textContent = "UNSERE PRODUKTE"
-
-    const productTitles = document.querySelectorAll(".product-content h3")
-    productTitles[0].textContent = "PROTOTYPENBAU"
-    productTitles[1].textContent = "ALUMINIUMGUSS"
-    productTitles[2].textContent = "KLEINSERIEN"
-
-    const productDescriptions = document.querySelectorAll(".product-content p")
-    // Updated content for the Prototype section
-    productDescriptions[0].textContent =
-      "Wir fertigen Prototypen auf Basis von 3D-CAD-Daten. Modellkonstruktion, Formerstellung, Guss, sowie mechanische Bearbeitung und Qualitätssicherung werden bei uns unter einem Dach durchgeführt."
-    productDescriptions[1].textContent =
-      "In unserer eigenen Gießerei betreiben wir Schmelzöfen für Aluminiumlegierungen. Mit unserem eigens entwickelten Gießverfahren erreichen wir ohne signifikanten Preisunterschied Wandstärken und Oberflächenstrukturen von druckgussähnlicher Qualität."
-    productDescriptions[2].textContent =
-      "Nahtlos im Anschluss an die Ergebnisse der Prototypenphase bieten wir die Produktion von Vor- und Kleinserien an. Auch hier wird mit seriennahen Werkstoffen gearbeitet und unter Verwendung der Datensätze und Werkzeuge der Prototypenphase, was für unsere Kunden einen weiteren Kostenvorteil bedeutet."
-
-    const learnMoreButtons = document.querySelectorAll(".product-content .btn-outline")
-    learnMoreButtons.forEach((button) => {
-      button.textContent = "MEHR ERFAHREN "
-      // Re-add the icon
-      const icon = document.createElement("i")
-      icon.setAttribute("data-lucide", "arrow-right")
-      button.appendChild(icon)
-      lucide.createIcons()
+  bindNavLinkEvents() {
+    this.navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        this.closeMenu()
+      })
+      
+      // Close menu on Escape key
+      link.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && this.nav.classList.contains('active')) {
+          this.closeMenu()
+          this.menuToggle.focus()
+        }
+      })
     })
-
-    // Contact
-    document.querySelector("#contact .section-title").textContent = "KONTAKT"
-
-    const formLabels = document.querySelectorAll(".form-group label")
-    formLabels[0].innerHTML = "Name"
-    formLabels[1].innerHTML = 'Nachname <span class="required">*</span>'
-    formLabels[2].innerHTML = 'E-Mail <span class="required">*</span>'
-    formLabels[3].innerHTML = 'Nachricht <span class="required">*</span>'
-    formLabels[4].innerHTML = "Ich stimme der Datenschutzerklärung zu"
-
-    const errorMessages = document.querySelectorAll(".error-message")
-    errorMessages.forEach((message) => {
-      message.textContent = "Dieses Feld ist erforderlich"
-    })
-    errorMessages[errorMessages.length - 1].textContent = "Sie müssen der Datenschutzerklärung zustimmen"
-
-    document.querySelector(".btn-rounded").textContent = "Nachricht senden"
-
-    // Contact info
-    const infoTitles = document.querySelectorAll(".info-item h3")
-    infoTitles[0].innerHTML = '<i data-lucide="map-pin"></i> ADRESSE'
-    infoTitles[1].innerHTML = '<i data-lucide="mail"></i> E-MAIL'
-    infoTitles[2].innerHTML = '<i data-lucide="phone"></i> TELEFON'
-    lucide.createIcons()
-
-    const infoTexts = document.querySelectorAll(".info-item p")
-    infoTexts[0].innerHTML = "Innungsstraße 60<br>13509 Berlin"
-    infoTexts[1].textContent = "info@lichy-berlin.de"
-    infoTexts[2].textContent = "030 / 414 16 12"
-
-    // Footer
-    const footerLinks = document.querySelectorAll(".footer-links a")
-    footerLinks[0].textContent = "STARTSEITE"
-    footerLinks[1].textContent = "PRODUKTE"
-    footerLinks[2].textContent = "KONTAKT"
-
-    document.querySelector(".footer-copyright p").textContent = "© 2025 Werner Lichy. Alle Rechte vorbehalten."
-    document.querySelectorAll(".footer-legal-links a")[0].textContent = "Impressum"
-    document.querySelectorAll(".footer-legal-links a")[1].textContent = "Datenschutzerklärung"
   }
 
-  function translateToEnglish() {
-    // Navigation
-    document.querySelectorAll(".nav-link")[0].textContent = "HOME"
-    document.querySelectorAll(".nav-link")[1].textContent = "ABOUT"
-    document.querySelectorAll(".nav-link")[2].textContent = "PRODUCTS"
-    document.querySelectorAll(".nav-link")[3].textContent = "CONTACT"
-
-    // Hero
-    const heroTitle = document.querySelector(".hero-title")
-    heroTitle.innerHTML = '<span class="first-part">Precision</span><span class="second-part">Engineering</span>'
-    heroTitle.classList.remove("german")
-    heroTitle.classList.add("english")
-    document.querySelector(".hero-subtitle").textContent = "FROM BERLIN"
-
-    // About
-    document.querySelector("#about .section-title").textContent = "ABOUT US"
-    const aboutParagraphs = document.querySelectorAll("#about p")
-    aboutParagraphs[0].textContent =
-      "For over 40 years, we have been your competent partner for prototype development, model making, aluminum casting, and small series production. As a family-run company, quality, reliability, and personal support are at the center of everything we do. With state-of-the-art CNC machining, a high degree of flexibility, and an experienced team of highly qualified professionals, we implement your projects efficiently and precisely."
-    aboutParagraphs[1].textContent =
-      "Whether individual production or series manufacturing – we accompany you from the initial idea to the finished component and together find the best solution for your requirements in precision engineering and aluminum casting."
-
-    // Products
-    document.querySelector("#products .section-title").textContent = "OUR PRODUCTS"
-
-    const productTitles = document.querySelectorAll(".product-content h3")
-    productTitles[0].textContent = "PROTOTYPE DEVELOPMENT"
-    productTitles[1].textContent = "ALUMINUM CASTING"
-    productTitles[2].textContent = "SMALL SERIES PRODUCTION"
-
-    const productDescriptions = document.querySelectorAll(".product-content p")
-    productDescriptions[0].textContent =
-      "We manufacture prototypes based on 3D CAD data. Model construction, mold creation, casting, as well as mechanical processing and quality assurance are all carried out under one roof."
-    productDescriptions[1].textContent =
-      "In our own foundry, we operate melting furnaces for aluminum alloys. With our specially developed casting process, we achieve wall thicknesses and surface structures of die-cast-like quality without significant price differences."
-    productDescriptions[2].textContent =
-      "Seamlessly following the results of the prototype phase, we offer the production of pre-series and small series. Here too, we work with production-grade materials and use the data sets and tools from the prototype phase, which means a further cost advantage for our customers."
-
-    const learnMoreButtons = document.querySelectorAll(".product-content .btn-outline")
-    learnMoreButtons.forEach((button) => {
-      button.textContent = "LEARN MORE "
-      // Re-add the icon
-      const icon = document.createElement("i")
-      icon.setAttribute("data-lucide", "arrow-right")
-      button.appendChild(icon)
-      lucide.createIcons()
+  bindOutsideClickEvents() {
+    document.addEventListener('click', (e) => {
+      if (this.nav.classList.contains('active') && 
+          !this.nav.contains(e.target) && 
+          e.target !== this.menuToggle) {
+        this.closeMenu()
+      }
     })
-
-    // Contact
-    document.querySelector("#contact .section-title").textContent = "CONTACT US"
-
-    const formLabels = document.querySelectorAll(".form-group label")
-    formLabels[0].innerHTML = "Name"
-    formLabels[1].innerHTML = 'Surname <span class="required">*</span>'
-    formLabels[2].innerHTML = 'Email <span class="required">*</span>'
-    formLabels[3].innerHTML = 'Message <span class="required">*</span>'
-    formLabels[4].innerHTML = "I agree to the data protection policy"
-
-    const errorMessages = document.querySelectorAll(".error-message")
-    errorMessages.forEach((message) => {
-      message.textContent = "This field is required"
-    })
-    errorMessages[errorMessages.length - 1].textContent = "You must agree to the data protection policy"
-
-    document.querySelector(".btn-rounded").textContent = "Send Message"
-
-    // Contact info
-    const infoTitles = document.querySelectorAll(".info-item h3")
-    infoTitles[0].innerHTML = '<i data-lucide="map-pin"></i> ADDRESS'
-    infoTitles[1].innerHTML = '<i data-lucide="mail"></i> EMAIL'
-    infoTitles[2].innerHTML = '<i data-lucide="phone"></i> PHONE'
-    lucide.createIcons()
-
-    const infoTexts = document.querySelectorAll(".info-item p")
-    infoTexts[0].innerHTML = "Innungsstraße 60<br>13509 Berlin"
-    infoTexts[1].textContent = "info@lichy-berlin.de"
-    infoTexts[2].textContent = "030 / 414 16 12"
-
-    // Footer
-    const footerLinks = document.querySelectorAll(".footer-links a")
-    footerLinks[0].textContent = "HOME"
-    footerLinks[1].textContent = "PRODUCTS"
-    footerLinks[2].textContent = "CONTACT"
-
-    document.querySelector(".footer-copyright p").textContent = "© 2025 Werner Lichy. All rights reserved."
-    document.querySelectorAll(".footer-legal-links a")[0].textContent = "Legal Notice (Impressum)"
-    document.querySelectorAll(".footer-legal-links a")[1].textContent = "Privacy Policy"
   }
 
-  // Add class to the hero title based on current language
-  const heroTitle = document.querySelector(".hero-title")
-  if (isEnglish) {
-    heroTitle.classList.add("english")
-  } else {
-    heroTitle.classList.add("german")
+  toggleMenu() {
+    const isExpanded = this.nav.classList.contains('active')
+    this.nav.classList.toggle('active')
+    document.body.classList.toggle('menu-open')
+    
+    // Update ARIA attributes
+    if (this.menuToggle) {
+      this.menuToggle.setAttribute('aria-expanded', !isExpanded)
+    }
   }
+
+  closeMenu() {
+    this.nav.classList.remove('active')
+    document.body.classList.remove('menu-open')
+    
+    // Update ARIA attributes
+    if (this.menuToggle) {
+      this.menuToggle.setAttribute('aria-expanded', 'false')
+    }
+  }
+}
+
+// ============================================================================
+// SMOOTH SCROLL MANAGER
+// ============================================================================
+
+class SmoothScrollManager {
+  constructor() {
+    this.init()
+  }
+
+  init() {
+    const anchorLinks = safeQuerySelectorAll('a[href^="#"]')
+    anchorLinks.forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        this.handleAnchorClick(e, anchor)
+      })
+    })
+
+    // Adjust initial scroll position if page is loaded with a hash (e.g., from another page)
+    this.handleInitialHash()
+  }
+
+  handleAnchorClick(e, anchor) {
+    e.preventDefault()
+
+    const targetId = anchor.getAttribute('href')
+    if (targetId === '#') return
+
+    // Handle cross-page links (e.g., index.html#contact)
+    if (targetId.includes('#')) {
+      const [page, hash] = targetId.split('#')
+      if (page && page !== window.location.pathname.split('/').pop()) {
+        // Navigate to different page
+        window.location.href = targetId
+        return
+      }
+      // Update targetId to just the hash
+      const targetElement = safeQuerySelector('#' + hash)
+      if (!targetElement) return
+      
+      const headerHeight = safeQuerySelector('.header')?.offsetHeight || 0
+      const elementHeight = targetElement.offsetHeight
+      const viewportHeight = window.innerHeight
+      
+      // Center the element in viewport
+      const targetPosition = targetElement.getBoundingClientRect().top + 
+                            window.pageYOffset - headerHeight - 
+                            (viewportHeight / 2) + (elementHeight / 2)
+
+      window.scrollTo({
+        top: Math.max(0, targetPosition),
+        behavior: 'smooth'
+      })
+      return
+    }
+
+    const targetElement = safeQuerySelector(targetId)
+    if (!targetElement) return
+
+    const headerHeight = safeQuerySelector('.header')?.offsetHeight || 0
+    const elementHeight = targetElement.offsetHeight
+    const viewportHeight = window.innerHeight
+    
+    // Center the element in viewport
+    const targetPosition = targetElement.getBoundingClientRect().top + 
+                          window.pageYOffset - headerHeight - 
+                          (viewportHeight / 2) + (elementHeight / 2)
+
+    window.scrollTo({
+      top: Math.max(0, targetPosition),
+      behavior: 'smooth'
+    })
+  }
+
+  handleInitialHash() {
+    const hash = window.location.hash
+    if (!hash || hash === '#') return
+
+    // Small timeout to ensure layout is ready
+    setTimeout(() => {
+      const targetElement = safeQuerySelector(hash)
+      if (!targetElement) return
+
+      const headerHeight = safeQuerySelector('.header')?.offsetHeight || 0
+      const elementHeight = targetElement.offsetHeight
+      const viewportHeight = window.innerHeight
+
+      // Use offsetTop so calculation is independent of any default browser hash jump
+      const elementTop = targetElement.offsetTop
+
+      const targetPosition = elementTop - headerHeight -
+                            (viewportHeight / 2) + (elementHeight / 2)
+
+      window.scrollTo({
+        top: Math.max(0, targetPosition),
+        behavior: 'auto'
+      })
+    }, 50)
+  }
+}
+
+// ============================================================================
+// MAIN APPLICATION
+// ============================================================================
+
+class WernerLichyApp {
+  constructor() {
+    this.languageManager = new LanguageManager()
+    this.animationManager = new AnimationManager()
+    this.parallaxManager = new ParallaxManager()
+    this.formManager = new FormManager()
+    this.navigationManager = new NavigationManager()
+    this.smoothScrollManager = new SmoothScrollManager()
+    
+    this.init()
+  }
+
+  init() {
+    this.setupDeviceClasses()
+    this.initializeIcons()
+    this.setupLanguageToggle()
+    this.setupFormManager()
+    this.setupPageTransition()
+  }
+
+  setupDeviceClasses() {
+    if (isIOSDevice()) {
+      document.body.classList.add('ios')
+    }
+  }
+
+  initializeIcons() {
+    if (window.lucide) {
+      window.lucide.createIcons()
+    }
+  }
+
+  setupLanguageToggle() {
+    const langToggle = safeQuerySelector('#langToggle')
+    const currentLang = safeQuerySelector('.current-lang')
+    const langDropdown = safeQuerySelector('#langDropdown')
+    const langOptions = safeQuerySelectorAll('.lang-option')
+
+    if (!langToggle || !currentLang || !langDropdown) return
+
+    // Update active language option in dropdown
+    const updateActiveOption = (isEnglish) => {
+      langOptions.forEach(option => {
+        option.classList.remove('active')
+        if ((isEnglish && option.dataset.lang === 'english') ||
+            (!isEnglish && option.dataset.lang === 'german')) {
+          option.classList.add('active')
+        }
+      })
+    }
+
+    // Set initial language display
+    const isEnglish = this.languageManager.currentLanguage
+    currentLang.textContent = isEnglish ? 'EN' : 'DE'
+    updateActiveOption(isEnglish)
+
+    // Apply saved language preference
+    this.languageManager.translateToLanguage(isEnglish)
+
+    // Toggle dropdown on button click
+    langToggle.addEventListener('click', (e) => {
+      e.stopPropagation()
+      const isExpanded = langToggle.getAttribute('aria-expanded') === 'true'
+      langToggle.setAttribute('aria-expanded', !isExpanded)
+      langDropdown.classList.toggle('show')
+    })
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!langToggle.contains(e.target) && !langDropdown.contains(e.target)) {
+        langToggle.setAttribute('aria-expanded', 'false')
+        langDropdown.classList.remove('show')
+      }
+    })
+
+    // Handle language selection from dropdown
+    langOptions.forEach(option => {
+      option.addEventListener('click', (e) => {
+        e.stopPropagation()
+        const selectedLang = option.dataset.lang === 'english'
+        
+        this.languageManager.saveLanguage(selectedLang)
+        currentLang.textContent = selectedLang ? 'EN' : 'DE'
+        updateActiveOption(selectedLang)
+        this.languageManager.translateToLanguage(selectedLang)
+        
+        // Close dropdown
+        langToggle.setAttribute('aria-expanded', 'false')
+        langDropdown.classList.remove('show')
+        
+        // Announce language change to screen readers
+        const liveRegion = safeQuerySelector('#aria-live-region')
+        if (liveRegion) {
+          liveRegion.textContent = `Language changed to ${selectedLang ? 'English' : 'German'}`
+          setTimeout(() => {
+            liveRegion.textContent = ''
+          }, 1000)
+        }
+      })
+    })
+    
+    // Keyboard support for language toggle
+    langToggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault()
+        langToggle.click()
+      } else if (e.key === 'Escape') {
+        langToggle.setAttribute('aria-expanded', 'false')
+        langDropdown.classList.remove('show')
+      }
+    })
+
+    // Keyboard navigation in dropdown
+    langOptions.forEach((option, index) => {
+      option.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          option.click()
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault()
+          const nextOption = langOptions[index + 1] || langOptions[0]
+          nextOption.focus()
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault()
+          const prevOption = langOptions[index - 1] || langOptions[langOptions.length - 1]
+          prevOption.focus()
+        } else if (e.key === 'Escape') {
+          langToggle.setAttribute('aria-expanded', 'false')
+          langDropdown.classList.remove('show')
+          langToggle.focus()
+        }
+      })
+    })
+  }
+
+  setupFormManager() {
+    this.formManager.setLanguageManager(this.languageManager)
+  }
+
+  setupPageTransition() {
+    document.body.classList.add('page-transition')
+  }
+}
+
+// ============================================================================
+// INITIALIZATION
+// ============================================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+  new WernerLichyApp()
 })

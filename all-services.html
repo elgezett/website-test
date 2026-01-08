@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Services & Capabilities - Werner Lichy | Prototypenbau & Aluminiumguss Berlin</title>
+    <meta name="description" content="Complete manufacturing services from design to delivery. Prototypes, aluminum casting, CNC machining, and quality assurance.">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/android-chrome-512x512.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Page-specific styles */
+        body {
+            background-color: #1A3857;
+            color: white;
+        }
+        .page-content {
+            padding: 120px 0 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: white;
+            border-bottom: 2px solid white;
+            padding-bottom: 10px;
+        }
+        .content-section {
+            margin-bottom: 40px;
+            /* Optimize for smooth animations */
+            will-change: transform, opacity;
+        }
+        .content-section h2 {
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        .content-section h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        .content-section p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: white;
+        }
+        .content-section a {
+            color: #4A90E2;
+            text-decoration: none;
+        }
+        .content-section a:hover {
+            text-decoration: underline;
+        }
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .service-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .service-card h4 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        .service-card p {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image" loading="lazy">
+                </a>
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <nav class="nav" id="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html#hero" class="nav-link">STARTSEITE</a></li>
+                    <li><a href="index.html#products" class="nav-link">PRODUKTE</a></li>
+                    <li><a href="index.html#about" class="nav-link">ÜBER UNS</a></li>
+                    <li><a href="index.html#contact" class="nav-link">KONTAKT</a></li>
+                    <li class="nav-divider"></li>
+                    <li class="lang-item">
+                        <button class="lang-icon" id="langToggle" aria-label="Change language">
+                            <i data-lucide="globe"></i>
+                            <span class="current-lang">EN</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="page-content">
+        <div class="container">
+            <h1 id="pageTitle" class="page-title">All Services & Capabilities</h1>
+            
+            <!-- English Content -->
+            <div id="en-content">
+                <div class="content-section animate-on-scroll" data-animation="fade-up">
+                    <h2>Complete Manufacturing Solutions</h2>
+                    <p>From initial concept to final delivery, Werner Lichy provides comprehensive manufacturing services that cover every aspect of the production process. Our integrated approach ensures seamless transitions between different manufacturing stages, reducing lead times and maintaining consistent quality throughout.</p>
+                </div>
+
+                <div class="content-section animate-on-scroll" data-animation="fade-up" data-delay="100">
+                    <h2>Core Services</h2>
+                    <div class="service-grid">
+                        <div class="service-card">
+                            <h4>3D Design & CAD</h4>
+                            <p>Advanced CAD/CAM systems for precise design optimization and simulation.</p>
+                        </div>
+                        <div class="service-card">
+                            <h4>Model Construction</h4>
+                            <p>High-precision models and molds using advanced 3D milling and rapid prototyping.</p>
+                        </div>
+                        <div class="service-card">
+                            <h4>Aluminum Casting</h4>
+                            <p>In-house foundry with sand and permanent mold casting capabilities.</p>
+                        </div>
+                        <div class="service-card">
+                            <h4>CNC Machining</h4>
+                            <p>5-axis technology with automation systems for maximum precision and efficiency.</p>
+                        </div>
+                        <div class="service-card">
+                            <h4>Quality Assurance</h4>
+                            <p>ISO 9001 certified with tactile, scanning, and optical measurement technologies.</p>
+                        </div>
+                        <div class="service-card">
+                            <h4>Assembly & Testing</h4>
+                            <p>Complete assembly services with functional testing and surface finishing.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section animate-on-scroll" data-animation="fade-up" data-delay="200">
+                    <h2>Specialized Capabilities</h2>
+                    <p>Our expertise extends beyond standard manufacturing to include specialized services such as heat treatment, surface finishing, packaging solutions, and comprehensive quality control. We work with a wide range of materials and can accommodate both prototype development and serial production requirements.</p>
+                </div>
+
+                <div class="content-section animate-on-scroll" data-animation="fade-up" data-delay="300">
+                    <h2>Industry Applications</h2>
+                    <p>We serve diverse industries including automotive, aerospace, medical devices, and industrial machinery. Our flexible manufacturing approach allows us to adapt to specific industry requirements while maintaining the highest standards of precision and reliability.</p>
+                </div>
+            </div>
+
+            <!-- German Content -->
+            <div id="de-content" style="display: none;">
+                <div class="content-section animate-on-scroll" data-animation="fade-up">
+                    <h2>Komplette Fertigungslösungen</h2>
+                    <p>Von der ersten Idee bis zur finalen Lieferung bietet Werner Lichy umfassende Fertigungsdienstleistungen, die jeden Aspekt des Produktionsprozesses abdecken. Unser integrierter Ansatz gewährleistet nahtlose Übergänge zwischen verschiedenen Fertigungsstufen und reduziert Durchlaufzeiten bei gleichbleibender Qualität.</p>
+                </div>
+
+                <div class="content-section animate-on-scroll" data-animation="fade-up" data-delay="100">
+                    <h2>Kernservices</h2>
+                    <div class="service-grid">
+                        <div class="service-card">
+                            <h4>3D-Design & CAD</h4>
+                            <p>Moderne CAD/CAM-Systeme für präzise Designoptimierung und Simulation.</p>
+                        </div>
+                        <div class="service-card">
+                            <h4>Modellbau</h4>
+                            <p>Hochpräzise Modelle und Formen mit moderner 3D-Frästechnik und Rapid Prototyping.</p>
+                        </div>
+                        <div class="service-card">
+                            <h4>Aluminiumguss</h4>
+                            <p>Hauseigene Gießerei mit Sand- und Kokillenguss-Kapazitäten.</p>
+                        </div>
+                        <div class="service-card">
+                            <h4>CNC-Bearbeitung</h4>
+                            <p>5-Achs-Technologie mit Automatisierungssystemen für maximale Präzision und Effizienz.</p>
+                        </div>
+                        <div class="service-card">
+                            <h4>Qualitätssicherung</h4>
+                            <p>ISO 9001 zertifiziert mit taktiler, Scan- und optischer Messtechnik.</p>
+                        </div>
+                        <div class="service-card">
+                            <h4>Montage & Prüfung</h4>
+                            <p>Komplette Montageservices mit Funktionstests und Oberflächenveredelung.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section animate-on-scroll" data-animation="fade-up" data-delay="200">
+                    <h2>Spezialisierte Fähigkeiten</h2>
+                    <p>Unsere Expertise geht über die Standardfertigung hinaus und umfasst spezialisierte Services wie Wärmebehandlung, Oberflächenveredelung, Verpackungslösungen und umfassende Qualitätskontrolle. Wir arbeiten mit einer breiten Palette von Materialien und können sowohl Prototypenentwicklung als auch Serienfertigungsanforderungen erfüllen.</p>
+                </div>
+
+                <div class="content-section animate-on-scroll" data-animation="fade-up" data-delay="300">
+                    <h2>Branchenanwendungen</h2>
+                    <p>Wir bedienen verschiedene Branchen einschließlich Automobil, Luftfahrt, Medizintechnik und Industrieanlagen. Unser flexibler Fertigungsansatz ermöglicht es uns, uns an spezifische Branchenanforderungen anzupassen und dabei höchste Präzisions- und Zuverlässigkeitsstandards zu wahren.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html#hero" class="logo-link">
+                        <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image footer-logo-image" loading="lazy">
+                    </a>
+                </div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="index.html">Startseite</a></li>
+                        <li><a href="index.html#products">Produkte</a></li>
+                        <li><a href="index.html#about">Über uns</a></li>
+                        <li><a href="index.html#contact">Kontakt</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <a href="https://www.linkedin.com/company/werner-lichy-modell-und-prototypenbau/?originalSubdomain=de" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2025 Werner Lichy. All rights reserved.</p>
+                </div>
+                <div class="footer-legal-links">
+                    <a href="privacy-policy.html">Datenschutz</a>
+                    <span class="footer-divider">|</span>
+                    <a href="legal-notice.html">Impressum</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        /**
+         * All Services Page - Language Support
+         * Simple language toggle for content switching
+         */
+        document.addEventListener("DOMContentLoaded", () => {
+            // Initialize Lucide icons
+            lucide.createIcons();
+            
+            // Optimized scroll animations for all-services page
+            function initScrollAnimations() {
+                const animatedElements = document.querySelectorAll('.content-section.animate-on-scroll');
+                
+                // Use Intersection Observer with earlier trigger for better performance
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '200px', // Trigger 200px before element enters viewport
+                    threshold: [0, 0.01, 0.1] // Multiple thresholds for better detection
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting || entry.intersectionRatio > 0) {
+                            const element = entry.target;
+                            const delay = parseInt(element.getAttribute('data-delay')) || 0;
+                            
+                            // Use requestAnimationFrame for smoother animation
+                            if (delay > 0) {
+                                setTimeout(() => {
+                                    requestAnimationFrame(() => {
+                                        element.classList.add('active');
+                                    });
+                                }, delay);
+                            } else {
+                                requestAnimationFrame(() => {
+                                    element.classList.add('active');
+                                });
+                            }
+                            
+                            // Unobserve once animated
+                            observer.unobserve(element);
+                        }
+                    });
+                }, observerOptions);
+
+                // Observe all animated elements
+                animatedElements.forEach(element => {
+                    // Check if already in viewport
+                    const rect = element.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    const triggerPoint = windowHeight * 1.2; // 120% of viewport height
+                    
+                    if (rect.top < triggerPoint) {
+                        const delay = parseInt(element.getAttribute('data-delay')) || 0;
+                        if (delay > 0) {
+                            setTimeout(() => {
+                                requestAnimationFrame(() => {
+                                    element.classList.add('active');
+                                });
+                            }, delay);
+                        } else {
+                            requestAnimationFrame(() => {
+                                element.classList.add('active');
+                            });
+                        }
+                    } else {
+                        observer.observe(element);
+                    }
+                });
+            }
+            
+            // Initialize scroll animations
+            initScrollAnimations();
+            
+            // Re-initialize animations when language changes
+            let animationInitialized = false;
+            
+            // Language toggle functionality
+            const langToggle = document.getElementById("langToggle");
+            const currentLang = document.querySelector(".current-lang");
+            const pageTitle = document.getElementById("pageTitle");
+            const enContent = document.getElementById("en-content");
+            const deContent = document.getElementById("de-content");
+            const LANGUAGE_KEY = 'lichy-website-language';
+            
+            // Get saved language preference or default to English
+            let isEnglish = localStorage.getItem(LANGUAGE_KEY) !== 'german';
+
+            if (langToggle && currentLang) {
+                // Set initial language display based on saved preference
+                currentLang.textContent = isEnglish ? "EN" : "DE";
+                langToggle.classList.add('active');
+                
+                // Apply saved language preference
+                if (isEnglish) {
+                    translateToEnglish();
+                } else {
+                    translateToGerman();
+                }
+                
+                // Toggle language on click
+                langToggle.addEventListener("click", () => {
+                    isEnglish = !isEnglish;
+                    
+                    // Save language preference to localStorage
+                    localStorage.setItem(LANGUAGE_KEY, isEnglish ? 'english' : 'german');
+                    
+                    // Update language display
+                    currentLang.textContent = isEnglish ? "EN" : "DE";
+                    
+                    // Switch language content
+                    if (isEnglish) {
+                        translateToEnglish();
+                    } else {
+                        translateToGerman();
+                    }
+                });
+            }
+            
+            function translateToGerman() {
+                pageTitle.textContent = "Alle Services & Fähigkeiten";
+                enContent.style.display = "none";
+                deContent.style.display = "block";
+                
+                // Update navigation
+                document.querySelectorAll(".nav-link")[0].textContent = "STARTSEITE";
+                document.querySelectorAll(".nav-link")[1].textContent = "PRODUKTE";
+                document.querySelectorAll(".nav-link")[2].textContent = "ÜBER UNS";
+                document.querySelectorAll(".nav-link")[3].textContent = "KONTAKT";
+                
+                // Update footer
+                const footerLinks = document.querySelectorAll(".footer-links a");
+                footerLinks[0].textContent = "Startseite";
+                footerLinks[1].textContent = "Produkte";
+                footerLinks[2].textContent = "Über uns";
+                footerLinks[3].textContent = "Kontakt";
+                
+                document.querySelector(".footer-copyright p").textContent = "© 2025 Werner Lichy. Alle Rechte vorbehalten.";
+                
+                const footerLegalLinks = document.querySelectorAll(".footer-legal-links a");
+                footerLegalLinks[0].textContent = "Datenschutz";
+                footerLegalLinks[1].textContent = "Impressum";
+                
+                // Re-initialize animations for new content
+                setTimeout(() => {
+                    initScrollAnimations();
+                }, 50);
+            }
+            
+            function translateToEnglish() {
+                pageTitle.textContent = "All Services & Capabilities";
+                enContent.style.display = "block";
+                deContent.style.display = "none";
+                
+                // Update navigation
+                document.querySelectorAll(".nav-link")[0].textContent = "HOME";
+                document.querySelectorAll(".nav-link")[1].textContent = "PRODUCTS";
+                document.querySelectorAll(".nav-link")[2].textContent = "ABOUT";
+                document.querySelectorAll(".nav-link")[3].textContent = "CONTACT";
+                
+                // Update footer
+                const footerLinks = document.querySelectorAll(".footer-links a");
+                footerLinks[0].textContent = "Home";
+                footerLinks[1].textContent = "Products";
+                footerLinks[2].textContent = "About";
+                footerLinks[3].textContent = "Contact";
+                
+                document.querySelector(".footer-copyright p").textContent = "© 2025 Werner Lichy. All rights reserved.";
+                
+                const footerLegalLinks = document.querySelectorAll(".footer-legal-links a");
+                footerLegalLinks[0].textContent = "Privacy Policy";
+                footerLegalLinks[1].textContent = "Legal Notice";
+                
+                // Re-initialize animations for new content
+                setTimeout(() => {
+                    initScrollAnimations();
+                }, 50);
+            }
+        });
+    </script>
+</body>
+</html>
