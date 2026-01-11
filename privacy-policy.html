@@ -15,11 +15,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/android-chrome-512x512.png">
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         .page-content {
             padding: 120px 0 60px;
@@ -68,13 +64,13 @@
                     <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image" loading="lazy">
                 </a>
             </div>
-            <div class="menu-toggle" id="menuToggle">
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav">
                 <div class="hamburger">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
-            </div>
+            </button>
             <nav class="nav" id="nav">
                 <ul class="nav-list">
                     <li><a href="/#hero" class="nav-link">Home</a></li>
@@ -84,9 +80,9 @@
                     <li class="nav-divider"></li>
                     <li class="lang-item">
                         <button class="lang-icon" id="langToggle" aria-label="Change language" aria-expanded="false" aria-haspopup="true">
-                            <i data-lucide="globe"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
                             <span class="current-lang">EN</span>
-                            <i data-lucide="chevron-down" class="chevron-icon"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron-icon"><path d="m6 9 6 6 6-6" /></svg>
                         </button>
                         <ul class="lang-dropdown" id="langDropdown" role="menu">
                             <li role="none">
@@ -101,6 +97,29 @@
             </nav>
         </div>
     </header>
+    
+    <!-- Language Drawer for Mobile -->
+    <div class="lang-drawer" id="langDrawer">
+        <div class="lang-drawer-overlay"></div>
+        <div class="lang-drawer-content">
+            <div class="lang-drawer-header">
+                <h3 class="lang-drawer-title" id="langDrawerTitle">Select language</h3>
+                <button class="lang-drawer-close" id="langDrawerClose" aria-label="Close language drawer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                </button>
+            </div>
+            <div class="lang-drawer-options">
+                <button class="lang-drawer-option" data-lang="english">
+                    <span>English</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lang-drawer-check"><path d="M20 6 9 17l-5-5" /></svg>
+                </button>
+                <button class="lang-drawer-option" data-lang="german">
+                    <span>Deutsch</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lang-drawer-check"><path d="M20 6 9 17l-5-5" /></svg>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <div class="page-content container">
         <h1 class="page-title" id="pageTitle">Datenschutzerklärung</h1>
@@ -265,12 +284,8 @@
     <script src="script.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Initialize Lucide icons
-            lucide.createIcons();
             
-            // Language switcher for privacy page
-            const langToggle = document.getElementById("langToggle");
-            const currentLang = document.querySelector(".current-lang");
+            // Language switcher for privacy page - integrates with main script.js
             const pageTitle = document.getElementById("pageTitle");
             const enContent = document.getElementById("en-content");
             const deContent = document.getElementById("de-content");
@@ -278,88 +293,59 @@
             
             // Get saved language preference or default to English
             let isEnglish = localStorage.getItem(LANGUAGE_KEY) !== 'german';
-
-            if (langToggle && currentLang) {
-              // Set initial language display
-              currentLang.textContent = isEnglish ? "EN" : "DE";
-              langToggle.classList.add('active');
-              
-              // Apply saved language preference
-              if (isEnglish) {
+            
+            // Apply saved language preference on page load
+            if (isEnglish) {
                 translatePrivacyToEnglish();
-              } else {
+            } else {
                 translatePrivacyToGerman();
-              }
-
-              // Toggle language on click
-              langToggle.addEventListener("click", () => {
-                isEnglish = !isEnglish;
-
-                // Save language preference to localStorage
-                localStorage.setItem(LANGUAGE_KEY, isEnglish ? 'english' : 'german');
-
-                // Update language display
-                currentLang.textContent = isEnglish ? "EN" : "DE";
-
-                // Switch language content
-                if (isEnglish) {
-                  translatePrivacyToEnglish();
-                } else {
-                  translatePrivacyToGerman();
-                }
-              });
             }
             
+            // Listen for language changes from dropdown/drawer (handled by script.js)
+            const langOptions = document.querySelectorAll('.lang-option, .lang-drawer-option');
+            langOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const selectedLang = option.dataset.lang === 'english';
+                    isEnglish = selectedLang;
+                    
+                    // Switch language content
+                    if (isEnglish) {
+                        translatePrivacyToEnglish();
+                    } else {
+                        translatePrivacyToGerman();
+                    }
+                });
+            });
+            
+            // Also listen for storage events in case language changes on another page
+            window.addEventListener('storage', (e) => {
+                if (e.key === LANGUAGE_KEY) {
+                    const newLang = e.newValue !== 'german';
+                    isEnglish = newLang;
+                    if (isEnglish) {
+                        translatePrivacyToEnglish();
+                    } else {
+                        translatePrivacyToGerman();
+                    }
+                }
+            });
+            
             function translatePrivacyToGerman() {
-                // Navigation
-                document.querySelectorAll(".nav-link")[0].textContent = "Startseite";
-                document.querySelectorAll(".nav-link")[1].textContent = "Services";
-                document.querySelectorAll(".nav-link")[2].textContent = "Über uns";
-                document.querySelectorAll(".nav-link")[3].textContent = "Kontakt";
-                
                 // Page title
                 pageTitle.textContent = "Datenschutzerklärung";
                 
                 // Show German content, hide English content
                 enContent.style.display = "none";
                 deContent.style.display = "block";
-                
-                // Footer
-                const footerLinks = document.querySelectorAll(".footer-links a");
-                footerLinks[0].textContent = "Startseite";
-                footerLinks[1].textContent = "Services";
-                footerLinks[2].textContent = "Über uns";
-                footerLinks[3].textContent = "Kontakt";
-                
-                document.querySelector(".footer-copyright p").textContent = "© 2025 Werner Lichy. Alle Rechte vorbehalten.";
-                document.querySelectorAll(".footer-legal-links a")[0].textContent = "Impressum";
-                document.querySelectorAll(".footer-legal-links a")[1].textContent = "Datenschutzerklärung";
             }
             
             function translatePrivacyToEnglish() {
-                // Navigation
-                document.querySelectorAll(".nav-link")[0].textContent = "Home";
-                document.querySelectorAll(".nav-link")[1].textContent = "Services";
-                document.querySelectorAll(".nav-link")[2].textContent = "About";
-                document.querySelectorAll(".nav-link")[3].textContent = "Contact";
-                
                 // Page title
                 pageTitle.textContent = "Privacy Policy";
                 
                 // Show English content, hide German content
                 deContent.style.display = "none";
                 enContent.style.display = "block";
-                
-                // Footer
-                const footerLinks = document.querySelectorAll(".footer-links a");
-                footerLinks[0].textContent = "Home";
-                footerLinks[1].textContent = "Services";
-                footerLinks[2].textContent = "About";
-                footerLinks[3].textContent = "Contact";
-                
-                document.querySelector(".footer-copyright p").textContent = "© 2025 Werner Lichy. All rights reserved.";
-                document.querySelectorAll(".footer-legal-links a")[0].textContent = "Legal Notice (Impressum)";
-                document.querySelectorAll(".footer-legal-links a")[1].textContent = "Privacy Policy";
             }
         });
     </script>

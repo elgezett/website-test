@@ -1,3 +1,44 @@
+/* Font Face Declarations */
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('assets/fonts/raleway-v37-latin-300.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('assets/fonts/raleway-v37-latin-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('assets/fonts/raleway-v37-latin-500.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('assets/fonts/raleway-v37-latin-600.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('assets/fonts/raleway-v37-latin-700.woff2') format('woff2');
+}
+
 /* Base Styles */
 :root {
   --primary: #38618c;
@@ -173,7 +214,7 @@ img {
 }
 
 .logo-image {
-  height: 64px;
+  height: 77px; /* Increased by 20% from 64px */
   width: auto;
 }
 
@@ -852,7 +893,7 @@ img {
   border: 2px solid var(--white) !important;
   border-radius: 4px;
   padding: 12px 30px;
-  font-family: "Poppins", sans-serif;
+  font-family: "Raleway", sans-serif;
   font-weight: 500;
   font-size: 1rem;
   text-decoration: none;
@@ -1004,6 +1045,21 @@ img {
 
 .product-text-parallax {
   will-change: transform;
+}
+
+/* Disable scroll animations on all-services page for accessibility */
+.content-section.animate-on-scroll,
+.content-section.animate-on-scroll * {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+.content-section.animate-on-scroll.active,
+.content-section.animate-on-scroll.active * {
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 .product-content h3 {
@@ -1250,7 +1306,7 @@ img {
   border-radius: 4px; /* Added border radius */
   background-color: var(--white);
   color: var(--dark);
-  font-family: "Work Sans", sans-serif;
+  font-family: "Raleway", sans-serif;
   transition: var(--transition);
 }
 
@@ -1710,7 +1766,7 @@ img {
   }
 
   .logo-image {
-    height: 52px;
+    height: 62px; /* Increased by 20% from 52px */
   }
 
   .footer-logo-image {
@@ -2201,5 +2257,72 @@ a.btn:active,
     /* Reduce complexity for mobile */
     transform: none !important;
     will-change: auto !important;
+  }
+  
+  /* Disable all scroll animations on mobile for accessibility */
+  .animate-on-scroll,
+  .animate-on-scroll *,
+  .scroll-animate,
+  .scroll-animate *,
+  .product-image,
+  .product-image img,
+  .about-paragraphs,
+  .about-image,
+  .about-image img {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+    will-change: auto !important;
+  }
+  
+  .animate-on-scroll.active,
+  .scroll-animate.active {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  /* Ensure images are always visible on mobile */
+  .product-image img,
+  .scroll-animate img,
+  .about-image img {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: scale(1) !important;
+    -webkit-transform: scale(1) !important;
+  }
+  
+  /* Disable hero animations on mobile */
+  .hero-title,
+  .hero-subtitle,
+  .hero-cta {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  /* Ensure parallax text elements are visible on mobile */
+  .parallax-text,
+  .parallax-heading,
+  .parallax-button {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  /* Ensure section titles and subtitles are visible */
+  .section-title,
+  .section-subtitle {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  /* Ensure contact info is visible */
+  .contact-info,
+  .info-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

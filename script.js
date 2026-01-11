@@ -170,7 +170,7 @@ class LanguageManager {
             successMessage: "Vielen Dank für Ihre Nachricht. Wir werden uns bald bei Ihnen melden!"
           },
           info: {
-            titles: ['<i data-lucide="map-pin"></i> ADRESSE', '<i data-lucide="mail"></i> E-MAIL', '<i data-lucide="phone"></i> TELEFON'],
+            titles: ['<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" /></svg> ADRESSE', '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg> E-MAIL', '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" /></svg> TELEFON'],
             texts: ["Innungsstraße 60<br>13509 Berlin", "info@lichy-berlin.de", "030 / 414 16 12"]
           }
         },
@@ -234,7 +234,7 @@ class LanguageManager {
             successMessage: "Thank you for your message. We will get back to you soon!"
           },
           info: {
-            titles: ['<i data-lucide="map-pin"></i> ADDRESS', '<i data-lucide="mail"></i> EMAIL', '<i data-lucide="phone"></i> PHONE'],
+            titles: ['<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" /></svg> ADDRESS', '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg> EMAIL', '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" /></svg> PHONE'],
             texts: ["Innungsstraße 60<br>13509 Berlin", "info@lichy-berlin.de", "030 / 414 16 12"]
           }
         },
@@ -323,11 +323,6 @@ class LanguageManager {
 
     // Language drawer title
     this.updateElement('#langDrawerTitle', t.language.drawerTitle)
-
-    // Refresh Lucide icons
-    if (window.lucide) {
-      window.lucide.createIcons()
-    }
   }
 
   updateElement(selector, content) {
@@ -355,8 +350,22 @@ class LanguageManager {
     const buttons = safeQuerySelectorAll('.product-content .btn-solid')
     buttons.forEach(button => {
       button.textContent = buttonText
-      const icon = document.createElement('i')
-      icon.setAttribute('data-lucide', 'arrow-right')
+      const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+      icon.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+      icon.setAttribute('width', '24')
+      icon.setAttribute('height', '24')
+      icon.setAttribute('viewBox', '0 0 24 24')
+      icon.setAttribute('fill', 'none')
+      icon.setAttribute('stroke', 'currentColor')
+      icon.setAttribute('stroke-width', '2')
+      icon.setAttribute('stroke-linecap', 'round')
+      icon.setAttribute('stroke-linejoin', 'round')
+      const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+      path1.setAttribute('d', 'M5 12h14')
+      const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+      path2.setAttribute('d', 'm12 5 7 7-7 7')
+      icon.appendChild(path1)
+      icon.appendChild(path2)
       button.appendChild(icon)
     })
   }
@@ -375,6 +384,12 @@ class AnimationManager {
   }
 
   init() {
+    // Skip all animations on mobile devices for better accessibility
+    if (isMobileDevice()) {
+      this.showAllElementsWithoutAnimation()
+      return
+    }
+    
     this.initHeroAnimations()
     this.initScrollObserver() // Initialize observer first
     this.checkAnimations()
@@ -382,7 +397,8 @@ class AnimationManager {
   }
 
   initHeroAnimations() {
-    if (prefersReducedMotion()) {
+    // Skip animations on mobile or if user prefers reduced motion
+    if (isMobileDevice() || prefersReducedMotion()) {
       this.showHeroElementsWithoutAnimation()
       return
     }
@@ -432,7 +448,8 @@ class AnimationManager {
   }
 
   checkAnimations() {
-    if (prefersReducedMotion()) {
+    // Skip animations on mobile or if user prefers reduced motion
+    if (isMobileDevice() || prefersReducedMotion()) {
       this.showAllElementsWithoutAnimation()
       return
     }
@@ -442,10 +459,47 @@ class AnimationManager {
   }
 
   showAllElementsWithoutAnimation() {
+    // Show all animated elements immediately without animation
     [...this.animateElements, ...this.scrollAnimateElements].forEach(element => {
       element.classList.add('active')
       element.style.opacity = '1'
       element.style.transform = 'none'
+      element.style.transition = 'none'
+      element.style.animation = 'none'
+      
+      // Also ensure all child elements (images, text) are visible
+      const children = element.querySelectorAll('*')
+      children.forEach(child => {
+        child.style.opacity = '1'
+        child.style.transform = 'none'
+        child.style.transition = 'none'
+        child.style.animation = 'none'
+      })
+    })
+    
+    // Also handle hero elements
+    this.heroElements.forEach(element => {
+      element.style.opacity = '1'
+      element.style.transform = 'none'
+      element.style.transition = 'none'
+    })
+    
+    // Ensure product images are visible
+    const productImages = safeQuerySelectorAll('.product-image img, .scroll-animate img')
+    productImages.forEach(img => {
+      img.style.opacity = '1'
+      img.style.visibility = 'visible'
+      img.style.transform = 'scale(1)'
+      img.style.transition = 'none'
+    })
+    
+    // Ensure about section images are visible
+    const aboutImages = safeQuerySelectorAll('.about-image img')
+    aboutImages.forEach(img => {
+      img.style.opacity = '1'
+      img.style.visibility = 'visible'
+      img.style.transform = 'none'
+      img.style.transition = 'none'
     })
   }
 
@@ -1208,9 +1262,6 @@ class WernerLichyApp {
   }
 
   initializeIcons() {
-    if (window.lucide) {
-      window.lucide.createIcons()
-    }
   }
 
   setupLanguageToggle() {
@@ -1258,12 +1309,7 @@ class WernerLichyApp {
         
         langDrawer.classList.add('active')
         document.body.style.overflow = 'hidden'
-        // Initialize icons when drawer opens
-        if (window.lucide) {
-          setTimeout(() => {
-            window.lucide.createIcons()
-          }, 100)
-        }
+        // Icons are now static SVGs, no initialization needed
       }
     }
 
@@ -1438,15 +1484,7 @@ class WernerLichyApp {
       })
     })
 
-    // Initialize icons when drawer opens
-    if (langDrawer) {
-      const observer = new MutationObserver(() => {
-        if (langDrawer.classList.contains('active') && window.lucide) {
-          window.lucide.createIcons()
-        }
-      })
-      observer.observe(langDrawer, { attributes: true, attributeFilter: ['class'] })
-    }
+    // Icons are now static SVGs, no initialization needed
   }
 
   setupFormManager() {

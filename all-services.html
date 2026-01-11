@@ -15,11 +15,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/android-chrome-512x512.png">
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         /* Page-specific styles */
         body {
@@ -40,8 +36,27 @@
         }
         .content-section {
             margin-bottom: 40px;
-            /* Optimize for smooth animations */
-            will-change: transform, opacity;
+            /* Disable animations for accessibility - content visible immediately */
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+            animation: none !important;
+            will-change: auto;
+        }
+        
+        /* Ensure all content sections and their children are visible immediately */
+        .content-section.animate-on-scroll,
+        .content-section.animate-on-scroll * {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+            animation: none !important;
+        }
+        
+        .content-section.animate-on-scroll.active,
+        .content-section.animate-on-scroll.active * {
+            opacity: 1 !important;
+            transform: none !important;
         }
         .content-section h2 {
             color: white;
@@ -98,13 +113,13 @@
                     <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image" loading="lazy">
                 </a>
             </div>
-            <div class="menu-toggle" id="menuToggle">
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav">
                 <div class="hamburger">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
-            </div>
+            </button>
             <nav class="nav" id="nav">
                 <ul class="nav-list">
                     <li><a href="/#hero" class="nav-link">Home</a></li>
@@ -114,9 +129,9 @@
                     <li class="nav-divider"></li>
                     <li class="lang-item">
                         <button class="lang-icon" id="langToggle" aria-label="Change language" aria-expanded="false" aria-haspopup="true">
-                            <i data-lucide="globe"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
                             <span class="current-lang">EN</span>
-                            <i data-lucide="chevron-down" class="chevron-icon"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron-icon"><path d="m6 9 6 6 6-6" /></svg>
                         </button>
                         <ul class="lang-dropdown" id="langDropdown" role="menu">
                             <li role="none">
@@ -131,6 +146,29 @@
             </nav>
         </div>
     </header>
+    
+    <!-- Language Drawer for Mobile -->
+    <div class="lang-drawer" id="langDrawer">
+        <div class="lang-drawer-overlay"></div>
+        <div class="lang-drawer-content">
+            <div class="lang-drawer-header">
+                <h3 class="lang-drawer-title" id="langDrawerTitle">Select language</h3>
+                <button class="lang-drawer-close" id="langDrawerClose" aria-label="Close language drawer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                </button>
+            </div>
+            <div class="lang-drawer-options">
+                <button class="lang-drawer-option" data-lang="english">
+                    <span>English</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lang-drawer-check"><path d="M20 6 9 17l-5-5" /></svg>
+                </button>
+                <button class="lang-drawer-option" data-lang="german">
+                    <span>Deutsch</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lang-drawer-check"><path d="M20 6 9 17l-5-5" /></svg>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Page Content -->
     <div class="page-content">
@@ -141,7 +179,7 @@
             <div id="en-content">
                 <div class="content-section animate-on-scroll" data-animation="fade-up">
                     <h2>Complete Manufacturing Solutions</h2>
-                    <p>From initial concept to final delivery, Werner Lichy provides comprehensive manufacturing services that cover every aspect of the production process. Our integrated approach ensures seamless transitions between different manufacturing stages, reducing lead times and maintaining consistent quality throughout.</p>
+                    <p>Every component passes through a complete in-house manufacturing process. From 3D design and model construction to aluminum casting, machining, and final inspection, all steps are handled under one roof. The result is ready-to-use components that are durable, precise, and manufactured in Berlin.</p>
                 </div>
 
                 <div class="content-section animate-on-scroll" data-animation="fade-up" data-delay="100">
@@ -189,7 +227,7 @@
             <div id="de-content" style="display: none;">
                 <div class="content-section animate-on-scroll" data-animation="fade-up">
                     <h2>Komplette Fertigungslösungen</h2>
-                    <p>Von der ersten Idee bis zur finalen Lieferung bietet Werner Lichy umfassende Fertigungsdienstleistungen, die jeden Aspekt des Produktionsprozesses abdecken. Unser integrierter Ansatz gewährleistet nahtlose Übergänge zwischen verschiedenen Fertigungsstufen und reduziert Durchlaufzeiten bei gleichbleibender Qualität.</p>
+                    <p>Jedes Bauteil durchläuft eine vollständig integrierte Inhouse-Prozesskette. Von der 3D-Konstruktion und dem Modellbau über den Aluminiumguss bis hin zur mechanischen Bearbeitung und Endkontrolle erfolgen alle Schritte aus einer Hand. Das Ergebnis sind sofort einsetzbare Bauteile, präzise gefertigt und langlebig produziert in Berlin.</p>
                 </div>
 
                 <div class="content-section animate-on-scroll" data-animation="fade-up" data-delay="100">
@@ -254,7 +292,7 @@
                 </div>
                 <div class="footer-social">
                     <a href="https://www.linkedin.com/company/werner-lichy-modell-und-prototypenbau/?originalSubdomain=de" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
-                        <i data-lucide="linkedin"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></svg>
                     </a>
                 </div>
             </div>
@@ -278,69 +316,56 @@
          * Simple language toggle for content switching
          */
         document.addEventListener("DOMContentLoaded", () => {
-            // Initialize Lucide icons
-            lucide.createIcons();
+            // Disable all scroll animations on mobile devices for accessibility
+            function isMobileDevice() {
+                return window.innerWidth <= 768 || 
+                       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            }
             
-            // Optimized scroll animations for all-services page
-            function initScrollAnimations() {
-                const animatedElements = document.querySelectorAll('.content-section.animate-on-scroll');
-                
-                // Use Intersection Observer with earlier trigger for better performance
-                const observerOptions = {
-                    root: null,
-                    rootMargin: '200px', // Trigger 200px before element enters viewport
-                    threshold: [0, 0.01, 0.1] // Multiple thresholds for better detection
-                };
-
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting || entry.intersectionRatio > 0) {
-                            const element = entry.target;
-                            const delay = parseInt(element.getAttribute('data-delay')) || 0;
-                            
-                            // Use requestAnimationFrame for smoother animation
-                            if (delay > 0) {
-                                setTimeout(() => {
-                                    requestAnimationFrame(() => {
-                                        element.classList.add('active');
-                                    });
-                                }, delay);
-                            } else {
-                                requestAnimationFrame(() => {
-                                    element.classList.add('active');
-                                });
-                            }
-                            
-                            // Unobserve once animated
-                            observer.unobserve(element);
-                        }
+            // Disable all scroll animations immediately for accessibility on mobile
+            if (isMobileDevice()) {
+                const allAnimated = document.querySelectorAll('.animate-on-scroll, .content-section.animate-on-scroll, .scroll-animate');
+                allAnimated.forEach(element => {
+                    element.classList.add('active');
+                    element.style.opacity = '1';
+                    element.style.transform = 'none';
+                    element.style.transition = 'none';
+                    element.style.animation = 'none';
+                    // Disable on all children
+                    const children = element.querySelectorAll('*');
+                    children.forEach(child => {
+                        child.style.opacity = '1';
+                        child.style.transform = 'none';
+                        child.style.transition = 'none';
+                        child.style.animation = 'none';
                     });
-                }, observerOptions);
-
-                // Observe all animated elements
-                animatedElements.forEach(element => {
-                    // Check if already in viewport
-                    const rect = element.getBoundingClientRect();
-                    const windowHeight = window.innerHeight;
-                    const triggerPoint = windowHeight * 1.2; // 120% of viewport height
-                    
-                    if (rect.top < triggerPoint) {
-                        const delay = parseInt(element.getAttribute('data-delay')) || 0;
-                        if (delay > 0) {
-                            setTimeout(() => {
-                                requestAnimationFrame(() => {
-                                    element.classList.add('active');
-                                });
-                            }, delay);
-                        } else {
-                            requestAnimationFrame(() => {
-                                element.classList.add('active');
-                            });
-                        }
-                    } else {
-                        observer.observe(element);
-                    }
                 });
+            }
+            
+            
+            // Disable scroll animations for accessibility - show all content immediately on mobile
+            function initScrollAnimations() {
+                // Only disable animations on mobile devices
+                if (isMobileDevice()) {
+                    // Immediately show all elements without animation for better accessibility
+                    const animatedElements = document.querySelectorAll('.content-section.animate-on-scroll, .animate-on-scroll, .scroll-animate');
+                    animatedElements.forEach(element => {
+                        element.classList.add('active');
+                        element.style.opacity = '1';
+                        element.style.transform = 'none';
+                        element.style.transition = 'none';
+                        element.style.animation = 'none';
+                        // Also ensure all child elements are visible
+                        const children = element.querySelectorAll('*');
+                        children.forEach(child => {
+                            child.style.opacity = '1';
+                            child.style.transform = 'none';
+                            child.style.transition = 'none';
+                            child.style.animation = 'none';
+                        });
+                    });
+                }
+                // On desktop, let the main script.js handle animations normally
             }
             
             // Initialize scroll animations
@@ -418,7 +443,7 @@
                 footerLegalLinks[0].textContent = "Datenschutz";
                 footerLegalLinks[1].textContent = "Impressum";
                 
-                // Re-initialize animations for new content
+                // Ensure new content is visible immediately (animations disabled)
                 setTimeout(() => {
                     initScrollAnimations();
                 }, 50);
@@ -448,7 +473,7 @@
                 footerLegalLinks[0].textContent = "Privacy Policy";
                 footerLegalLinks[1].textContent = "Legal Notice";
                 
-                // Re-initialize animations for new content
+                // Ensure new content is visible immediately (animations disabled)
                 setTimeout(() => {
                     initScrollAnimations();
                 }, 50);

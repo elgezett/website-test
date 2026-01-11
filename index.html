@@ -15,11 +15,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/android-chrome-512x512.png">
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
     <!-- Skip to main content link for keyboard users -->
@@ -51,9 +47,9 @@
                     <li class="nav-divider"></li>
                     <li class="lang-item">
                         <button class="lang-icon" id="langToggle" aria-label="Change language" aria-expanded="false" aria-haspopup="true">
-                            <i data-lucide="globe"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
                             <span class="current-lang">EN</span>
-                            <i data-lucide="chevron-down" class="chevron-icon"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron-icon"><path d="m6 9 6 6 6-6" /></svg>
                         </button>
                         <ul class="lang-dropdown" id="langDropdown" role="menu">
                             <li role="none">
@@ -76,17 +72,17 @@
             <div class="lang-drawer-header">
                 <h3 class="lang-drawer-title" id="langDrawerTitle">Select language</h3>
                 <button class="lang-drawer-close" id="langDrawerClose" aria-label="Close language drawer">
-                    <i data-lucide="x"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
                 </button>
             </div>
             <div class="lang-drawer-options">
                 <button class="lang-drawer-option" data-lang="english">
                     <span>English</span>
-                    <i data-lucide="check" class="lang-drawer-check"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lang-drawer-check"><path d="M20 6 9 17l-5-5" /></svg>
                 </button>
                 <button class="lang-drawer-option" data-lang="german">
                     <span>Deutsch</span>
-                    <i data-lucide="check" class="lang-drawer-check"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lang-drawer-check"><path d="M20 6 9 17l-5-5" /></svg>
                 </button>
             </div>
         </div>
@@ -288,15 +284,15 @@
                 -->
                 <div class="contact-info animate-on-scroll" data-animation="fade-up">
                     <div class="info-item">
-                        <h3><i data-lucide="map-pin"></i> ADRESSE</h3>
+                        <h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" /></svg> ADRESSE</h3>
                         <p>Innungsstraße 60<br>13509 Berlin</p>
                     </div>
                     <div class="info-item">
-                        <h3><i data-lucide="mail"></i> E-MAIL</h3>
+                        <h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></svg> E-MAIL</h3>
                         <p>info@lichy-berlin.de</p>
                     </div>
                     <div class="info-item">
-                        <h3><i data-lucide="phone"></i> TELEFON</h3>
+                        <h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" /></svg> TELEFON</h3>
                         <p>030 / 414 16 12</p>
                     </div>
                 </div>
@@ -323,7 +319,7 @@
                 </div>
                 <div class="footer-social">
                     <a href="https://www.linkedin.com/company/werner-lichy-modell-und-prototypenbau/?originalSubdomain=de" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
-                        <i data-lucide="linkedin"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></svg>
                     </a>
                 </div>
             </div>
