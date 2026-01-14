@@ -1,0 +1,79 @@
+<!-- 
+    SHARED HEADER COMPONENT
+    ========================
+    This header should be identical across all HTML pages for consistency.
+    
+    Key elements:
+    - Logo link: Use "/" for pages other than index.html, "#hero" for index.html
+    - Navigation links: Use "/#section" for cross-page navigation
+    - Language toggle: Handled by script.js - do not add custom toggle handlers
+    - Language drawer: Required for mobile - must be present on all pages
+    
+    The dropdown functionality is handled by script.js (WernerLichyApp class).
+    Page-specific scripts should only handle content translation, not dropdown toggling.
+-->
+
+<!-- Header -->
+<header class="header">
+    <div class="container header-container">
+        <div class="logo">
+            <a href="/" class="logo-link">
+                <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image" loading="lazy">
+            </a>
+        </div>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+        <nav class="nav" id="nav">
+            <ul class="nav-list">
+                <li><a href="/#hero" class="nav-link">Home</a></li>
+                <li><a href="/#products" class="nav-link">Services</a></li>
+                <li><a href="/#about" class="nav-link">About</a></li>
+                <li><a href="/#contact" class="nav-link">Contact</a></li>
+                <li class="nav-divider"></li>
+                <li class="lang-item">
+                    <button class="lang-icon" id="langToggle" aria-label="Change language" aria-expanded="false" aria-haspopup="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg>
+                        <span class="current-lang">EN</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron-icon"><path d="m6 9 6 6 6-6" /></svg>
+                    </button>
+                    <ul class="lang-dropdown" id="langDropdown" role="menu">
+                        <li role="none">
+                            <button class="lang-option" data-lang="english" role="menuitem">English</button>
+                        </li>
+                        <li role="none">
+                            <button class="lang-option" data-lang="german" role="menuitem">Deutsch</button>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Language Drawer for Mobile -->
+<div class="lang-drawer" id="langDrawer">
+    <div class="lang-drawer-overlay"></div>
+    <div class="lang-drawer-content">
+        <div class="lang-drawer-header">
+            <h3 class="lang-drawer-title" id="langDrawerTitle">Select language</h3>
+            <button class="lang-drawer-close" id="langDrawerClose" aria-label="Close language drawer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+            </button>
+        </div>
+        <div class="lang-drawer-options">
+            <button class="lang-drawer-option" data-lang="english">
+                <span>English</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lang-drawer-check"><path d="M20 6 9 17l-5-5" /></svg>
+            </button>
+            <button class="lang-drawer-option" data-lang="german">
+                <span>Deutsch</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lang-drawer-check"><path d="M20 6 9 17l-5-5" /></svg>
+            </button>
+        </div>
+    </div>
+</div>
