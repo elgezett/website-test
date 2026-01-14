@@ -526,7 +526,7 @@ img {
 .hero-content {
   position: relative;
   z-index: 1;
-  max-width: 800px;
+  max-width: 1500px;
   padding: 0 20px;
 }
 
@@ -536,6 +536,39 @@ img {
   letter-spacing: 1px;
   line-height: 1.2;
   max-width: 900px;
+}
+
+/* German title: Force exactly two lines on desktop */
+@media (min-width: 769px) {
+  .hero-title.german {
+    font-size: 3.5rem;
+    max-width: none; /* Remove width restriction to allow natural 2-line layout */
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    line-height: 1.3;
+    white-space: normal;
+    word-break: keep-all;
+    overflow-wrap: normal;
+    hyphens: none;
+    display: block;
+    letter-spacing: 1px;
+  }
+  
+  /* Ensure br tag creates a proper line break - this is the key */
+  .hero-title.german br {
+    display: block;
+    content: "";
+    margin: 0;
+    padding: 0;
+    line-height: 0.5;
+  }
+  
+  /* Prevent any automatic line breaks - force text to stay together except at br */
+  .hero-title.german {
+    word-spacing: normal;
+  }
 }
 
 .hero-content p {
@@ -1892,15 +1925,16 @@ img {
       background-color: var(--white);
       border-radius: 20px 20px 0 0;
       box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
-      transform: translateY(100%);
-      transition: transform 0.3s ease;
+      transform: translateY(100%); /* Startet unterhalb des Viewports */
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth easing */
       max-height: 50vh;
       display: flex;
       flex-direction: column;
+      overflow-y: auto;
     }
     
     .lang-drawer.active .lang-drawer-content {
-      transform: translateY(0);
+      transform: translateY(0); /* Slide in von unten nach oben */
     }
     
     .lang-drawer-header {
@@ -2057,7 +2091,7 @@ img {
   }
 
   .partner-logo img[alt="Porsche"] {
-    max-height: 18px; /* Increased from 10px to 18px */
+    max-height: 12px;
   }
 
 
@@ -2104,7 +2138,7 @@ img {
   }
 
   .partner-logo img[alt="Porsche"] {
-    max-height: 16px; /* Increased from 9px to 16px */
+    max-height: 12px;
   }
 }
 
