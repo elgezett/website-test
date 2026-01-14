@@ -265,14 +265,7 @@ class LanguageManager {
     this.updateElements('.nav-link', t.navigation)
 
     // Hero
-    // For German title, insert line break after "fertige Bauteile," to display on two lines
-    if (!isEnglish && t.hero.title.includes('fertige Bauteile')) {
-      // Use HTML <br> tag for reliable line break
-      const germanTitleWithBreak = t.hero.title.replace('fertige Bauteile,', 'fertige Bauteile,<br>')
-      this.updateElement('.hero-title', germanTitleWithBreak)
-    } else {
-      this.updateElement('.hero-title', t.hero.title)
-    }
+    this.updateElement('.hero-title', t.hero.title)
     this.updateElement('.hero-subtitle', t.hero.subtitle)
     this.updateElement('.hero-cta .btn', t.hero.button)
     
