@@ -26,13 +26,13 @@
                     <img src="assets/images/logo/lichy-logo.svg" alt="Werner Lichy - Prototypenbau und Aluminiumguss" class="logo-image" loading="lazy">
                 </a>
             </div>
-            <div class="menu-toggle" id="menuToggle">
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav">
                 <div class="hamburger">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
-            </div>
+            </button>
             <nav class="nav" id="nav">
                 <ul class="nav-list">
                     <li><a href="/#hero" class="nav-link">Home</a></li>
@@ -59,6 +59,29 @@
             </nav>
         </div>
     </header>
+    
+    <!-- Language Drawer for Mobile -->
+    <div class="lang-drawer" id="langDrawer">
+        <div class="lang-drawer-overlay"></div>
+        <div class="lang-drawer-content">
+            <div class="lang-drawer-header">
+                <h3 class="lang-drawer-title" id="langDrawerTitle">Select language</h3>
+                <button class="lang-drawer-close" id="langDrawerClose" aria-label="Close language drawer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                </button>
+            </div>
+            <div class="lang-drawer-options">
+                <button class="lang-drawer-option" data-lang="english">
+                    <span>English</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lang-drawer-check"><path d="M20 6 9 17l-5-5" /></svg>
+                </button>
+                <button class="lang-drawer-option" data-lang="german">
+                    <span>Deutsch</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lang-drawer-check"><path d="M20 6 9 17l-5-5" /></svg>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section id="hero" class="hero">
@@ -69,7 +92,7 @@
                 <h1 class="animate-on-scroll hero-title" data-animation="fade-up">
                     All services and capabilities
                 </h1>
-                <p class="animate-on-scroll hero-subtitle" data-animation="fade-up" data-delay="1200">Comprehensive manufacturing solutions from design to delivery</p>
+                <p class="animate-on-scroll hero-subtitle" data-animation="fade-up" data-delay="400">Comprehensive manufacturing solutions from design to delivery</p>
             </div>
         </div>
     </section>
@@ -382,37 +405,40 @@
                 if (footerLegalLinks[1]) footerLegalLinks[1].textContent = "Legal Notice"
             }
             
-            // Language toggle functionality for services page with persistence
-            const langToggle = document.getElementById('langToggle')
-            const currentLang = document.querySelector('.current-lang')
-            
-            // Language persistence using localStorage (same key as main page)
+            // Language switcher for services page - integrates with main script.js
             const LANGUAGE_KEY = 'lichy-website-language'
             
-            // Get saved language preference or default to English
-            let isEnglish = localStorage.getItem(LANGUAGE_KEY) !== 'german'
-            
-            if (langToggle && currentLang) {
-                // Set initial language display based on saved preference
-                currentLang.textContent = isEnglish ? "EN" : "DE"
-                langToggle.classList.add('active')
-                
-                // Apply saved language preference
-                if (isEnglish) {
-                    translateServicesToEnglish()
-                } else {
-                    translateServicesToGerman()
+            // Get initial language: saved preference, browser language, or default to English
+            function getInitialLanguage() {
+                // First check if user has a saved preference
+                const savedLanguage = localStorage.getItem(LANGUAGE_KEY)
+                if (savedLanguage === 'german' || savedLanguage === 'english') {
+                    return savedLanguage === 'english'
                 }
                 
-                // Toggle language on click
-                langToggle.addEventListener("click", () => {
-                    isEnglish = !isEnglish
-                    
-                    // Save language preference to localStorage
-                    localStorage.setItem(LANGUAGE_KEY, isEnglish ? 'english' : 'german')
-                    
-                    // Update language display
-                    currentLang.textContent = isEnglish ? "EN" : "DE"
+                // If no saved preference, detect browser language
+                const browserLang = navigator.language || navigator.userLanguage || 'en'
+                const langCode = browserLang.toLowerCase().split('-')[0] // Get language code (e.g., 'de' from 'de-DE')
+                
+                // Default to German if browser language is German, otherwise English
+                return langCode !== 'de'
+            }
+            
+            let isEnglish = getInitialLanguage()
+            
+            // Apply initial language preference on page load
+            if (isEnglish) {
+                translateServicesToEnglish()
+            } else {
+                translateServicesToGerman()
+            }
+            
+            // Listen for language changes from dropdown/drawer (handled by script.js)
+            const langOptions = document.querySelectorAll('.lang-option, .lang-drawer-option')
+            langOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const selectedLang = option.dataset.lang === 'english'
+                    isEnglish = selectedLang
                     
                     // Switch language content
                     if (isEnglish) {
@@ -421,7 +447,20 @@
                         translateServicesToGerman()
                     }
                 })
-            }
+            })
+            
+            // Also listen for storage events in case language changes on another page
+            window.addEventListener('storage', (e) => {
+                if (e.key === LANGUAGE_KEY) {
+                    const newLang = e.newValue !== 'german'
+                    isEnglish = newLang
+                    if (isEnglish) {
+                        translateServicesToEnglish()
+                    } else {
+                        translateServicesToGerman()
+                    }
+                }
+            })
             
                   // Initialize smooth animations with optimized performance
                   function checkAnimations() {
@@ -480,7 +519,21 @@
                   // Initialize scroll animations for product images (matching main page logic)
                   const scrollAnimateElements = document.querySelectorAll('.scroll-animate');
                   
+                  // Make all product images visible immediately (like on index.html)
+                  scrollAnimateElements.forEach((element) => {
+                      const img = element.querySelector('img');
+                      if (img) {
+                          img.style.opacity = '1';
+                          img.style.visibility = 'visible';
+                      }
+                  });
+                  
                   function updateScrollAnimations() {
+                      // Only run scale animation on desktop
+                      if (window.innerWidth <= 768) {
+                          return; // Skip on mobile
+                      }
+                      
                       scrollAnimateElements.forEach((element) => {
                           const elementPosition = element.getBoundingClientRect();
                           const windowHeight = window.innerHeight;
@@ -751,11 +804,20 @@
                     transform: translateZ(0) scale(0.85);
                     -webkit-transform: translateZ(0) scale(0.85);
                     transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-                    opacity: 1;
+                    /* Always ensure images are visible - like on index.html */
+                    opacity: 1 !important;
+                    visibility: visible !important;
                     /* Force hardware acceleration */
                     backface-visibility: hidden;
                     -webkit-backface-visibility: hidden;
                     will-change: transform;
+                }
+                
+                /* Ensure scroll-animate images are always visible */
+                .scroll-animate img,
+                .product-image.scroll-animate img {
+                    opacity: 1 !important;
+                    visibility: visible !important;
                 }
                 
                 /* Hover effect for images - same as about section */
